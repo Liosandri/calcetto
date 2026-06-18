@@ -1,0 +1,1804 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASSR – Questionnaire Bilingue FR/VI</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Baloo+2:wght@700;800&display=swap');
+
+  :root {
+    --red:    #E8003D;
+    --yellow: #F5C400;
+    --navy:   #0B1F4A;
+    --sky:    #E8F3FF;
+    --white:  #FFFFFF;
+    --gray:   #F0F2F5;
+    --text:   #1A1A2E;
+    --muted:  #6B7280;
+    --green:  #16A34A;
+    --wrong:  #DC2626;
+    --radius: 14px;
+    --shadow: 0 4px 24px rgba(11,31,74,.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(160deg, #0B1F4A 0%, #1a3a7a 40%, #0B1F4A 100%);
+    min-height: 100vh;
+    color: var(--text);
+    padding: 16px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    text-align: center;
+    padding: 32px 20px 24px;
+    color: white;
+  }
+  .header .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red);
+    color: white;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 99px;
+    margin-bottom: 16px;
+  }
+  .flag { font-size: 18px; }
+  .header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: white;
+  }
+  .header h1 span { color: var(--yellow); }
+  .header p { margin-top: 8px; color: rgba(255,255,255,.65); font-size: 14px; }
+
+  /* ── STATS BAR ── */
+  .stats {
+    display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+    margin: 0 auto 24px;
+    max-width: 680px;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.18);
+    color: white;
+    border-radius: 99px;
+    padding: 8px 18px;
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .stat-pill .num { font-size: 18px; font-weight: 800; color: var(--yellow); }
+
+  /* ── PROGRESS ── */
+  .progress-wrap {
+    max-width: 680px; margin: 0 auto 20px;
+    background: rgba(255,255,255,.15);
+    border-radius: 99px; height: 8px; overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, var(--yellow), #FF7A00);
+    transition: width .4s ease;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-width: 680px;
+    margin: 0 auto 20px;
+    overflow: hidden;
+  }
+
+  .card-head {
+    background: var(--navy);
+    padding: 16px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-head .qnum {
+    font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    color: var(--yellow); text-transform: uppercase;
+  }
+  .card-head .theme-tag {
+    background: rgba(255,255,255,.12);
+    color: rgba(255,255,255,.8);
+    font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 99px;
+  }
+
+  .card-body { padding: 22px 22px 18px; }
+
+  .question-fr {
+    font-size: 16px; font-weight: 600; line-height: 1.5;
+    color: var(--navy); margin-bottom: 6px;
+  }
+  .question-vi {
+    font-size: 13px; color: var(--muted); line-height: 1.5;
+    margin-bottom: 18px;
+    padding: 8px 12px;
+    background: var(--gray);
+    border-radius: 8px;
+    border-left: 3px solid var(--red);
+  }
+  .question-vi::before { content: "🇻🇳 "; }
+
+  /* ── ILLUSTRATION ── */
+  .illus-wrap {
+    margin-bottom: 18px;
+    border-radius: 10px; overflow: hidden;
+    background: var(--sky);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 110px;
+    position: relative;
+  }
+  .illus-wrap svg { display: block; }
+  .illus-wrap .illus-label {
+    position: absolute; bottom: 8px; right: 10px;
+    font-size: 10px; color: var(--muted); font-weight: 500;
+  }
+
+  /* ── OPTIONS ── */
+  .options { display: grid; gap: 10px; }
+
+  .option {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 14px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, transform .1s;
+    background: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover { border-color: var(--navy); background: var(--sky); }
+  .option.selected { border-color: var(--navy); background: var(--sky); }
+  .option.correct  { border-color: var(--green); background: #F0FDF4; }
+  .option.wrong    { border-color: var(--wrong); background: #FEF2F2; }
+
+  .opt-letter {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%;
+    background: var(--gray);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: var(--navy);
+    transition: background .2s, color .2s;
+  }
+  .option.correct .opt-letter { background: var(--green); color: white; }
+  .option.wrong   .opt-letter { background: var(--wrong); color: white; }
+
+  .opt-text { flex: 1; }
+  .opt-text .fr { font-size: 14px; font-weight: 500; color: var(--text); line-height: 1.4; }
+  .opt-text .vi { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+  /* ── EXPLANATION ── */
+  .explanation {
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: #F0FDF4;
+    border-radius: 8px;
+    border-left: 3px solid var(--green);
+    display: none;
+  }
+  .explanation.visible { display: block; }
+  .explanation .exp-fr { font-size: 13px; color: #166534; font-weight: 500; line-height: 1.5; }
+  .explanation .exp-vi { font-size: 12px; color: #4ADE80; margin-top: 4px; line-height: 1.5; }
+
+  /* ── BUTTONS ── */
+  .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+
+  .btn {
+    padding: 10px 22px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    border: none; cursor: pointer; transition: transform .1s, opacity .2s;
+    font-family: inherit;
+  }
+  .btn:active { transform: scale(.97); }
+  .btn-primary { background: var(--navy); color: white; }
+  .btn-primary:hover { background: #162d68; }
+  .btn-primary:disabled { opacity: .4; cursor: default; }
+  .btn-validate { background: var(--red); color: white; }
+  .btn-validate:hover { background: #c5002f; }
+  .btn-validate:disabled { opacity: .4; cursor: default; }
+
+  /* ── LOADING ── */
+  .loading-card {
+    background: white;
+    border-radius: var(--radius);
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .spinner {
+    width: 48px; height: 48px;
+    border: 4px solid var(--gray);
+    border-top-color: var(--red);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-card p { color: var(--muted); font-size: 14px; }
+  .loading-card .load-vi { font-size: 12px; color: #9CA3AF; margin-top: 4px; }
+
+  /* ── RESULTS ── */
+  .results {
+    background: white;
+    border-radius: var(--radius);
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    display: none;
+  }
+  .results.visible { display: block; }
+  .results .score-circle {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 36px; font-weight: 800;
+    color: white;
+  }
+  .results .score-circle .score-label { font-size: 12px; font-weight: 600; margin-top: -4px; }
+  .results h2 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .results p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+  .results .btn-restart { background: var(--navy); color: white; padding: 12px 32px; border-radius: 10px; font-size: 15px; font-weight: 700; border: none; cursor: pointer; font-family: inherit; }
+
+  /* ── FILTER TABS ── */
+  .filters {
+    max-width: 680px; margin: 0 auto 16px;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 7px 14px; border-radius: 99px;
+    font-size: 12px; font-weight: 600;
+    border: 2px solid rgba(255,255,255,.3);
+    background: transparent; color: rgba(255,255,255,.7);
+    cursor: pointer; transition: all .2s; font-family: inherit;
+  }
+  .filter-btn.active { background: var(--yellow); border-color: var(--yellow); color: var(--navy); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 480px) {
+    body { padding: 10px; }
+    .card-body { padding: 16px; }
+    .btn-row { flex-direction: column-reverse; }
+    .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge"><span class="flag">🇫🇷</span> ASSR / Code 50cc <span class="flag">🇻🇳</span></div>
+  <h1>Questionnaire <span>Bilingue</span></h1>
+  <p>Préparation au permis AM / BSR – Français &amp; Tiếng Việt</p>
+</div>
+
+<div class="stats" id="statsBar">
+  <div class="stat-pill">Questions : <span class="num" id="statTotal">–</span></div>
+  <div class="stat-pill">✅ Bonnes : <span class="num" id="statGood">0</span></div>
+  <div class="stat-pill">❌ Erreurs : <span class="num" id="statWrong">0</span></div>
+</div>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+<div class="filters" id="filtersRow">
+  <button class="filter-btn active" onclick="setFilter('all',this)">🗂️ Tout / Tất cả</button>
+  <button class="filter-btn" onclick="setFilter('priorite',this)">⛔ Priorité</button>
+  <button class="filter-btn" onclick="setFilter('signalisation',this)">🚦 Signalisation</button>
+  <button class="filter-btn" onclick="setFilter('alcool',this)">🍺 Alcool / Drogues</button>
+  <button class="filter-btn" onclick="setFilter('securite',this)">🪖 Sécurité</button>
+  <button class="filter-btn" onclick="setFilter('conduite',this)">🛵 Conduite</button>
+</div>
+
+<div id="quizArea"></div>
+<div class="results" id="resultsBox">
+  <div class="score-circle" id="scoreCircle">
+    <span id="scorePct">–</span>
+    <span class="score-label">score</span>
+  </div>
+  <h2 id="resultTitle">–</h2>
+  <p id="resultMsg">–</p>
+  <button class="btn-restart" onclick="restart()">🔄 Recommencer / Làm lại</button>
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// QUESTION BANK – 100 questions ASSR / Code 50cc
+// Each: { id, theme, fr, vi, illus, options:[{fr,vi}], answer(0-based), expFr, expVi }
+// ════════════════════════════════════════════════
+const ALL_QUESTIONS = [
+  // ── PRIORITÉ ──────────────────────────────────
+  {id:1,theme:"priorite",
+   fr:"À une intersection sans signalisation, vous venez de la droite d'un autre véhicule. Qui est prioritaire ?",
+   vi:"Tại ngã tư không có biển báo, bạn đến từ bên phải xe khác. Ai được ưu tiên ?",
+   illus:"crossroad-right",
+   options:[
+     {fr:"Vous, car vous venez de la droite",vi:"Bạn, vì bạn đến từ bên phải"},
+     {fr:"L'autre véhicule, car il est plus grand",vi:"Xe kia, vì xe to hơn"},
+     {fr:"Celui qui roule le plus vite",vi:"Người đi nhanh hơn"},
+   ],answer:0,
+   expFr:"Règle de priorité à droite : sans autre signalisation, le véhicule venant de la droite est prioritaire.",
+   expVi:"Quy tắc ưu tiên bên phải: khi không có biển báo, xe từ bên phải được ưu tiên."},
+
+  {id:2,theme:"priorite",
+   fr:"Que signifie un panneau 'Cédez le passage' (triangle pointe en bas) ?",
+   vi:"Biển 'Nhường đường' (tam giác ngược) có nghĩa là gì ?",
+   illus:"cedez-passage",
+   options:[
+     {fr:"Vous devez vous arrêter complètement",vi:"Bạn phải dừng hẳn"},
+     {fr:"Vous devez laisser passer les usagers venant d'autres directions",vi:"Bạn nhường đường cho xe từ hướng khác"},
+     {fr:"Vous avez la priorité",vi:"Bạn được ưu tiên"},
+   ],answer:1,
+   expFr:"Le panneau 'Cédez le passage' impose de laisser passer les autres sans s'arrêter obligatoirement.",
+   expVi:"Biển 'Nhường đường' yêu cầu nhường xe khác nhưng không bắt buộc dừng hẳn."},
+
+  {id:3,theme:"priorite",
+   fr:"Qu'impose le panneau 'Stop' ?",
+   vi:"Biển 'Stop' yêu cầu gì ?",
+   illus:"stop-sign",
+   options:[
+     {fr:"Ralentir sans s'arrêter",vi:"Giảm tốc không cần dừng"},
+     {fr:"S'arrêter obligatoirement avant la ligne d'arrêt",vi:"Bắt buộc dừng xe trước vạch dừng"},
+     {fr:"Klaxonner avant de passer",vi:"Bấm còi trước khi qua"},
+   ],answer:1,
+   expFr:"Le Stop impose un arrêt complet, même en l'absence de tout autre usager.",
+   expVi:"Biển Stop bắt buộc dừng hoàn toàn dù không có xe khác."},
+
+  {id:4,theme:"priorite",
+   fr:"Sur une route à sens unique, qui a la priorité à une intersection ?",
+   vi:"Trên đường một chiều, ai được ưu tiên tại ngã tư ?",
+   illus:"one-way",
+   options:[
+     {fr:"La priorité à droite s'applique normalement",vi:"Quy tắc ưu tiên bên phải vẫn áp dụng"},
+     {fr:"Le véhicule le plus lourd",vi:"Xe nặng hơn"},
+     {fr:"Celui qui klaxonne en premier",vi:"Người bấm còi trước"},
+   ],answer:0,
+   expFr:"La priorité à droite s'applique sur les routes à sens unique comme sur les routes normales.",
+   expVi:"Quy tắc ưu tiên bên phải vẫn áp dụng trên đường một chiều."},
+
+  {id:5,theme:"priorite",
+   fr:"Un véhicule se trouve sur une route prioritaire (panneau passage protégé). Qui cède le passage ?",
+   vi:"Một xe trên đường ưu tiên (biển đường ưu tiên). Ai phải nhường ?",
+   illus:"route-prioritaire",
+   options:[
+     {fr:"Le véhicule sur la route prioritaire",vi:"Xe trên đường ưu tiên"},
+     {fr:"Vous, qui arrivez sur la route prioritaire",vi:"Bạn, đang vào đường ưu tiên"},
+     {fr:"Les deux doivent s'arrêter",vi:"Cả hai phải dừng"},
+   ],answer:1,
+   expFr:"Sur une route à passage protégé, les véhicules arrivant doivent céder le passage.",
+   expVi:"Trên đường ưu tiên, xe đến phải nhường đường cho xe đang đi trên đường đó."},
+
+  // ── SIGNALISATION ──────────────────────────────
+  {id:6,theme:"signalisation",
+   fr:"Que signifie un feu tricolore rouge ?",
+   vi:"Đèn giao thông đỏ có nghĩa là gì ?",
+   illus:"feu-rouge",
+   options:[
+     {fr:"Ralentir",vi:"Giảm tốc"},
+     {fr:"S'arrêter obligatoirement",vi:"Bắt buộc dừng lại"},
+     {fr:"Passer si la voie est libre",vi:"Đi nếu đường trống"},
+   ],answer:1,
+   expFr:"Le feu rouge impose l'arrêt total. Le franchir est une infraction grave.",
+   expVi:"Đèn đỏ bắt buộc dừng hoàn toàn. Vượt đèn đỏ là vi phạm nghiêm trọng."},
+
+  {id:7,theme:"signalisation",
+   fr:"Que signifie le feu orange (jaune) fixe ?",
+   vi:"Đèn vàng liên tục có nghĩa là gì ?",
+   illus:"feu-orange",
+   options:[
+     {fr:"Accélérer pour passer avant le rouge",vi:"Tăng tốc để qua trước khi đèn đỏ"},
+     {fr:"Ralentir et s'apprêter à s'arrêter",vi:"Giảm tốc và chuẩn bị dừng"},
+     {fr:"Continuer normalement",vi:"Tiếp tục bình thường"},
+   ],answer:1,
+   expFr:"Le feu orange signale l'imminence du rouge. Il faut ralentir et s'arrêter sauf si c'est impossible sans danger.",
+   expVi:"Đèn vàng báo hiệu sắp chuyển đỏ. Cần giảm tốc và dừng trừ khi không thể an toàn."},
+
+  {id:8,theme:"signalisation",
+   fr:"Quelle est la signification d'une ligne blanche continue au centre de la route ?",
+   vi:"Vạch trắng liên tục ở giữa đường có nghĩa gì ?",
+   illus:"ligne-continue",
+   options:[
+     {fr:"Interdiction de franchir ou de dépasser",vi:"Cấm vượt qua hoặc vượt xe"},
+     {fr:"Vous pouvez doubler en étant prudent",vi:"Có thể vượt khi cẩn thận"},
+     {fr:"Zone de stationnement autorisé",vi:"Được phép đỗ xe"},
+   ],answer:0,
+   expFr:"La ligne blanche continue est infranchissable : il est interdit de la traverser pour doubler ou tourner.",
+   expVi:"Vạch liên tục không được phép vượt qua: cấm vượt xe hoặc rẽ qua vạch."},
+
+  {id:9,theme:"signalisation",
+   fr:"Que signifie ce panneau : un triangle rouge avec un point d'exclamation ?",
+   vi:"Biển tam giác đỏ có dấu chấm than có nghĩa gì ?",
+   illus:"danger-generic",
+   options:[
+     {fr:"Danger non précisé – soyez vigilant",vi:"Nguy hiểm không xác định – hãy cẩn thận"},
+     {fr:"Interdiction de doubler",vi:"Cấm vượt xe"},
+     {fr:"Péage à venir",vi:"Sắp đến trạm thu phí"},
+   ],answer:0,
+   expFr:"Le triangle avec point d'exclamation signale un danger quelconque non identifié. Prudence accrue.",
+   expVi:"Biển tam giác với dấu chấm than báo nguy hiểm chung. Cần đặc biệt chú ý."},
+
+  {id:10,theme:"signalisation",
+   fr:"Un panneau rond bleu avec une flèche vers le haut indique :",
+   vi:"Biển tròn xanh dương với mũi tên hướng lên có nghĩa :",
+   illus:"sens-obligatoire",
+   options:[
+     {fr:"Sens interdit",vi:"Cấm đi"},
+     {fr:"Sens obligatoire – vous devez avancer tout droit",vi:"Chiều đi bắt buộc – phải đi thẳng"},
+     {fr:"Voie réservée aux vélos",vi:"Làn dành cho xe đạp"},
+   ],answer:1,
+   expFr:"Les panneaux ronds bleus sont des panneaux d'obligation. Une flèche vers le haut = aller tout droit.",
+   expVi:"Biển tròn xanh là biển bắt buộc. Mũi tên hướng lên = bắt buộc đi thẳng."},
+
+  {id:11,theme:"signalisation",
+   fr:"Que signifie une ligne blanche discontinue (pointillés) au centre ?",
+   vi:"Vạch trắng đứt đoạn (chấm) ở giữa đường có nghĩa gì ?",
+   illus:"ligne-discontinue",
+   options:[
+     {fr:"Interdiction de doubler dans tous les cas",vi:"Cấm vượt xe trong mọi trường hợp"},
+     {fr:"Vous pouvez doubler si la visibilité est bonne",vi:"Được phép vượt xe nếu tầm nhìn tốt"},
+     {fr:"Voie à sens unique",vi:"Đường một chiều"},
+   ],answer:1,
+   expFr:"La ligne discontinue autorise le dépassement si les conditions sont réunies (visibilité, sécurité).",
+   expVi:"Vạch đứt đoạn cho phép vượt xe nếu đủ điều kiện (tầm nhìn, an toàn)."},
+
+  {id:12,theme:"signalisation",
+   fr:"Un panneau rond rouge avec une barre blanche horizontale signifie :",
+   vi:"Biển tròn đỏ với thanh ngang trắng có nghĩa :",
+   illus:"sens-interdit",
+   options:[
+     {fr:"Vitesse limitée à 30 km/h",vi:"Giới hạn tốc độ 30 km/h"},
+     {fr:"Sens interdit",vi:"Cấm đi vào"},
+     {fr:"Stationnement interdit",vi:"Cấm đỗ xe"},
+   ],answer:1,
+   expFr:"Ce panneau est le 'Sens interdit'. Il interdit l'accès à une voie dans ce sens.",
+   expVi:"Đây là biển 'Cấm đi vào'. Cấm vào đường theo chiều đó."},
+
+  {id:13,theme:"signalisation",
+   fr:"Quelle couleur ont les panneaux d'interdiction ?",
+   vi:"Biển cấm có màu gì ?",
+   illus:"panneau-interdiction",
+   options:[
+     {fr:"Ronds à fond blanc, liseré et symbole rouges",vi:"Tròn, nền trắng, viền và ký hiệu đỏ"},
+     {fr:"Triangulaires à fond jaune",vi:"Tam giác nền vàng"},
+     {fr:"Carrés bleus",vi:"Hình vuông xanh"},
+   ],answer:0,
+   expFr:"Les panneaux d'interdiction sont ronds, à fond blanc avec un liseré rouge (ex : vitesse max, dépassement interdit).",
+   expVi:"Biển cấm hình tròn, nền trắng, viền đỏ (ví dụ: tốc độ tối đa, cấm vượt)."},
+
+  {id:14,theme:"signalisation",
+   fr:"Que signifie le marquage 'Stop' peint sur la chaussée ?",
+   vi:"Chữ 'Stop' vẽ trên mặt đường có nghĩa gì ?",
+   illus:"marquage-stop",
+   options:[
+     {fr:"Arrêt facultatif",vi:"Dừng tùy ý"},
+     {fr:"Arrêt obligatoire à la ligne",vi:"Bắt buộc dừng tại vạch"},
+     {fr:"Zone de livraison",vi:"Khu vực giao hàng"},
+   ],answer:1,
+   expFr:"Le marquage 'STOP' au sol complète le panneau et rappelle l'obligation d'arrêt complet.",
+   expVi:"Chữ 'STOP' trên đường kết hợp với biển báo, nhắc nhở bắt buộc dừng hoàn toàn."},
+
+  {id:15,theme:"signalisation",
+   fr:"Que signifie un panneau vitesse maximum '50' dans un rond rouge ?",
+   vi:"Biển tốc độ tối đa '50' trong vòng tròn đỏ có nghĩa gì ?",
+   illus:"vitesse-50",
+   options:[
+     {fr:"Vitesse conseillée à 50 km/h",vi:"Tốc độ khuyến nghị 50 km/h"},
+     {fr:"Vitesse minimale 50 km/h",vi:"Tốc độ tối thiểu 50 km/h"},
+     {fr:"Vitesse maximale autorisée : 50 km/h",vi:"Tốc độ tối đa được phép: 50 km/h"},
+   ],answer:2,
+   expFr:"Ce panneau d'interdiction fixe la vitesse maximale autorisée à 50 km/h.",
+   expVi:"Biển cấm này giới hạn tốc độ tối đa được phép là 50 km/h."},
+
+  // ── ALCOOL / DROGUES ──────────────────────────
+  {id:16,theme:"alcool",
+   fr:"Quel est le taux d'alcool maximum autorisé pour les conducteurs de 50cc en France ?",
+   vi:"Mức nồng độ cồn tối đa cho phép với người lái 50cc ở Pháp là bao nhiêu ?",
+   illus:"alcool-taux",
+   options:[
+     {fr:"0,5 g/L de sang",vi:"0,5 g/L máu"},
+     {fr:"0,2 g/L de sang",vi:"0,2 g/L máu"},
+     {fr:"0,8 g/L de sang",vi:"0,8 g/L máu"},
+   ],answer:1,
+   expFr:"Pour les conducteurs novices et les conducteurs de cyclomoteurs, le taux maximal est de 0,2 g/L.",
+   expVi:"Với lái xe mới và xe máy dưới 50cc, mức tối đa là 0,2 g/L máu."},
+
+  {id:17,theme:"alcool",
+   fr:"L'alcool affecte la conduite en :",
+   vi:"Rượu bia ảnh hưởng đến lái xe bằng cách :",
+   illus:"effet-alcool",
+   options:[
+     {fr:"Améliorant la réactivité",vi:"Cải thiện phản xạ"},
+     {fr:"Allongeant le temps de réaction et perturbant la vision",vi:"Kéo dài thời gian phản ứng và ảnh hưởng tầm nhìn"},
+     {fr:"N'a pas d'effet en dessous de 2 verres",vi:"Không có tác dụng dưới 2 ly"},
+   ],answer:1,
+   expFr:"Même faible, l'alcool ralentit les réflexes, perturbe la vision et fausse l'appréciation des distances.",
+   expVi:"Dù ít, rượu làm chậm phản xạ, ảnh hưởng thị giác và sai lệch đánh giá khoảng cách."},
+
+  {id:18,theme:"alcool",
+   fr:"La consommation de cannabis avant de conduire :",
+   vi:"Sử dụng cần sa trước khi lái xe :",
+   illus:"cannabis",
+   options:[
+     {fr:"Est autorisée si on ne ressent plus les effets",vi:"Được phép nếu không còn cảm thấy tác dụng"},
+     {fr:"Est interdite et multiplie le risque d'accident",vi:"Bị cấm và làm tăng nguy cơ tai nạn"},
+     {fr:"Est tolérée pour de petites distances",vi:"Được chấp nhận cho quãng đường ngắn"},
+   ],answer:1,
+   expFr:"La conduite sous l'empire du cannabis est interdite. Elle multiplie par 1,8 le risque d'accident mortel.",
+   expVi:"Lái xe khi dùng cần sa bị cấm. Nó làm tăng 1,8 lần nguy cơ tai nạn chết người."},
+
+  {id:19,theme:"alcool",
+   fr:"Le café ou une douche froide permettent-ils d'éliminer l'alcool plus vite ?",
+   vi:"Cà phê hay tắm nước lạnh có giúp cơ thể loại bỏ cồn nhanh hơn không ?",
+   illus:"mythe-cafe",
+   options:[
+     {fr:"Oui, le café accélère l'élimination",vi:"Có, cà phê giúp loại bỏ nhanh hơn"},
+     {fr:"Non, seul le temps permet d'éliminer l'alcool",vi:"Không, chỉ có thời gian mới giúp loại bỏ cồn"},
+     {fr:"Oui, une douche froide est efficace",vi:"Có, tắm nước lạnh có hiệu quả"},
+   ],answer:1,
+   expFr:"Seul le temps permet à l'organisme d'éliminer l'alcool. Café, eau, douche froide n'ont aucun effet.",
+   expVi:"Chỉ có thời gian mới giúp cơ thể loại bỏ cồn. Cà phê, nước, tắm lạnh đều vô tác dụng."},
+
+  {id:20,theme:"alcool",
+   fr:"Conduire sous l'influence de médicaments qui altèrent la vigilance est :",
+   vi:"Lái xe khi dùng thuốc ảnh hưởng đến sự tỉnh táo là :",
+   illus:"medicaments",
+   options:[
+     {fr:"Autorisé si le médecin l'a prescrit",vi:"Được phép nếu bác sĩ kê toa"},
+     {fr:"Autorisé si on fait attention",vi:"Được phép nếu cẩn thận"},
+     {fr:"Interdit et dangereux, même sur prescription",vi:"Bị cấm và nguy hiểm, kể cả khi có đơn thuốc"},
+   ],answer:2,
+   expFr:"Certains médicaments (ex : somnifères, antihistaminiques) sont signalés par un pictogramme. Leur prise déconseille la conduite.",
+   expVi:"Một số thuốc (thuốc ngủ, kháng histamine) có biểu tượng cảnh báo. Không nên lái xe khi dùng."},
+
+  // ── SECURITE ──────────────────────────────────
+  {id:21,theme:"securite",
+   fr:"Le port du casque est-il obligatoire pour le conducteur d'un 50cc ?",
+   vi:"Đội mũ bảo hiểm có bắt buộc với người lái xe 50cc không ?",
+   illus:"casque",
+   options:[
+     {fr:"Non, c'est facultatif en ville",vi:"Không, tùy ý trong thành phố"},
+     {fr:"Oui, obligatoire pour le conducteur ET le passager",vi:"Có, bắt buộc cho người lái VÀ người ngồi sau"},
+     {fr:"Seulement sur autoroute",vi:"Chỉ bắt buộc trên đường cao tốc"},
+   ],answer:1,
+   expFr:"Le casque est obligatoire pour tout conducteur ET passager de deux-roues motorisé, quelle que soit la vitesse ou le lieu.",
+   expVi:"Mũ bảo hiểm bắt buộc cho người lái VÀ người ngồi sau trên xe hai bánh có động cơ, bất kể tốc độ hay nơi đâu."},
+
+  {id:22,theme:"securite",
+   fr:"Quelle est la distance minimale de sécurité entre deux véhicules à 50 km/h ?",
+   vi:"Khoảng cách an toàn tối thiểu giữa hai xe ở tốc độ 50 km/h là bao nhiêu ?",
+   illus:"distance-securite",
+   options:[
+     {fr:"5 mètres",vi:"5 mét"},
+     {fr:"Environ 28 mètres (distance de freinage)",vi:"Khoảng 28 mét (khoảng cách phanh)"},
+     {fr:"1 longueur de véhicule",vi:"1 chiều dài xe"},
+   ],answer:1,
+   expFr:"La distance de sécurité correspond à la distance parcourue en 2 secondes, soit ~28 m à 50 km/h.",
+   expVi:"Khoảng cách an toàn tương đương quãng đường đi trong 2 giây, khoảng 28 m ở 50 km/h."},
+
+  {id:23,theme:"securite",
+   fr:"Pourquoi doit-on vérifier ses rétroviseurs avant de changer de direction ?",
+   vi:"Tại sao phải kiểm tra gương chiếu hậu trước khi đổi hướng ?",
+   illus:"retroviseur",
+   options:[
+     {fr:"Pour respecter le code de la route uniquement",vi:"Chỉ để tuân theo luật giao thông"},
+     {fr:"Pour s'assurer qu'aucun véhicule ou cycliste ne se trouve dans l'angle mort",vi:"Để đảm bảo không có xe hay người đi xe đạp trong điểm mù"},
+     {fr:"C'est inutile sur les petites routes",vi:"Không cần thiết trên đường nhỏ"},
+   ],answer:1,
+   expFr:"Les angles morts sont dangereux. Avant tout changement de direction, il faut vérifier rétroviseurs ET faire le tour de tête.",
+   expVi:"Điểm mù rất nguy hiểm. Trước khi đổi hướng, cần kiểm tra gương VÀ quay đầu quan sát."},
+
+  {id:24,theme:"securite",
+   fr:"Que doit-on faire en cas de crevaison soudaine ?",
+   vi:"Phải làm gì khi bị thủng lốp đột ngột ?",
+   illus:"crevaison",
+   options:[
+     {fr:"Freiner brusquement pour s'arrêter vite",vi:"Phanh gấp để dừng nhanh"},
+     {fr:"Tenir fermement le guidon, décélérer progressivement et s'arrêter sur le côté",vi:"Giữ chắc tay lái, giảm tốc từ từ và dừng sang bên đường"},
+     {fr:"Accélérer pour rejoindre le bord rapidement",vi:"Tăng tốc để nhanh vào lề"},
+   ],answer:1,
+   expFr:"Un freinage brusque lors d'une crevaison peut faire tomber. Il faut décélérer progressivement et s'arrêter en sécurité.",
+   expVi:"Phanh gấp khi thủng lốp có thể gây ngã. Cần giảm tốc từ từ và dừng an toàn sang lề."},
+
+  {id:25,theme:"securite",
+   fr:"Les gants de protection pour motocycliste :",
+   vi:"Găng tay bảo hộ cho người đi xe máy :",
+   illus:"gants",
+   options:[
+     {fr:"Sont obligatoires depuis 2020",vi:"Bắt buộc từ năm 2020"},
+     {fr:"Sont recommandés mais pas obligatoires pour les 50cc",vi:"Được khuyến nghị nhưng không bắt buộc với xe 50cc"},
+     {fr:"Ne servent à rien en cas de chute",vi:"Vô tác dụng khi ngã"},
+   ],answer:1,
+   expFr:"Les gants homologués sont fortement conseillés (protection des mains en cas de chute) mais non obligatoires pour les 50cc.",
+   expVi:"Găng tay được chứng nhận rất được khuyến nghị (bảo vệ tay khi ngã) nhưng không bắt buộc với xe 50cc."},
+
+  {id:26,theme:"securite",
+   fr:"Lors d'un dépassement, quel est le risque principal pour un cyclomotoriste ?",
+   vi:"Khi vượt xe, nguy cơ chính với người lái xe máy là gì ?",
+   illus:"depassement",
+   options:[
+     {fr:"Être surpris par un véhicule arrivant en face",vi:"Bị bất ngờ bởi xe đến từ hướng ngược lại"},
+     {fr:"Dépenser plus d'essence",vi:"Tốn nhiều xăng hơn"},
+     {fr:"Salir son casque",vi:"Làm bẩn mũ bảo hiểm"},
+   ],answer:0,
+   expFr:"Le dépassement expose à un choc frontal avec un véhicule arrivant en sens inverse. C'est l'une des causes majeures d'accidents mortels.",
+   expVi:"Vượt xe có nguy cơ va chạm trực diện với xe ngược chiều. Đây là một trong những nguyên nhân tai nạn chết người chủ yếu."},
+
+  {id:27,theme:"securite",
+   fr:"Avant de démarrer, que doit-on vérifier sur son cyclomoteur ?",
+   vi:"Trước khi khởi động, cần kiểm tra gì trên xe máy ?",
+   illus:"verification",
+   options:[
+     {fr:"Seulement le niveau d'essence",vi:"Chỉ kiểm tra xăng"},
+     {fr:"Freins, pneus, éclairage et niveaux",vi:"Phanh, lốp, đèn và mức chất lỏng"},
+     {fr:"La couleur du casque",vi:"Màu mũ bảo hiểm"},
+   ],answer:1,
+   expFr:"Avant tout départ, vérifier les freins, la pression des pneus, le fonctionnement des feux et les niveaux (huile, essence).",
+   expVi:"Trước mỗi chuyến đi, kiểm tra phanh, áp suất lốp, đèn và mức dầu/xăng."},
+
+  {id:28,theme:"securite",
+   fr:"En cas de pluie, la distance de freinage d'un deux-roues :",
+   vi:"Khi trời mưa, quãng đường phanh của xe hai bánh :",
+   illus:"pluie",
+   options:[
+     {fr:"Reste la même qu'en conditions sèches",vi:"Vẫn như lúc đường khô"},
+     {fr:"Diminue grâce à l'eau",vi:"Giảm nhờ nước"},
+     {fr:"Augmente considérablement",vi:"Tăng đáng kể"},
+   ],answer:2,
+   expFr:"Sur sol mouillé, l'adhérence diminue et la distance de freinage peut doubler. Vitesse et prudence s'imposent.",
+   expVi:"Trên đường ướt, độ bám giảm và quãng đường phanh có thể tăng gấp đôi. Cần giảm tốc và cẩn thận hơn."},
+
+  {id:29,theme:"securite",
+   fr:"Qu'est-ce que la 'zone d'angle mort' d'un poids lourd ?",
+   vi:"'Vùng điểm mù' của xe tải là gì ?",
+   illus:"angle-mort",
+   options:[
+     {fr:"La zone visible dans le rétroviseur du camion",vi:"Vùng nhìn thấy trong gương của xe tải"},
+     {fr:"La zone où le conducteur du camion ne peut pas vous voir",vi:"Vùng mà tài xế xe tải không thể nhìn thấy bạn"},
+     {fr:"L'espace réservé aux dépannages",vi:"Không gian dành cho xe cứu hộ"},
+   ],answer:1,
+   expFr:"Les angles morts d'un poids lourd sont très étendus (surtout à droite). Un cyclomotoriste doit éviter d'y stationner.",
+   expVi:"Điểm mù của xe tải rất rộng (đặc biệt bên phải). Người đi xe máy nên tránh dừng ở vùng đó."},
+
+  {id:30,theme:"securite",
+   fr:"Sur la route, le port d'un gilet rétro-réfléchissant de nuit est :",
+   vi:"Trên đường, việc mặc áo phản quang ban đêm là :",
+   illus:"gilet-reflechissant",
+   options:[
+     {fr:"Obligatoire pour les conducteurs de deux-roues",vi:"Bắt buộc với người lái xe hai bánh"},
+     {fr:"Fortement recommandé pour être visible",vi:"Rất được khuyến nghị để dễ nhìn thấy"},
+     {fr:"Interdit sur les routes nationales",vi:"Bị cấm trên đường quốc lộ"},
+   ],answer:1,
+   expFr:"Bien que non obligatoire pour les 50cc (hors autoroute à pied), le gilet jaune améliore fortement la visibilité la nuit.",
+   expVi:"Dù không bắt buộc với xe 50cc, áo phản quang giúp tăng đáng kể khả năng nhìn thấy vào ban đêm."},
+
+  // ── CONDUITE ──────────────────────────────────
+  {id:31,theme:"conduite",
+   fr:"Quelle est la vitesse maximale autorisée en agglomération en France ?",
+   vi:"Tốc độ tối đa cho phép trong khu dân cư ở Pháp là bao nhiêu ?",
+   illus:"vitesse-agglo",
+   options:[
+     {fr:"50 km/h sauf indication contraire",vi:"50 km/h trừ khi có biển báo khác"},
+     {fr:"70 km/h",vi:"70 km/h"},
+     {fr:"30 km/h partout",vi:"30 km/h ở mọi nơi"},
+   ],answer:0,
+   expFr:"En agglomération, la vitesse est limitée à 50 km/h par défaut. Des panneaux peuvent indiquer 30 km/h dans certaines zones.",
+   expVi:"Trong khu dân cư, tốc độ mặc định là 50 km/h. Biển báo có thể chỉ 30 km/h ở một số khu vực."},
+
+  {id:32,theme:"conduite",
+   fr:"Un cyclomoteur (50cc) peut-il circuler sur l'autoroute ?",
+   vi:"Xe 50cc có được phép lưu thông trên đường cao tốc không ?",
+   illus:"autoroute",
+   options:[
+     {fr:"Oui, sur la voie de droite uniquement",vi:"Có, chỉ trên làn phải"},
+     {fr:"Non, c'est interdit",vi:"Không, bị cấm"},
+     {fr:"Oui, si la vitesse maximale est dépassable",vi:"Có, nếu vượt được tốc độ tối đa"},
+   ],answer:1,
+   expFr:"Les cyclomoteurs (moins de 45 km/h) sont interdits sur les autoroutes et les routes express.",
+   expVi:"Xe máy dưới 45 km/h bị cấm trên đường cao tốc và đường cao tốc tốc độ cao."},
+
+  {id:33,theme:"conduite",
+   fr:"Que faire avant de tourner à gauche dans une intersection ?",
+   vi:"Cần làm gì trước khi rẽ trái tại ngã tư ?",
+   illus:"tourner-gauche",
+   options:[
+     {fr:"Accélérer pour passer rapidement",vi:"Tăng tốc để qua nhanh"},
+     {fr:"Signaler, vérifier les rétros, regarder l'angle mort, puis tourner",vi:"Báo hiệu, kiểm tra gương, quan sát điểm mù, rồi rẽ"},
+     {fr:"Freiner brusquement au dernier moment",vi:"Phanh gấp vào phút cuối"},
+   ],answer:1,
+   expFr:"Avant tout changement de direction : clignotant → rétroviseurs → angle mort → manœuvre progressive.",
+   expVi:"Trước khi đổi hướng: xi nhan → gương → điểm mù → thực hiện từ từ."},
+
+  {id:34,theme:"conduite",
+   fr:"Quelle est la vitesse maximale d'un cyclomoteur en France ?",
+   vi:"Tốc độ tối đa của xe 50cc ở Pháp là bao nhiêu ?",
+   illus:"vitesse-max-50",
+   options:[
+     {fr:"50 km/h",vi:"50 km/h"},
+     {fr:"45 km/h",vi:"45 km/h"},
+     {fr:"60 km/h",vi:"60 km/h"},
+   ],answer:1,
+   expFr:"Un cyclomoteur est limité à 45 km/h. Au-delà, il entre dans la catégorie des motocyclettes.",
+   expVi:"Xe máy 50cc giới hạn 45 km/h. Trên mức đó thuộc loại mô tô."},
+
+  {id:35,theme:"conduite",
+   fr:"Lors d'une descente longue et raide, il est conseillé de :",
+   vi:"Khi xuống dốc dài và dốc, nên :",
+   illus:"descente",
+   options:[
+     {fr:"Mettre le moteur au point mort pour économiser l'essence",vi:"Về số 0 để tiết kiệm xăng"},
+     {fr:"Freiner en douceur et de façon intermittente",vi:"Phanh nhẹ và ngắt quãng"},
+     {fr:"Accélérer pour prendre de la vitesse",vi:"Tăng tốc để lấy đà"},
+   ],answer:1,
+   expFr:"En descente, freiner progressivement évite la surchauffe des freins et garde le contrôle du véhicule.",
+   expVi:"Khi xuống dốc, phanh từ từ tránh quá nhiệt phanh và duy trì kiểm soát xe."},
+
+  {id:36,theme:"conduite",
+   fr:"Peut-on utiliser son téléphone portable en conduisant un 50cc ?",
+   vi:"Có được dùng điện thoại khi lái xe 50cc không ?",
+   illus:"telephone",
+   options:[
+     {fr:"Oui, si on utilise un kit mains-libres",vi:"Có, nếu dùng tai nghe rảnh tay"},
+     {fr:"Non, l'usage du téléphone tenu en main est interdit",vi:"Không, cấm cầm điện thoại trên tay"},
+     {fr:"Oui, en s'arrêtant sur le côté",vi:"Có, nếu dừng sang lề"},
+   ],answer:1,
+   expFr:"Tenir son téléphone en main au volant est interdit et peut entraîner un retrait du permis. Le kit mains-libres est toléré mais déconseillé.",
+   expVi:"Cầm điện thoại khi lái xe bị cấm và có thể bị thu bằng lái. Tai nghe rảnh tay được chấp nhận nhưng không khuyến khích."},
+
+  {id:37,theme:"conduite",
+   fr:"La nuit, les feux de croisement (codes) doivent être allumés à partir de :",
+   vi:"Ban đêm, đèn pha cận (đèn cos) phải bật từ :",
+   illus:"feux-croisement",
+   options:[
+     {fr:"Minuit",vi:"Nửa đêm"},
+     {fr:"Dès la tombée de la nuit (coucher du soleil)",vi:"Ngay khi trời tối (mặt trời lặn)"},
+     {fr:"Seulement sur les routes sans éclairage",vi:"Chỉ trên đường không có đèn đường"},
+   ],answer:1,
+   expFr:"Les feux de croisement sont obligatoires dès la tombée de la nuit et en cas de mauvaise visibilité.",
+   expVi:"Đèn cận bắt buộc từ khi trời tối và khi tầm nhìn kém."},
+
+  {id:38,theme:"conduite",
+   fr:"Que doit-on faire lorsqu'on aperçoit un enfant qui pourrait traverser ?",
+   vi:"Phải làm gì khi thấy trẻ em có thể băng qua đường ?",
+   illus:"enfant-traversee",
+   options:[
+     {fr:"Klaxonner et maintenir la vitesse",vi:"Bấm còi và giữ tốc độ"},
+     {fr:"Ralentir très fortement et se préparer à s'arrêter",vi:"Giảm tốc mạnh và sẵn sàng dừng lại"},
+     {fr:"Changer de voie",vi:"Đổi làn đường"},
+   ],answer:1,
+   expFr:"Les enfants sont imprévisibles. Il faut réduire la vitesse au maximum dès qu'un enfant est aperçu près de la chaussée.",
+   expVi:"Trẻ em khó đoán. Cần giảm tốc tối đa ngay khi thấy trẻ gần đường."},
+
+  {id:39,theme:"conduite",
+   fr:"Lorsqu'un conducteur effectue un demi-tour, il doit :",
+   vi:"Khi thực hiện vòng U-turn, người lái phải :",
+   illus:"demi-tour",
+   options:[
+     {fr:"S'assurer de ne pas gêner les autres usagers et utiliser le clignotant",vi:"Đảm bảo không cản trở xe khác và dùng xi nhan"},
+     {fr:"Accélérer pour minimiser le temps de manœuvre",vi:"Tăng tốc để giảm thời gian thao tác"},
+     {fr:"Ne jamais vérifier derrière soi",vi:"Không cần kiểm tra phía sau"},
+   ],answer:0,
+   expFr:"Le demi-tour nécessite de signaler la manœuvre et de s'assurer de ne pas gêner ni mettre en danger les autres.",
+   expVi:"U-turn cần báo hiệu và đảm bảo không cản trở hay gây nguy hiểm cho người khác."},
+
+  {id:40,theme:"conduite",
+   fr:"Qu'est-ce que l'éco-conduite pour un deux-roues ?",
+   vi:"Lái xe tiết kiệm với xe hai bánh là gì ?",
+   illus:"eco-conduite",
+   options:[
+     {fr:"Rouler le plus vite possible pour réduire le temps de trajet",vi:"Đi càng nhanh càng tốt để giảm thời gian"},
+     {fr:"Adapter sa vitesse, anticiper les freinages et éviter les accélérations brutales",vi:"Điều chỉnh tốc độ, dự đoán phanh và tránh tăng tốc đột ngột"},
+     {fr:"Couper le moteur dans les descentes",vi:"Tắt máy khi xuống dốc"},
+   ],answer:1,
+   expFr:"L'éco-conduite réduit la consommation et l'usure. Elle implique d'anticiper les situations pour éviter freinages et accélérations brusques.",
+   expVi:"Lái xe tiết kiệm giảm tiêu hao và hao mòn. Cần dự đoán tình huống để tránh phanh và tăng tốc đột ngột."},
+
+  // ── MORE MIXED QUESTIONS ──────────────────────
+  {id:41,theme:"priorite",
+   fr:"Sur un rond-point, qui est prioritaire ?",
+   vi:"Tại vòng xuyến, ai được ưu tiên ?",
+   illus:"rondpoint",
+   options:[
+     {fr:"Les véhicules qui entrent sur le rond-point",vi:"Xe đang vào vòng xuyến"},
+     {fr:"Les véhicules déjà engagés sur le rond-point",vi:"Xe đang ở trong vòng xuyến"},
+     {fr:"Les véhicules venant de la droite",vi:"Xe đến từ bên phải"},
+   ],answer:1,
+   expFr:"Sur un rond-point, les véhicules en circulation ont la priorité sur ceux qui entrent.",
+   expVi:"Trong vòng xuyến, xe đang lưu thông được ưu tiên so với xe đang vào."},
+
+  {id:42,theme:"signalisation",
+   fr:"Un panneau 'Zone 30' signifie :",
+   vi:"Biển 'Vùng 30' có nghĩa :",
+   illus:"zone30",
+   options:[
+     {fr:"La vitesse est limitée à 30 km/h dans toute la zone",vi:"Tốc độ giới hạn 30 km/h trong toàn khu vực"},
+     {fr:"Il y a 30 feux rouges dans la zone",vi:"Có 30 đèn đỏ trong khu vực"},
+     {fr:"Vitesse minimale de 30 km/h",vi:"Tốc độ tối thiểu 30 km/h"},
+   ],answer:0,
+   expFr:"La zone 30 impose une limitation à 30 km/h sur toutes les voies de la zone, avec priorité piétons.",
+   expVi:"Vùng 30 giới hạn tốc độ 30 km/h trên tất cả các đường trong khu vực, người đi bộ được ưu tiên."},
+
+  {id:43,theme:"alcool",
+   fr:"La fatigue au volant multiplie les risques d'accident. Que faire si on est fatigué ?",
+   vi:"Mệt mỏi khi lái xe làm tăng nguy cơ tai nạn. Cần làm gì khi mệt ?",
+   illus:"fatigue",
+   options:[
+     {fr:"Ouvrir la fenêtre et continuer",vi:"Mở cửa sổ và tiếp tục"},
+     {fr:"S'arrêter, se reposer ou dormir",vi:"Dừng lại, nghỉ ngơi hoặc ngủ"},
+     {fr:"Boire un café et accélérer",vi:"Uống cà phê và tăng tốc"},
+   ],answer:1,
+   expFr:"La seule solution contre la fatigue est le repos. Même 20 minutes de sommeil améliorent la vigilance.",
+   expVi:"Chỉ có nghỉ ngơi mới giải quyết được mệt mỏi. Chỉ 20 phút ngủ cũng cải thiện sự tỉnh táo."},
+
+  {id:44,theme:"securite",
+   fr:"Que signifie le pictogramme 'conductivité basse' sur un pneu ?",
+   vi:"Biểu tượng 'độ dẫn thấp' trên lốp xe có nghĩa gì ?",
+   illus:"pneu-usure",
+   options:[
+     {fr:"Le pneu est neuf",vi:"Lốp mới"},
+     {fr:"Le pneu est proche de la limite d'usure légale",vi:"Lốp gần đến giới hạn mài mòn hợp pháp"},
+     {fr:"Le pneu est résistant à l'eau",vi:"Lốp chống nước"},
+   ],answer:1,
+   expFr:"Les témoins d'usure indiquent que le pneu doit être changé. Un pneu usé réduit fortement l'adhérence.",
+   expVi:"Chỉ báo mài mòn cho thấy cần thay lốp. Lốp mòn làm giảm đáng kể độ bám đường."},
+
+  {id:45,theme:"conduite",
+   fr:"Un conducteur doit-il céder le passage aux piétons sur un passage clouté ?",
+   vi:"Người lái xe có phải nhường đường cho người đi bộ tại vạch băng đường không ?",
+   illus:"passage-pieton",
+   options:[
+     {fr:"Seulement si le piéton est déjà engagé",vi:"Chỉ khi người đi bộ đã bước xuống đường"},
+     {fr:"Oui, toujours, même s'il attend sur le trottoir",vi:"Có, luôn luôn, kể cả khi họ đang đứng trên vỉa hè"},
+     {fr:"Non, le conducteur est prioritaire",vi:"Không, người lái xe được ưu tiên"},
+   ],answer:1,
+   expFr:"Le conducteur doit céder le passage aux piétons qui souhaitent traverser, même s'ils attendent encore sur le trottoir.",
+   expVi:"Người lái xe phải nhường đường cho người đi bộ muốn băng qua, kể cả khi họ còn đứng trên vỉa hè."},
+
+  {id:46,theme:"signalisation",
+   fr:"Un feu de signalisation à flèche verte indique :",
+   vi:"Đèn giao thông mũi tên xanh có nghĩa :",
+   illus:"fleche-verte",
+   options:[
+     {fr:"Passage autorisé dans la direction indiquée, en cédant le passage aux autres",vi:"Được phép đi theo hướng mũi tên, nhưng nhường đường cho xe khác"},
+     {fr:"Priorité absolue dans toutes les directions",vi:"Ưu tiên tuyệt đối mọi hướng"},
+     {fr:"Arrêt obligatoire avant de tourner",vi:"Bắt buộc dừng trước khi rẽ"},
+   ],answer:0,
+   expFr:"La flèche verte de dégagement autorise le passage dans la direction indiquée, mais le conducteur doit céder le passage aux piétons et usagers.",
+   expVi:"Mũi tên xanh cho phép đi theo hướng chỉ định, nhưng phải nhường đường cho người đi bộ và xe khác."},
+
+  {id:47,theme:"priorite",
+   fr:"Aux passages à niveau sans barrière, que doit-on faire ?",
+   vi:"Tại giao cắt đường sắt không có rào chắn, cần làm gì ?",
+   illus:"passage-niveau",
+   options:[
+     {fr:"Accélérer pour passer avant le train",vi:"Tăng tốc để qua trước tàu"},
+     {fr:"S'assurer qu'aucun train n'arrive et traverser prudemment",vi:"Đảm bảo không có tàu đến và băng qua cẩn thận"},
+     {fr:"Les voitures ont priorité sur le train",vi:"Ô tô được ưu tiên so với tàu"},
+   ],answer:1,
+   expFr:"Le train a toujours priorité. À un passage à niveau, on doit s'arrêter si un train approche.",
+   expVi:"Tàu luôn được ưu tiên. Tại giao cắt đường sắt, phải dừng lại nếu tàu đang đến."},
+
+  {id:48,theme:"alcool",
+   fr:"Combien de verres d'alcool standard faut-il boire pour dépasser 0,5 g/L chez un adulte moyen ?",
+   vi:"Cần uống bao nhiêu ly rượu tiêu chuẩn để vượt 0,5 g/L với người lớn trung bình ?",
+   illus:"verres-alcool",
+   options:[
+     {fr:"1 verre",vi:"1 ly"},
+     {fr:"2 à 3 verres",vi:"2 đến 3 ly"},
+     {fr:"Plus de 10 verres",vi:"Hơn 10 ly"},
+   ],answer:1,
+   expFr:"2 à 3 verres standards suffisent généralement pour atteindre 0,5 g/L. Ce seuil est bien plus vite atteint à jeun.",
+   expVi:"2 đến 3 ly tiêu chuẩn thường đủ để đạt 0,5 g/L. Ngưỡng này đạt nhanh hơn khi bụng đói."},
+
+  {id:49,theme:"conduite",
+   fr:"Le frein avant d'un cyclomoteur est généralement :",
+   vi:"Phanh trước của xe máy 50cc thường là :",
+   illus:"frein-avant",
+   options:[
+     {fr:"Actionné par le pied droit",vi:"Điều khiển bằng chân phải"},
+     {fr:"Actionné par la poignée droite du guidon",vi:"Điều khiển bằng tay nắm phải của tay lái"},
+     {fr:"Actionné par la poignée gauche du guidon",vi:"Điều khiển bằng tay nắm trái của tay lái"},
+   ],answer:1,
+   expFr:"Sur la plupart des cyclomoteurs, la poignée droite actionne le frein avant (le plus puissant).",
+   expVi:"Trên hầu hết xe 50cc, tay nắm phải điều khiển phanh trước (mạnh nhất)."},
+
+  {id:50,theme:"securite",
+   fr:"Que faire si votre véhicule prend feu après un accident ?",
+   vi:"Phải làm gì nếu xe bốc cháy sau tai nạn ?",
+   illus:"incendie",
+   options:[
+     {fr:"Rester dans le véhicule et attendre les secours",vi:"Ở trong xe và đợi cứu trợ"},
+     {fr:"Éloigner les passagers du véhicule et appeler les secours (18 ou 112)",vi:"Đưa hành khách ra khỏi xe và gọi cứu hộ (18 hoặc 112)"},
+     {fr:"Ouvrir le capot pour voir le moteur",vi:"Mở nắp capo để kiểm tra động cơ"},
+   ],answer:1,
+   expFr:"En cas d'incendie : évacuer immédiatement, s'éloigner du véhicule, appeler le 18 (pompiers) ou le 112.",
+   expVi:"Khi cháy: sơ tán ngay lập tức, rời xa xe, gọi 18 (cứu hỏa) hoặc 112."},
+
+  {id:51,theme:"signalisation",
+   fr:"Une ligne jaune continue sur le bord de la chaussée indique :",
+   vi:"Vạch vàng liên tục ở lề đường có nghĩa :",
+   illus:"ligne-jaune",
+   options:[
+     {fr:"Arrêt et stationnement interdit",vi:"Cấm dừng và đỗ xe"},
+     {fr:"Voie réservée aux bus",vi:"Làn dành cho xe buýt"},
+     {fr:"Fin de limitation de vitesse",vi:"Kết thúc giới hạn tốc độ"},
+   ],answer:0,
+   expFr:"Une ligne jaune continue en bord de chaussée signifie interdiction totale d'arrêt et de stationnement.",
+   expVi:"Vạch vàng liên tục ở lề đường có nghĩa cấm hoàn toàn dừng và đỗ xe."},
+
+  {id:52,theme:"conduite",
+   fr:"En cas d'accident avec dommages matériels uniquement, que doit-on faire ?",
+   vi:"Khi tai nạn chỉ gây thiệt hại vật chất, cần làm gì ?",
+   illus:"constat",
+   options:[
+     {fr:"Partir si les dégâts sont minimes",vi:"Bỏ đi nếu thiệt hại nhỏ"},
+     {fr:"Remplir un constat amiable avec l'autre conducteur",vi:"Điền biên bản tai nạn với tài xế kia"},
+     {fr:"Appeler obligatoirement la police",vi:"Bắt buộc gọi cảnh sát"},
+   ],answer:1,
+   expFr:"Sans blessé, les conducteurs doivent remplir un constat amiable. Partir sans le remplir est un délit de fuite.",
+   expVi:"Không có người bị thương, các lái xe phải điền biên bản tai nạn. Bỏ đi là bỏ trốn sau tai nạn."},
+
+  {id:53,theme:"priorite",
+   fr:"Quel véhicule d'urgence doit toujours être laissé passer en priorité ?",
+   vi:"Xe khẩn cấp nào luôn phải được nhường đường ưu tiên ?",
+   illus:"vehicule-urgence",
+   options:[
+     {fr:"Uniquement les ambulances",vi:"Chỉ xe cứu thương"},
+     {fr:"Ambulances, pompiers, police (sirènes et gyrophares allumés)",vi:"Xe cứu thương, cứu hỏa, cảnh sát (có còi và đèn cảnh báo)"},
+     {fr:"Tous les taxis",vi:"Tất cả xe taxi"},
+   ],answer:1,
+   expFr:"Tout véhicule d'urgence avec sirène et gyrophare doit être laissé passer. Il faut se ranger sur le côté.",
+   expVi:"Mọi xe khẩn cấp có còi và đèn cảnh báo phải được nhường đường. Cần vào lề đường."},
+
+  {id:54,theme:"alcool",
+   fr:"La prise simultanée d'alcool et de certains médicaments :",
+   vi:"Uống rượu kết hợp với một số thuốc :",
+   illus:"alcool-medicaments",
+   options:[
+     {fr:"Annule les effets de l'alcool",vi:"Triệt tiêu tác dụng của rượu"},
+     {fr:"Démultiplie les effets dangereux des deux substances",vi:"Nhân lên nhiều lần tác hại nguy hiểm của cả hai"},
+     {fr:"N'a aucune interaction",vi:"Không có tương tác"},
+   ],answer:1,
+   expFr:"Alcool + médicaments psychoactifs : effet synergique très dangereux qui décuple la somnolence et les troubles de la coordination.",
+   expVi:"Rượu + thuốc tâm thần: tác dụng hiệp đồng rất nguy hiểm, làm tăng gấp bội buồn ngủ và rối loạn phối hợp."},
+
+  {id:55,theme:"securite",
+   fr:"Quelle est la différence entre la distance de réaction et la distance de freinage ?",
+   vi:"Sự khác biệt giữa khoảng cách phản ứng và khoảng cách phanh là gì ?",
+   illus:"distance-reaction",
+   options:[
+     {fr:"Ce sont la même chose",vi:"Chúng là một"},
+     {fr:"La réaction = temps avant d'appuyer ; freinage = temps pour s'arrêter après",vi:"Phản ứng = thời gian trước khi đạp phanh ; phanh = thời gian để dừng sau đó"},
+     {fr:"La réaction ne compte pas pour la sécurité",vi:"Phản ứng không quan trọng với an toàn"},
+   ],answer:1,
+   expFr:"Distance d'arrêt = distance de réaction + distance de freinage. Les deux augmentent avec la vitesse.",
+   expVi:"Khoảng cách dừng = khoảng cách phản ứng + khoảng cách phanh. Cả hai tăng theo tốc độ."},
+
+  {id:56,theme:"conduite",
+   fr:"Lors d'un dépassement, on doit signaler sa manœuvre :",
+   vi:"Khi vượt xe, cần báo hiệu :",
+   illus:"clignotant-depassement",
+   options:[
+     {fr:"Après avoir dépassé",vi:"Sau khi vượt xong"},
+     {fr:"Avant et pendant la manœuvre avec le clignotant gauche",vi:"Trước và trong khi thao tác bằng xi nhan trái"},
+     {fr:"En klaxonnant uniquement",vi:"Chỉ bằng còi"},
+   ],answer:1,
+   expFr:"Le clignotant gauche doit être activé avant et pendant le dépassement, puis le clignotant droit pour réintégrer la file.",
+   expVi:"Xi nhan trái phải bật trước và trong khi vượt, sau đó xi nhan phải khi vào làn."},
+
+  {id:57,theme:"priorite",
+   fr:"Sur une route en T (intersection en T), qui a la priorité ?",
+   vi:"Tại ngã ba chữ T, ai được ưu tiên ?",
+   illus:"intersection-T",
+   options:[
+     {fr:"Le véhicule sur la voie principale (la barre du T)",vi:"Xe trên đường chính (ngang của chữ T)"},
+     {fr:"Le véhicule arrivant par la branche verticale du T",vi:"Xe đến từ nhánh dọc của chữ T"},
+     {fr:"Ils sont à égalité",vi:"Ngang nhau"},
+   ],answer:0,
+   expFr:"Sur une route en T sans signalisation, le véhicule sur la route principale bénéficie de la priorité.",
+   expVi:"Tại ngã ba T không có biển báo, xe trên đường chính được ưu tiên."},
+
+  {id:58,theme:"signalisation",
+   fr:"Que signifie le panneau représentant deux voitures côte à côte (dépassement interdit) ?",
+   vi:"Biển hiển thị hai xe song song (cấm vượt) có nghĩa gì ?",
+   illus:"depassement-interdit",
+   options:[
+     {fr:"Voie réservée au covoiturage",vi:"Làn dành cho đi chung xe"},
+     {fr:"Interdiction de dépasser les véhicules à moteur",vi:"Cấm vượt xe có động cơ"},
+     {fr:"Route à double sens obligatoire",vi:"Đường bắt buộc hai chiều"},
+   ],answer:1,
+   expFr:"Ce panneau interdit tout dépassement de véhicules à moteur (sauf vélos, piétons).",
+   expVi:"Biển này cấm vượt mọi xe có động cơ (trừ xe đạp, người đi bộ)."},
+
+  {id:59,theme:"securite",
+   fr:"Que doit-on faire si on est impliqué dans un accident avec des blessés ?",
+   vi:"Phải làm gì nếu liên quan đến tai nạn có người bị thương ?",
+   illus:"accident-blesse",
+   options:[
+     {fr:"Fuir la scène pour éviter les complications",vi:"Rời hiện trường để tránh rắc rối"},
+     {fr:"Protéger, alerter les secours (15, 18, 112), secourir sans déplacer",vi:"Bảo vệ hiện trường, báo cứu hộ (15, 18, 112), sơ cứu không di chuyển nạn nhân"},
+     {fr:"Déplacer les blessés sur le trottoir",vi:"Chuyển người bị thương lên vỉa hè"},
+   ],answer:1,
+   expFr:"Règle PAS : Protéger (baliser), Alerter (15/18/112), Secourir (sans déplacer si possible).",
+   expVi:"Quy tắc PAS: Bảo vệ (đặt tam giác), Báo cứu hộ (15/18/112), Sơ cứu (không di chuyển nếu có thể)."},
+
+  {id:60,theme:"conduite",
+   fr:"Le conducteur d'un 50cc peut-il circuler entre les files de véhicules ?",
+   vi:"Người lái xe 50cc có được phép đi giữa các hàng xe không ?",
+   illus:"interfile",
+   options:[
+     {fr:"Oui, c'est autorisé partout",vi:"Có, được phép ở mọi nơi"},
+     {fr:"Oui, dans les zones expérimentales définies par arrêté",vi:"Có, trong các khu vực thí điểm được quy định"},
+     {fr:"Non, c'est toujours interdit",vi:"Không, luôn bị cấm"},
+   ],answer:1,
+   expFr:"La circulation inter-files est expérimentale en France dans certaines zones définies. En dehors, elle est interdite.",
+   expVi:"Đi giữa làn xe là thí điểm ở Pháp trong một số khu vực cụ thể. Ngoài các khu đó, bị cấm."},
+
+  // ── QUESTIONS 61–100 ───────────────────────────
+  {id:61,theme:"signalisation",
+   fr:"Un panneau triangulaire représentant un enfant indique :",
+   vi:"Biển tam giác hình trẻ em có nghĩa :",
+   illus:"enfant-panneau",
+   options:[
+     {fr:"École ou aire de jeux à proximité – prudence renforcée",vi:"Gần trường học hoặc sân chơi – cần đặc biệt cẩn thận"},
+     {fr:"Zone interdite aux enfants",vi:"Khu vực cấm trẻ em"},
+     {fr:"Arrêt de bus scolaire",vi:"Trạm dừng xe buýt trường"},
+   ],answer:0,
+   expFr:"Ce panneau de danger indique la présence probable d'enfants à proximité. Il faut ralentir fortement.",
+   expVi:"Biển nguy hiểm này cho thấy có thể có trẻ em gần đó. Cần giảm tốc mạnh."},
+
+  {id:62,theme:"alcool",
+   fr:"Une personne est alcoolisée à 0,8 g/L. Quel est son risque d'accident par rapport à une personne sobre ?",
+   vi:"Một người có nồng độ cồn 0,8 g/L. Nguy cơ tai nạn so với người tỉnh táo là bao nhiêu ?",
+   illus:"risque-accident",
+   options:[
+     {fr:"Identique",vi:"Tương đương"},
+     {fr:"Multiplié par 8 environ",vi:"Tăng khoảng 8 lần"},
+     {fr:"Légèrement supérieur",vi:"Cao hơn một chút"},
+   ],answer:1,
+   expFr:"À 0,8 g/L, le risque d'être responsable d'un accident mortel est multiplié par 8 environ.",
+   expVi:"Ở mức 0,8 g/L, nguy cơ gây tai nạn chết người tăng lên khoảng 8 lần."},
+
+  {id:63,theme:"conduite",
+   fr:"Comment appelle-t-on le phénomène où les yeux fixent un point sans vraiment voir ?",
+   vi:"Hiện tượng mắt nhìn vào một điểm nhưng thực ra không thấy gì được gọi là gì ?",
+   illus:"hypnose-route",
+   options:[
+     {fr:"L'hypnose de la route",vi:"Thôi miên đường"},
+     {fr:"La myopie temporaire",vi:"Cận thị tạm thời"},
+     {fr:"Le réflexe conditionné",vi:"Phản xạ có điều kiện"},
+   ],answer:0,
+   expFr:"L'hypnose de la route survient sur de longs trajets monotones. Elle diminue la vigilance et la réactivité.",
+   expVi:"Thôi miên đường xảy ra trên các chuyến đi dài đơn điệu. Nó làm giảm cảnh giác và phản ứng."},
+
+  {id:64,theme:"securite",
+   fr:"Quel est le rôle des protège-genoux pour un motocycliste ?",
+   vi:"Vai trò của đồ bảo vệ đầu gối với người lái mô tô là gì ?",
+   illus:"protege-genoux",
+   options:[
+     {fr:"Décoration uniquement",vi:"Chỉ để trang trí"},
+     {fr:"Absorber les chocs et protéger les articulations en cas de chute",vi:"Hấp thụ va đập và bảo vệ khớp khi ngã"},
+     {fr:"Améliorer l'aérodynamisme",vi:"Cải thiện khí động học"},
+   ],answer:1,
+   expFr:"Les genouillères homologuées protègent les articulations lors des chutes, l'une des blessures les plus fréquentes.",
+   expVi:"Bảo vệ đầu gối được chứng nhận bảo vệ khớp khi ngã, một trong những chấn thương phổ biến nhất."},
+
+  {id:65,theme:"signalisation",
+   fr:"Que signifient les chevrons jaunes peints sur la chaussée (en courbe) ?",
+   vi:"Những mũi tên vàng vẽ trên đường (trong đường cua) có nghĩa gì ?",
+   illus:"chevrons",
+   options:[
+     {fr:"Fin de priorité",vi:"Kết thúc ưu tiên"},
+     {fr:"Virage dangereux – ralentissez",vi:"Khúc cua nguy hiểm – giảm tốc"},
+     {fr:"Sens de circulation obligatoire",vi:"Chiều đi bắt buộc"},
+   ],answer:1,
+   expFr:"Les chevrons jaunes sur la chaussée signalent un virage dangereux et invitent à réduire la vitesse.",
+   expVi:"Mũi tên vàng trên đường báo hiệu khúc cua nguy hiểm và yêu cầu giảm tốc."},
+
+  {id:66,theme:"priorite",
+   fr:"Un conducteur doit-il céder le passage à un tram ?",
+   vi:"Người lái xe có phải nhường đường cho tàu điện không ?",
+   illus:"tramway",
+   options:[
+     {fr:"Non, le tram doit s'arrêter",vi:"Không, tàu điện phải dừng"},
+     {fr:"Oui, le tramway a toujours la priorité sur les voies ferrées",vi:"Có, tàu điện luôn được ưu tiên trên đường ray"},
+     {fr:"Seulement aux carrefours avec feux",vi:"Chỉ tại ngã tư có đèn"},
+   ],answer:1,
+   expFr:"Le tramway doit être laissé passer en priorité, surtout en dehors des carrefours réglementés.",
+   expVi:"Tàu điện phải được nhường đường ưu tiên, đặc biệt ngoài các ngã tư có đèn."},
+
+  {id:67,theme:"conduite",
+   fr:"Que faut-il faire quand on croise un véhicule en sens inverse la nuit ?",
+   vi:"Phải làm gì khi gặp xe ngược chiều vào ban đêm ?",
+   illus:"croisement-nuit",
+   options:[
+     {fr:"Allumer les feux de route pour mieux voir",vi:"Bật đèn pha xa để nhìn rõ hơn"},
+     {fr:"Passer aux feux de croisement (codes) pour ne pas éblouir",vi:"Chuyển sang đèn cận để không làm chói mắt"},
+     {fr:"Éteindre les feux pour ne pas éblouir",vi:"Tắt đèn để không làm chói"},
+   ],answer:1,
+   expFr:"Lors d'un croisement, on doit passer en feux de croisement pour éviter d'éblouir le conducteur venant en sens inverse.",
+   expVi:"Khi gặp xe ngược chiều, phải chuyển sang đèn cận để tránh làm chói mắt tài xế đối diện."},
+
+  {id:68,theme:"securite",
+   fr:"En cas de freinage d'urgence, que se passe-t-il si on bloque la roue avant ?",
+   vi:"Khi phanh khẩn cấp, điều gì xảy ra nếu bánh trước bị khóa ?",
+   illus:"blocage-roue",
+   options:[
+     {fr:"Le véhicule s'arrête plus vite",vi:"Xe dừng nhanh hơn"},
+     {fr:"Le véhicule risque de chuter ou de glisser sans contrôle",vi:"Xe có thể ngã hoặc trượt mất kiểm soát"},
+     {fr:"Rien de particulier",vi:"Không có gì đặc biệt"},
+   ],answer:1,
+   expFr:"Le blocage de la roue avant enlève toute directivité : le véhicule peut glisser ou tomber. Freiner progressivement.",
+   expVi:"Khóa bánh trước mất hoàn toàn điều hướng: xe có thể trượt hoặc ngã. Phanh từ từ."},
+
+  {id:69,theme:"alcool",
+   fr:"Peut-on être contrôlé à l'alcool même sans avoir causé d'accident ?",
+   vi:"Có thể bị kiểm tra nồng độ cồn ngay cả khi không gây tai nạn không ?",
+   illus:"controle-alcool",
+   options:[
+     {fr:"Non, seulement après un accident",vi:"Không, chỉ sau tai nạn"},
+     {fr:"Oui, lors de contrôles routiers aléatoires",vi:"Có, trong các đợt kiểm tra giao thông ngẫu nhiên"},
+     {fr:"Seulement la nuit",vi:"Chỉ vào ban đêm"},
+   ],answer:1,
+   expFr:"Les forces de l'ordre peuvent effectuer des contrôles d'alcoolémie à tout moment, sans raison particulière.",
+   expVi:"Lực lượng thực thi pháp luật có thể kiểm tra nồng độ cồn bất cứ lúc nào, không cần lý do cụ thể."},
+
+  {id:70,theme:"signalisation",
+   fr:"Que signifie un panneau rectangulaire bleu avec un P blanc ?",
+   vi:"Biển hình chữ nhật xanh với chữ P trắng có nghĩa gì ?",
+   illus:"parking",
+   options:[
+     {fr:"Stationnement interdit",vi:"Cấm đỗ xe"},
+     {fr:"Aire de stationnement autorisé",vi:"Khu vực được phép đỗ xe"},
+     {fr:"Passage pour piétons",vi:"Lối đi bộ"},
+   ],answer:1,
+   expFr:"Ce panneau d'indication bleu avec un P signale une zone de stationnement autorisé.",
+   expVi:"Biển chỉ dẫn xanh với chữ P báo khu vực được phép đỗ xe."},
+
+  {id:71,theme:"conduite",
+   fr:"Que faut-il faire avant de se garer le long d'un trottoir ?",
+   vi:"Cần làm gì trước khi đỗ xe dọc vỉa hè ?",
+   illus:"stationnement",
+   options:[
+     {fr:"Uniquement regarder dans le rétroviseur droit",vi:"Chỉ nhìn gương phải"},
+     {fr:"Signaler, vérifier les rétroviseurs, ralentir progressivement",vi:"Báo hiệu, kiểm tra gương, giảm tốc từ từ"},
+     {fr:"Accélérer pour se placer rapidement",vi:"Tăng tốc để vào vị trí nhanh"},
+   ],answer:1,
+   expFr:"Avant tout stationnement : clignotant → rétros → ralentissement progressif → arrêt en sécurité.",
+   expVi:"Trước khi đỗ xe: xi nhan → gương → giảm tốc từ từ → dừng an toàn."},
+
+  {id:72,theme:"securite",
+   fr:"Quelle tenue vestimentaire est recommandée pour conduire un 50cc ?",
+   vi:"Trang phục nào được khuyến nghị khi lái xe 50cc ?",
+   illus:"tenue-conduite",
+   options:[
+     {fr:"Short et tongs pour être à l'aise",vi:"Quần đùi và dép tông cho thoải mái"},
+     {fr:"Vêtements couvrants, chaussures fermées, casque et gants",vi:"Quần áo che phủ, giày kín, mũ bảo hiểm và găng tay"},
+     {fr:"N'importe quelle tenue, le casque suffit",vi:"Trang phục bất kỳ, mũ bảo hiểm là đủ"},
+   ],answer:1,
+   expFr:"Une tenue adaptée (blouson, pantalon résistant, bottes, gants) protège en cas de chute.",
+   expVi:"Trang phục phù hợp (áo khoác, quần bền, boots, găng tay) bảo vệ khi ngã."},
+
+  {id:73,theme:"priorite",
+   fr:"À une intersection, un véhicule vient de votre gauche sans signalisation. Que faites-vous ?",
+   vi:"Tại ngã tư, có xe đến từ bên trái bạn không có biển báo. Bạn làm gì ?",
+   illus:"gauche-intersection",
+   options:[
+     {fr:"Vous freinez et le laissez passer car il est prioritaire",vi:"Bạn phanh và nhường vì xe đó được ưu tiên"},
+     {fr:"Vous avez la priorité car il vient de la gauche",vi:"Bạn được ưu tiên vì xe đó đến từ bên trái"},
+     {fr:"C'est toujours la police qui gère",vi:"Cảnh sát luôn phụ trách điều này"},
+   ],answer:1,
+   expFr:"La priorité à droite signifie que vous êtes prioritaire sur les véhicules venant de votre gauche.",
+   expVi:"Quy tắc ưu tiên bên phải có nghĩa bạn được ưu tiên so với xe đến từ bên trái bạn."},
+
+  {id:74,theme:"conduite",
+   fr:"Qu'est-ce que l'aquaplaning (hydroplanage) ?",
+   vi:"Aquaplaning (trượt nước) là gì ?",
+   illus:"aquaplaning",
+   options:[
+     {fr:"Glissement du véhicule sur une couche d'eau, perte d'adhérence",vi:"Xe trượt trên lớp nước, mất độ bám"},
+     {fr:"Un sport aquatique",vi:"Một môn thể thao dưới nước"},
+     {fr:"La condensation sur le pare-brise",vi:"Hơi nước đọng trên kính chắn gió"},
+   ],answer:0,
+   expFr:"L'aquaplaning survient quand le pneu ne peut plus évacuer l'eau, créant un film qui fait perdre l'adhérence.",
+   expVi:"Aquaplaning xảy ra khi lốp không thể thoát nước, tạo lớp phim làm mất độ bám đường."},
+
+  {id:75,theme:"signalisation",
+   fr:"Un panneau vert sur une autoroute indique :",
+   vi:"Biển xanh lá trên đường cao tốc cho biết :",
+   illus:"panneau-vert",
+   options:[
+     {fr:"Une route nationale",vi:"Đường quốc lộ"},
+     {fr:"Les directions, sorties et services sur autoroute",vi:"Hướng đi, lối ra và dịch vụ trên đường cao tốc"},
+     {fr:"Une zone verte écologique",vi:"Khu vực xanh sinh thái"},
+   ],answer:1,
+   expFr:"Sur autoroute, les panneaux de direction sont verts. Sur route nationale, ils sont bleus.",
+   expVi:"Trên đường cao tốc, biển chỉ hướng màu xanh lá. Trên đường quốc lộ, chúng màu xanh lam."},
+
+  {id:76,theme:"alcool",
+   fr:"Conduire sous l'influence de stupéfiants est détectable par :",
+   vi:"Lái xe dưới ảnh hưởng của ma túy có thể phát hiện bằng :",
+   illus:"stupefiants",
+   options:[
+     {fr:"Uniquement une prise de sang",vi:"Chỉ bằng xét nghiệm máu"},
+     {fr:"Test salivaire et/ou prise de sang",vi:"Xét nghiệm nước bọt và/hoặc xét nghiệm máu"},
+     {fr:"Le comportement du conducteur uniquement",vi:"Chỉ bằng hành vi của lái xe"},
+   ],answer:1,
+   expFr:"Les forces de l'ordre utilisent des tests salivaires sur le bord de la route. Une prise de sang peut confirmer.",
+   expVi:"Lực lượng thực thi pháp luật dùng xét nghiệm nước bọt bên đường. Xét nghiệm máu có thể xác nhận."},
+
+  {id:77,theme:"conduite",
+   fr:"Quelle est la conduite à adopter dans un tunnel ?",
+   vi:"Cách lái xe trong hầm là gì ?",
+   illus:"tunnel",
+   options:[
+     {fr:"Éteindre les feux pour économiser la batterie",vi:"Tắt đèn để tiết kiệm pin"},
+     {fr:"Allumer les feux de croisement, garder la distance, ne pas s'arrêter",vi:"Bật đèn cận, giữ khoảng cách, không dừng"},
+     {fr:"Accélérer pour sortir plus vite",vi:"Tăng tốc để ra nhanh hơn"},
+   ],answer:1,
+   expFr:"Dans un tunnel : feux allumés, distance de sécurité maintenue, vitesse adaptée, pas d'arrêt sauf urgence.",
+   expVi:"Trong hầm: bật đèn, duy trì khoảng cách an toàn, tốc độ phù hợp, không dừng trừ khẩn cấp."},
+
+  {id:78,theme:"securite",
+   fr:"Comment réduire le risque d'accident par temps de brouillard ?",
+   vi:"Làm thế nào để giảm nguy cơ tai nạn trong thời tiết sương mù ?",
+   illus:"brouillard",
+   options:[
+     {fr:"Allumer les feux de route pour voir plus loin",vi:"Bật đèn pha xa để nhìn xa hơn"},
+     {fr:"Allumer les antibrouillards, réduire la vitesse, augmenter les distances",vi:"Bật đèn sương mù, giảm tốc, tăng khoảng cách"},
+     {fr:"Klaxonner régulièrement",vi:"Bấm còi thường xuyên"},
+   ],answer:1,
+   expFr:"Par brouillard : antibrouillards avant et arrière, vitesse réduite, distances très augmentées. Les feux de route éblouissent.",
+   expVi:"Khi sương mù: bật đèn sương mù trước và sau, giảm tốc, tăng khoảng cách. Đèn pha xa gây chói."},
+
+  {id:79,theme:"conduite",
+   fr:"Sur une route nationale hors agglomération, la vitesse maximale est :",
+   vi:"Trên đường quốc lộ ngoài khu dân cư, tốc độ tối đa là :",
+   illus:"route-nationale",
+   options:[
+     {fr:"90 km/h (80 km/h depuis 2018 sur la plupart des routes)",vi:"90 km/h (80 km/h từ 2018 trên hầu hết các đường)"},
+     {fr:"110 km/h",vi:"110 km/h"},
+     {fr:"130 km/h",vi:"130 km/h"},
+   ],answer:0,
+   expFr:"Depuis 2018, la vitesse est limitée à 80 km/h sur la majorité des routes à double sens sans séparateur central.",
+   expVi:"Từ 2018, tốc độ giới hạn 80 km/h trên hầu hết đường hai chiều không có dải phân cách."},
+
+  {id:80,theme:"signalisation",
+   fr:"Un panneau de fin de limitation de vitesse ressemble à :",
+   vi:"Biển kết thúc giới hạn tốc độ trông như thế nào ?",
+   illus:"fin-limitation",
+   options:[
+     {fr:"Un rond rouge vide",vi:"Hình tròn đỏ rỗng"},
+     {fr:"Un rond blanc barré d'une diagonale grise avec le chiffre barré",vi:"Hình tròn trắng với đường chéo xám và số có gạch ngang"},
+     {fr:"Un triangle vert",vi:"Tam giác xanh"},
+   ],answer:1,
+   expFr:"La fin de limitation de vitesse est indiquée par un panneau circulaire blanc avec le chiffre barré d'une diagonale.",
+   expVi:"Kết thúc giới hạn tốc độ được báo bằng biển tròn trắng với số có đường gạch chéo."},
+
+  {id:81,theme:"alcool",
+   fr:"Que risque-t-on en conduisant avec un taux d'alcool supérieur à 0,8 g/L ?",
+   vi:"Lái xe với nồng độ cồn trên 0,8 g/L có nguy cơ gì ?",
+   illus:"sanction-alcool",
+   options:[
+     {fr:"Un simple avertissement",vi:"Chỉ một cảnh cáo đơn giản"},
+     {fr:"Un délit : jusqu'à 2 ans de prison, 4500 € d'amende, retrait de permis",vi:"Vi phạm hình sự: đến 2 năm tù, phạt 4500 €, thu bằng lái"},
+     {fr:"Une contravention de 35 €",vi:"Phạt 35 €"},
+   ],answer:1,
+   expFr:"Au-delà de 0,8 g/L, c'est un délit pénal avec des sanctions très lourdes, même pour un cyclomoteur.",
+   expVi:"Trên 0,8 g/L là vi phạm hình sự với hình phạt rất nặng, kể cả với xe 50cc."},
+
+  {id:82,theme:"priorite",
+   fr:"Que signifie un feu de signalisation clignotant orange ?",
+   vi:"Đèn giao thông vàng nhấp nháy có nghĩa gì ?",
+   illus:"feu-clignotant",
+   options:[
+     {fr:"Passage autorisé sans vigilance particulière",vi:"Được phép đi không cần đặc biệt cẩn thận"},
+     {fr:"Intersection à risque : prudence et priorité à droite",vi:"Ngã tư nguy hiểm: cẩn thận và ưu tiên bên phải"},
+     {fr:"Feux en panne – interdiction de passer",vi:"Đèn hỏng – cấm đi qua"},
+   ],answer:1,
+   expFr:"Un feu orange clignotant signale un carrefour dangereux. La priorité à droite s'applique, la prudence est de mise.",
+   expVi:"Đèn vàng nhấp nháy báo hiệu ngã tư nguy hiểm. Quy tắc ưu tiên bên phải áp dụng, cần thận trọng."},
+
+  {id:83,theme:"conduite",
+   fr:"Que faire lorsqu'on rencontre des animaux sur la route ?",
+   vi:"Phải làm gì khi gặp động vật trên đường ?",
+   illus:"animaux-route",
+   options:[
+     {fr:"Freiner brusquement et klaxonner fort",vi:"Phanh gấp và bấm còi to"},
+     {fr:"Réduire la vitesse, ne pas tenter de les éviter par une embardée brusque",vi:"Giảm tốc, không cố tránh bằng cách lái bổng"},
+     {fr:"Les ignorer et maintenir la vitesse",vi:"Bỏ qua và giữ tốc độ"},
+   ],answer:1,
+   expFr:"Une embardée brusque pour éviter un animal peut provoquer une perte de contrôle. Freiner progressivement.",
+   expVi:"Lái bổng đột ngột để tránh động vật có thể gây mất kiểm soát. Phanh từ từ."},
+
+  {id:84,theme:"securite",
+   fr:"Qu'est-ce que le phénomène 'deux roues jamais vu' ?",
+   vi:"Hiện tượng 'xe hai bánh không được nhìn thấy' là gì ?",
+   illus:"deux-roues-invisible",
+   options:[
+     {fr:"Les deux-roues sont plus petits et moins visibles pour les automobilistes",vi:"Xe hai bánh nhỏ hơn và khó nhìn thấy hơn với người lái ô tô"},
+     {fr:"Les deux-roues circulent la nuit",vi:"Xe hai bánh đi ban đêm"},
+     {fr:"Les deux-roues roulent silencieusement",vi:"Xe hai bánh chạy êm"},
+   ],answer:0,
+   expFr:"Le cyclomotoriste est moins visible car sa silhouette est étroite. Il faut porter des équipements réfléchissants.",
+   expVi:"Người đi xe máy ít được nhìn thấy hơn vì bóng hình hẹp. Cần mặc đồ phản quang."},
+
+  {id:85,theme:"conduite",
+   fr:"Sur une voie partagée bus + vélos, un cyclomoteur peut-il circuler ?",
+   vi:"Trên làn dùng chung xe buýt + xe đạp, xe 50cc có được phép đi không ?",
+   illus:"voie-bus",
+   options:[
+     {fr:"Oui, toujours",vi:"Có, luôn luôn"},
+     {fr:"Non, sauf si un panneau l'autorise explicitement",vi:"Không, trừ khi biển báo cho phép rõ ràng"},
+     {fr:"Oui, seulement la nuit",vi:"Có, chỉ ban đêm"},
+   ],answer:1,
+   expFr:"Les cyclomoteurs ne peuvent emprunter les voies bus/vélos que si un panneau le précise explicitement.",
+   expVi:"Xe 50cc chỉ được đi trên làn xe buýt/xe đạp khi biển báo cho phép rõ ràng."},
+
+  {id:86,theme:"signalisation",
+   fr:"Un panneau rectangulaire marron indique :",
+   vi:"Biển hình chữ nhật màu nâu cho biết :",
+   illus:"panneau-marron",
+   options:[
+     {fr:"Une zone industrielle",vi:"Khu công nghiệp"},
+     {fr:"Un site touristique ou culturel",vi:"Địa điểm du lịch hoặc văn hóa"},
+     {fr:"Un camping",vi:"Khu cắm trại"},
+   ],answer:1,
+   expFr:"Les panneaux marrons signalent les sites touristiques et culturels (châteaux, musées, parcs naturels…).",
+   expVi:"Biển màu nâu chỉ các địa điểm du lịch và văn hóa (lâu đài, bảo tàng, công viên tự nhiên...)."},
+
+  {id:87,theme:"alcool",
+   fr:"Parmi ces facteurs, lequel aggrave le plus les effets de l'alcool ?",
+   vi:"Trong các yếu tố này, yếu tố nào làm trầm trọng thêm tác dụng của rượu nhất ?",
+   illus:"facteurs-alcool",
+   options:[
+     {fr:"Boire de l'eau entre les verres",vi:"Uống nước giữa các ly"},
+     {fr:"Boire à jeun, être fatigué ou prendre des médicaments",vi:"Uống khi đói, mệt mỏi hoặc dùng thuốc"},
+     {fr:"Manger des fruits de mer",vi:"Ăn hải sản"},
+   ],answer:1,
+   expFr:"L'alcool absorbé à jeun passe plus vite dans le sang. La fatigue et les médicaments amplifiaient l'effet.",
+   expVi:"Rượu uống khi đói vào máu nhanh hơn. Mệt mỏi và thuốc làm tăng thêm tác dụng."},
+
+  {id:88,theme:"conduite",
+   fr:"En conduite de nuit, quand doit-on basculer de l'éclairage route aux codes ?",
+   vi:"Khi lái xe ban đêm, khi nào cần chuyển từ đèn pha xa sang đèn cận ?",
+   illus:"nuit-codes",
+   options:[
+     {fr:"Jamais, les feux de route sont toujours préférables",vi:"Không bao giờ, đèn pha xa luôn tốt hơn"},
+     {fr:"Dès qu'un véhicule approche en sens inverse ou vous précède",vi:"Ngay khi có xe ngược chiều hoặc xe phía trước"},
+     {fr:"Uniquement à l'entrée des villes",vi:"Chỉ khi vào thành phố"},
+   ],answer:1,
+   expFr:"Les feux de route (plein phare) éblouissent. On passe aux codes dès qu'un véhicule approche en face ou est devant.",
+   expVi:"Đèn pha xa gây chói mắt. Chuyển sang đèn cận ngay khi có xe ngược chiều hoặc xe phía trước."},
+
+  {id:89,theme:"securite",
+   fr:"Pourquoi les cyclomotoristes sont-ils surreprésentés dans les accidents ?",
+   vi:"Tại sao người đi xe máy chiếm tỷ lệ cao trong tai nạn ?",
+   illus:"statistiques-accident",
+   options:[
+     {fr:"Ils roulent trop lentement",vi:"Họ đi quá chậm"},
+     {fr:"Moins protégés, moins visibles, et parfois moins expérimentés",vi:"Ít được bảo vệ hơn, ít thấy hơn và đôi khi ít kinh nghiệm hơn"},
+     {fr:"Ils n'ont pas de rétroviseurs",vi:"Họ không có gương chiếu hậu"},
+   ],answer:1,
+   expFr:"Sans carrosserie protectrice, les deux-roues sont très vulnérables. La formation et les EPI réduisent les risques.",
+   expVi:"Không có thân xe bảo vệ, xe hai bánh rất dễ bị thương. Đào tạo và thiết bị bảo hộ giảm nguy cơ."},
+
+  {id:90,theme:"signalisation",
+   fr:"Que signifie un panneau de type 'début de zone 30' avec une large bande rouge ?",
+   vi:"Biển 'bắt đầu vùng 30' với dải đỏ rộng có nghĩa gì ?",
+   illus:"debut-zone30",
+   options:[
+     {fr:"Limite de commune",vi:"Ranh giới xã"},
+     {fr:"Entrée dans une zone à vitesse limitée à 30 km/h",vi:"Vào khu vực giới hạn tốc độ 30 km/h"},
+     {fr:"Fin de priorité",vi:"Kết thúc ưu tiên"},
+   ],answer:1,
+   expFr:"À l'entrée d'une zone 30, le panneau spécifique indique le début de la limitation. La priorité aux piétons s'applique.",
+   expVi:"Khi vào vùng 30, biển hiệu đặc biệt chỉ bắt đầu giới hạn. Ưu tiên người đi bộ được áp dụng."},
+
+  {id:91,theme:"conduite",
+   fr:"Quelle est l'attitude correcte face à un cycliste sur la route ?",
+   vi:"Thái độ đúng đắn khi gặp người đi xe đạp trên đường là gì ?",
+   illus:"cycliste",
+   options:[
+     {fr:"Le dépasser rapidement sans distance",vi:"Vượt nhanh không giữ khoảng cách"},
+     {fr:"Respecter 1 m de distance latérale en ville, 1,5 m hors agglomération",vi:"Giữ 1 m khoảng cách ngang trong thành phố, 1,5 m ngoài khu dân cư"},
+     {fr:"Klaxonner pour qu'il s'écarte",vi:"Bấm còi để họ tránh đường"},
+   ],answer:1,
+   expFr:"Le Code de la route impose 1 m de distance latérale lors du dépassement d'un cycliste en agglomération, 1,5 m hors agglomération.",
+   expVi:"Luật giao thông quy định 1 m khoảng cách ngang khi vượt xe đạp trong khu dân cư, 1,5 m ngoài khu dân cư."},
+
+  {id:92,theme:"securite",
+   fr:"Que signifie le pictogramme 'gilet airbag' sur certains équipements de motocycliste ?",
+   vi:"Biểu tượng 'áo giáp túi khí' trên một số thiết bị xe máy có nghĩa gì ?",
+   illus:"airbag-gilet",
+   options:[
+     {fr:"Le gilet est imperméable",vi:"Áo khoác không thấm nước"},
+     {fr:"Le gilet contient un airbag qui se gonfle en cas de chute pour protéger le torse",vi:"Áo khoác có túi khí phồng lên khi ngã để bảo vệ thân trên"},
+     {fr:"Le gilet est homologué uniquement pour les autoroutes",vi:"Áo khoác chỉ được chứng nhận cho đường cao tốc"},
+   ],answer:1,
+   expFr:"Le gilet airbag se déclenche en cas de chute et protège la colonne vertébrale et le thorax.",
+   expVi:"Áo giáp túi khí kích hoạt khi ngã và bảo vệ cột sống và lồng ngực."},
+
+  {id:93,theme:"alcool",
+   fr:"Quel est le numéro d'urgence européen accessible gratuitement ?",
+   vi:"Số khẩn cấp châu Âu miễn phí là bao nhiêu ?",
+   illus:"urgence-112",
+   options:[
+     {fr:"999",vi:"999"},
+     {fr:"112",vi:"112"},
+     {fr:"911",vi:"911"},
+   ],answer:1,
+   expFr:"Le 112 est le numéro d'urgence européen universel, accessible depuis tout téléphone, même sans crédit.",
+   expVi:"112 là số khẩn cấp châu Âu toàn cầu, gọi được từ mọi điện thoại, kể cả khi hết tiền."},
+
+  {id:94,theme:"conduite",
+   fr:"Un cyclomoteur est-il autorisé sur les pistes cyclables ?",
+   vi:"Xe 50cc có được phép đi trên làn xe đạp không ?",
+   illus:"piste-cyclable",
+   options:[
+     {fr:"Oui, toujours",vi:"Có, luôn luôn"},
+     {fr:"Non, sauf si un panneau l'autorise",vi:"Không, trừ khi có biển báo cho phép"},
+     {fr:"Oui, seulement la nuit",vi:"Có, chỉ ban đêm"},
+   ],answer:1,
+   expFr:"Les cyclomoteurs ne peuvent circuler sur les pistes cyclables que si un panneau le permet explicitement.",
+   expVi:"Xe 50cc chỉ được đi trên làn xe đạp khi có biển báo cho phép rõ ràng."},
+
+  {id:95,theme:"signalisation",
+   fr:"Que signifie un panneau représentant une voiture et une moto dans un rond rouge ?",
+   vi:"Biển hiển thị ô tô và xe máy trong vòng tròn đỏ có nghĩa gì ?",
+   illus:"interdit-motorise",
+   options:[
+     {fr:"Voie réservée aux véhicules motorisés",vi:"Làn dành cho xe có động cơ"},
+     {fr:"Interdit à tous les véhicules à moteur",vi:"Cấm tất cả xe có động cơ"},
+     {fr:"Voie à double sens",vi:"Đường hai chiều"},
+   ],answer:1,
+   expFr:"Ce panneau d'interdiction interdit la circulation à tous les véhicules motorisés (voitures, motos, scooters…).",
+   expVi:"Biển cấm này cấm lưu thông tất cả xe có động cơ (ô tô, mô tô, xe tay ga...)."},
+
+  {id:96,theme:"securite",
+   fr:"La fatigue double le temps de réaction. À 50 km/h, combien de mètres parcourt-on pendant 1 seconde de réaction ?",
+   vi:"Mệt mỏi làm tăng gấp đôi thời gian phản ứng. Ở 50 km/h, đi được bao nhiêu mét trong 1 giây phản ứng ?",
+   illus:"calcul-reaction",
+   options:[
+     {fr:"5 mètres",vi:"5 mét"},
+     {fr:"Environ 14 mètres",vi:"Khoảng 14 mét"},
+     {fr:"50 mètres",vi:"50 mét"},
+   ],answer:1,
+   expFr:"À 50 km/h on parcourt environ 14 m/s. Pendant 1 seconde de temps mort, le véhicule avance sans freinage.",
+   expVi:"Ở 50 km/h đi được khoảng 14 m/s. Trong 1 giây không phản ứng, xe tiến về phía trước không phanh."},
+
+  {id:97,theme:"conduite",
+   fr:"Que signifie l'acronyme 'BSR' ?",
+   vi:"'BSR' là viết tắt của gì ?",
+   illus:"bsr",
+   options:[
+     {fr:"Brevet de Sécurité Routière",vi:"Bằng An toàn Giao thông Đường bộ"},
+     {fr:"Bureau de Sécurité Routière",vi:"Cục An toàn Giao thông Đường bộ"},
+     {fr:"Bilan de Sécurité Routière",vi:"Báo cáo An toàn Giao thông"},
+   ],answer:0,
+   expFr:"Le BSR (Brevet de Sécurité Routière) est obligatoire pour conduire un cyclomoteur après avoir passé l'ASSR.",
+   expVi:"BSR (Bằng An toàn Giao thông Đường bộ) bắt buộc để lái xe 50cc sau khi đậu ASSR."},
+
+  {id:98,theme:"securite",
+   fr:"Quelle est la première chose à faire après un accident sans blessé grave ?",
+   vi:"Điều đầu tiên cần làm sau tai nạn không có người bị thương nặng là gì ?",
+   illus:"apres-accident",
+   options:[
+     {fr:"Fuir avant l'arrivée de la police",vi:"Bỏ trốn trước khi cảnh sát đến"},
+     {fr:"Sécuriser les lieux, allumer les warnings, poser le triangle si possible",vi:"Bảo đảm an toàn hiện trường, bật đèn hazard, đặt tam giác nếu có thể"},
+     {fr:"Appeler ses amis pour témoigner",vi:"Gọi bạn bè đến làm chứng"},
+   ],answer:1,
+   expFr:"La première priorité est la sécurité : warnings, triangle de signalisation, gilet fluorescent si disponible.",
+   expVi:"Ưu tiên đầu tiên là an toàn: đèn hazard, tam giác cảnh báo, áo phản quang nếu có."},
+
+  {id:99,theme:"signalisation",
+   fr:"Que signifie une double ligne blanche continue sur la chaussée ?",
+   vi:"Hai vạch trắng liên tục trên đường có nghĩa gì ?",
+   illus:"double-ligne",
+   options:[
+     {fr:"Dépassement interdit dans les deux sens",vi:"Cấm vượt xe cả hai chiều"},
+     {fr:"Dépassement autorisé dans les deux sens",vi:"Được phép vượt xe cả hai chiều"},
+     {fr:"Voie à sens unique",vi:"Đường một chiều"},
+   ],answer:0,
+   expFr:"Une double ligne blanche continue interdit tout franchissement et donc tout dépassement dans les deux sens de circulation.",
+   expVi:"Hai vạch trắng liên tục cấm vượt qua và do đó cấm vượt xe cả hai chiều."},
+
+  {id:100,theme:"conduite",
+   fr:"Un conducteur a l'obligation de céder le passage à un bus qui reprend sa place dans la circulation. Vrai ou faux ?",
+   vi:"Người lái xe có nghĩa vụ nhường đường cho xe buýt tái nhập làn đường. Đúng hay sai ?",
+   illus:"bus-priorite",
+   options:[
+     {fr:"Vrai – le bus signalant sa sortie bénéficie d'une priorité",vi:"Đúng – xe buýt báo hiệu rời bến được ưu tiên"},
+     {fr:"Faux – la priorité à droite s'applique normalement",vi:"Sai – quy tắc ưu tiên bên phải áp dụng bình thường"},
+     {fr:"Seulement en agglomération",vi:"Chỉ trong khu dân cư"},
+   ],answer:0,
+   expFr:"En agglomération, le conducteur doit céder le passage au bus qui signale sa reprise de circulation (clignotant gauche).",
+   expVi:"Trong khu dân cư, lái xe phải nhường đường cho xe buýt báo hiệu tái nhập làn (xi nhan trái)."},
+];
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let filtered = [...ALL_QUESTIONS];
+let current  = 0;
+let answered = false;
+let score    = { good: 0, wrong: 0 };
+let activeFilter = 'all';
+
+// ════════════════════════════════════════════════
+// ILLUSTRATIONS (SVG inline)
+// ════════════════════════════════════════════════
+function buildIllus(type) {
+  const defs = {
+    "crossroad-right":`<svg width="220" height="100" viewBox="0 0 220 100">
+      <rect x="90" y="0" width="40" height="100" fill="#ccc"/>
+      <rect x="0" y="40" width="220" height="20" fill="#ccc"/>
+      <path d="M110,70 L110,30" stroke="#fff" stroke-width="2" stroke-dasharray="6,4"/>
+      <path d="M10,50 L100,50" stroke="#fff" stroke-width="2" stroke-dasharray="6,4"/>
+      <polygon points="170,50 155,43 155,57" fill="#E8003D"/>
+      <text x="175" y="38" font-size="10" fill="#E8003D" font-weight="bold">VOUS</text>
+    </svg>`,
+    "cedez-passage":`<svg width="120" height="120" viewBox="0 0 120 120">
+      <polygon points="60,10 110,100 10,100" fill="white" stroke="#E8003D" stroke-width="5"/>
+      <polygon points="60,35 95,90 25,90" fill="white" stroke="#E8003D" stroke-width="3"/>
+      <text x="60" y="78" text-anchor="middle" font-size="11" fill="#E8003D" font-weight="bold">CÉDEZ</text>
+    </svg>`,
+    "stop-sign":`<svg width="100" height="100" viewBox="0 0 100 100">
+      <polygon points="30,5 70,5 95,30 95,70 70,95 30,95 5,70 5,30" fill="#E8003D"/>
+      <text x="50" y="58" text-anchor="middle" font-size="18" fill="white" font-weight="bold">STOP</text>
+    </svg>`,
+    "feu-rouge":`<svg width="60" height="140" viewBox="0 0 60 140">
+      <rect x="10" y="5" width="40" height="130" rx="8" fill="#333"/>
+      <circle cx="30" cy="33" r="14" fill="#E8003D"/>
+      <circle cx="30" cy="70" r="14" fill="#555"/>
+      <circle cx="30" cy="107" r="14" fill="#555"/>
+    </svg>`,
+    "feu-orange":`<svg width="60" height="140" viewBox="0 0 60 140">
+      <rect x="10" y="5" width="40" height="130" rx="8" fill="#333"/>
+      <circle cx="30" cy="33" r="14" fill="#555"/>
+      <circle cx="30" cy="70" r="14" fill="#F5C400"/>
+      <circle cx="30" cy="107" r="14" fill="#555"/>
+    </svg>`,
+    "ligne-continue":`<svg width="220" height="60" viewBox="0 0 220 60">
+      <rect x="0" y="20" width="220" height="20" fill="#ccc"/>
+      <line x1="0" y1="30" x2="220" y2="30" stroke="white" stroke-width="3"/>
+    </svg>`,
+    "ligne-discontinue":`<svg width="220" height="60" viewBox="0 0 220 60">
+      <rect x="0" y="20" width="220" height="20" fill="#ccc"/>
+      <line x1="0" y1="30" x2="220" y2="30" stroke="white" stroke-width="3" stroke-dasharray="14,8"/>
+    </svg>`,
+    "casque":`<svg width="100" height="90" viewBox="0 0 100 90">
+      <ellipse cx="50" cy="50" rx="40" ry="35" fill="#E8003D"/>
+      <path d="M15,60 Q20,80 50,82 Q80,80 85,60" fill="#333"/>
+      <rect x="22" y="52" width="56" height="18" rx="4" fill="#1a1a1a"/>
+      <rect x="26" y="54" width="48" height="14" rx="3" fill="#87CEEB" opacity="0.6"/>
+      <text x="50" y="42" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CASQUE</text>
+    </svg>`,
+    "alcool-taux":`<svg width="120" height="100" viewBox="0 0 120 100">
+      <rect x="40" y="20" width="40" height="60" rx="6" fill="#87CEEB" stroke="#0B1F4A" stroke-width="2"/>
+      <rect x="44" y="60" width="32" height="18" rx="3" fill="#F5C400" opacity=".7"/>
+      <text x="60" y="73" text-anchor="middle" font-size="9" font-weight="bold" fill="#0B1F4A">0,2 g/L</text>
+      <line x1="40" y1="55" x2="80" y2="55" stroke="#E8003D" stroke-width="2" stroke-dasharray="4,2"/>
+      <text x="85" y="58" font-size="9" fill="#E8003D" font-weight="bold">MAX</text>
+    </svg>`,
+    "vitesse-50":`<svg width="100" height="100" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="44" fill="white" stroke="#E8003D" stroke-width="7"/>
+      <text x="50" y="62" text-anchor="middle" font-size="34" font-weight="bold" fill="#333">50</text>
+    </svg>`,
+    "vitesse-agglo":`<svg width="100" height="100" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="44" fill="white" stroke="#E8003D" stroke-width="7"/>
+      <text x="50" y="62" text-anchor="middle" font-size="34" font-weight="bold" fill="#333">50</text>
+      <text x="50" y="88" text-anchor="middle" font-size="9" fill="#666">Agglomération</text>
+    </svg>`,
+    "rondpoint":`<svg width="140" height="140" viewBox="0 0 140 140">
+      <circle cx="70" cy="70" r="55" fill="none" stroke="#ccc" stroke-width="18"/>
+      <circle cx="70" cy="70" r="22" fill="#7a9" opacity=".5"/>
+      <polygon points="70,5 79,22 61,22" fill="#0B1F4A"/>
+      <polygon points="135,70 118,61 118,79" fill="#E8003D"/>
+    </svg>`,
+    "distance-securite":`<svg width="220" height="60" viewBox="0 0 220 60">
+      <rect x="0" y="25" width="220" height="10" fill="#ccc"/>
+      <rect x="5" y="15" width="50" height="30" rx="5" fill="#E8003D"/>
+      <rect x="140" y="15" width="50" height="30" rx="5" fill="#0B1F4A"/>
+      <line x1="60" y1="30" x2="135" y2="30" stroke="#F5C400" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="97" y="22" text-anchor="middle" font-size="9" fill="#F5C400">≈28 m</text>
+    </svg>`,
+    "passage-pieton":`<svg width="120" height="80" viewBox="0 0 120 80">
+      <rect x="0" y="50" width="120" height="30" fill="#ccc"/>
+      <rect x="0" y="50" width="15" height="30" fill="white"/>
+      <rect x="30" y="50" width="15" height="30" fill="white"/>
+      <rect x="60" y="50" width="15" height="30" fill="white"/>
+      <rect x="90" y="50" width="15" height="30" fill="white"/>
+      <ellipse cx="60" cy="18" rx="8" ry="8" fill="#0B1F4A"/>
+      <line x1="60" y1="26" x2="60" y2="44" stroke="#0B1F4A" stroke-width="3"/>
+      <line x1="60" y1="32" x2="48" y2="40" stroke="#0B1F4A" stroke-width="2"/>
+      <line x1="60" y1="32" x2="72" y2="40" stroke="#0B1F4A" stroke-width="2"/>
+    </svg>`,
+  };
+  const svg = defs[type];
+  if (svg) return svg;
+  // Generic fallback
+  const icons = {
+    "sens-interdit":"🚫","one-way":"↔️","route-prioritaire":"⭐","danger-generic":"⚠️",
+    "sens-obligatoire":"⬆️","panneau-interdiction":"🔴","marquage-stop":"🛑",
+    "vitesse-max-50":"🔴","effet-alcool":"🍺","cannabis":"🌿","mythe-cafe":"☕",
+    "medicaments":"💊","retroviseur":"🔍","crevaison":"🔧","gants":"🧤",
+    "depassement":"🏍️","verification":"✅","pluie":"🌧️","angle-mort":"👁️",
+    "gilet-reflechissant":"🦺","descente":"⛰️","telephone":"📵","feux-croisement":"💡",
+    "enfant-traversee":"🧒","demi-tour":"↩️","eco-conduite":"🌱","zone30":"🏘️",
+    "fatigue":"😴","pneu-usure":"🔧","fleche-verte":"🟢","passage-niveau":"🚂",
+    "verres-alcool":"🥃","frein-avant":"🛑","incendie":"🔥","ligne-jaune":"🟡",
+    "constat":"📋","vehicule-urgence":"🚨","alcool-medicaments":"⚠️","distance-reaction":"📏",
+    "clignotant-depassement":"⬅️","intersection-T":"🔀","depassement-interdit":"🚫",
+    "accident-blesse":"🚑","interfile":"🏍️","enfant-panneau":"🧒","risque-accident":"📊",
+    "hypnose-route":"😵","protege-genoux":"🦿","chevrons":"⚡","tramway":"🚋",
+    "croisement-nuit":"🌙","blocage-roue":"⚠️","controle-alcool":"👮","parking":"🅿️",
+    "stationnement":"🚗","tenue-conduite":"🧥","gauche-intersection":"⬅️","aquaplaning":"💧",
+    "panneau-vert":"🟢","stupefiants":"🚫","tunnel":"🚇","brouillard":"🌫️",
+    "route-nationale":"🛣️","fin-limitation":"⭕","sanction-alcool":"⚖️","feu-clignotant":"🟠",
+    "animaux-route":"🦌","deux-roues-invisible":"👻","voie-bus":"🚌","panneau-marron":"🏰",
+    "facteurs-alcool":"⚠️","nuit-codes":"💡","statistiques-accident":"📊","debut-zone30":"🏘️",
+    "cycliste":"🚴","airbag-gilet":"🦺","urgence-112":"📞","piste-cyclable":"🚲",
+    "interdit-motorise":"🚫","calcul-reaction":"📐","bsr":"📄","apres-accident":"🚦",
+    "double-ligne":"═══","bus-priorite":"🚌","vitesse-max-50":"🔴","stop-sign":"🛑",
+    "sens-interdit":"🚫","autoroute":"🛣️","tourner-gauche":"↰","vitesse-max-50":"🔴",
+  };
+  const emoji = icons[type] || "🚦";
+  return `<div style="font-size:52px;padding:10px">${emoji}</div>`;
+}
+
+// ════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════
+function render() {
+  const area = document.getElementById('quizArea');
+  const resBox = document.getElementById('resultsBox');
+
+  if (current >= filtered.length) {
+    area.innerHTML = '';
+    showResults();
+    return;
+  }
+  resBox.classList.remove('visible');
+
+  const q = filtered[current];
+  const pct = Math.round((current / filtered.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('statTotal').textContent = filtered.length;
+  document.getElementById('statGood').textContent = score.good;
+  document.getElementById('statWrong').textContent = score.wrong;
+
+  const letters = ['A','B','C'];
+  const opts = q.options.map((o, i) => `
+    <button class="option" id="opt${i}" onclick="selectOpt(${i})">
+      <div class="opt-letter">${letters[i]}</div>
+      <div class="opt-text">
+        <div class="fr">${o.fr}</div>
+        <div class="vi">${o.vi}</div>
+      </div>
+    </button>`).join('');
+
+  area.innerHTML = `
+    <div class="card">
+      <div class="card-head">
+        <span class="qnum">Question ${current+1} / ${filtered.length}</span>
+        <span class="theme-tag">${themeLabel(q.theme)}</span>
+      </div>
+      <div class="card-body">
+        <div class="question-fr">${q.fr}</div>
+        <div class="question-vi">${q.vi}</div>
+        <div class="illus-wrap">${buildIllus(q.illus)}</div>
+        <div class="options">${opts}</div>
+        <div class="explanation" id="expBox">
+          <div class="exp-fr">✅ ${q.expFr}</div>
+          <div class="exp-vi">🇻🇳 ${q.expVi}</div>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-validate" id="btnValidate" onclick="validate()" disabled>Valider</button>
+          <button class="btn btn-primary" id="btnNext" onclick="next()" disabled>Suivant ▶</button>
+        </div>
+      </div>
+    </div>`;
+  answered = false;
+}
+
+function themeLabel(t) {
+  return {priorite:"⛔ Priorité",signalisation:"🚦 Signalisation",alcool:"🍺 Alcool/Drogues",securite:"🪖 Sécurité",conduite:"🛵 Conduite"}[t]||t;
+}
+
+let selectedOpt = null;
+
+function selectOpt(i) {
+  if (answered) return;
+  selectedOpt = i;
+  document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+  document.getElementById('opt'+i).classList.add('selected');
+  document.getElementById('btnValidate').disabled = false;
+}
+
+function validate() {
+  if (answered || selectedOpt === null) return;
+  answered = true;
+  const q = filtered[current];
+  document.querySelectorAll('.option').forEach((el, i) => {
+    if (i === q.answer) el.classList.add('correct');
+    else if (i === selectedOpt) el.classList.add('wrong');
+  });
+  if (selectedOpt === q.answer) score.good++;
+  else score.wrong++;
+  document.getElementById('expBox').classList.add('visible');
+  document.getElementById('btnValidate').disabled = true;
+  document.getElementById('btnNext').disabled = false;
+  document.getElementById('statGood').textContent = score.good;
+  document.getElementById('statWrong').textContent = score.wrong;
+}
+
+function next() {
+  current++;
+  selectedOpt = null;
+  render();
+}
+
+function showResults() {
+  const total = filtered.length;
+  const pct = Math.round((score.good / total) * 100);
+  const circle = document.getElementById('scoreCircle');
+  circle.style.background = pct >= 70 ? 'linear-gradient(135deg,#16A34A,#15803D)' : pct >= 50 ? 'linear-gradient(135deg,#F5C400,#d97706)' : 'linear-gradient(135deg,#E8003D,#991b1b)';
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('resultTitle').textContent = pct >= 70 ? '🎉 Bravo ! Très bon résultat !' : pct >= 50 ? '📚 Pas mal, continuez à réviser !' : '💪 Continuez vos révisions !';
+  document.getElementById('resultMsg').textContent = `${score.good} bonnes réponses sur ${total} – Kết quả: ${score.good}/${total}`;
+  document.getElementById('resultsBox').classList.add('visible');
+  document.getElementById('progressBar').style.width = '100%';
+}
+
+function restart() {
+  score = { good:0, wrong:0 };
+  current = 0;
+  selectedOpt = null;
+  filtered = applyFilter(activeFilter);
+  shuffleArr(filtered);
+  document.getElementById('resultsBox').classList.remove('visible');
+  render();
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  score = { good:0, wrong:0 };
+  current = 0;
+  selectedOpt = null;
+  filtered = applyFilter(f);
+  shuffleArr(filtered);
+  render();
+}
+
+function applyFilter(f) {
+  return f === 'all' ? [...ALL_QUESTIONS] : ALL_QUESTIONS.filter(q => q.theme === f);
+}
+
+function shuffleArr(a) {
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+}
+
+// ── INIT ──
+shuffleArr(filtered);
+render();
+</script>
+</body>
+</html>
