@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passeport Français — Juillet & Août</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap');
+
+:root {
+  --creme: #FBF8F2;
+  --encre: #1C1C1A;
+  --encre-doux: #4A4A45;
+  --jul: #2D6A8A;
+  --jul-light: #E8F3F9;
+  --aout: #8A5A2D;
+  --aout-light: #F9F0E8;
+  --vert: #2A6B4A;
+  --vert-light: #E8F5EE;
+  --rouge: #8A2D2D;
+  --rouge-light: #F9E8E8;
+  --or: #B8860B;
+  --or-light: #FDF8E8;
+  --border: rgba(28,28,26,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--creme);
+  color: var(--encre);
+  min-height: 100vh;
+}
+
+/* ── ÉCRAN D'ACCUEIL ── */
+#screen-home {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+}
+
+.home-hero {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.home-hero .overtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--encre-doux);
+  margin-bottom: 1rem;
+}
+
+.home-hero h1 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 42px;
+  line-height: 1.1;
+  color: var(--encre);
+  margin-bottom: 0.5rem;
+}
+
+.home-hero h1 em {
+  font-style: italic;
+  color: var(--jul);
+}
+
+.home-hero .sub {
+  font-size: 14px;
+  color: var(--encre-doux);
+  margin-top: 0.75rem;
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.month-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.month-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+.month-card.juillet::before {
+  content: "";
+  position: absolute; top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: var(--jul-light);
+  border-radius: 0 16px 0 60px;
+}
+
+.month-card.aout::before {
+  content: "";
+  position: absolute; top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: var(--aout-light);
+  border-radius: 0 16px 0 60px;
+}
+
+.month-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.juillet .month-label { color: var(--jul); }
+.aout .month-label { color: var(--aout); }
+
+.month-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.month-meta {
+  font-size: 12px;
+  color: var(--encre-doux);
+  margin-bottom: 1rem;
+}
+
+.month-progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.month-progress-fill {
+  height: 4px;
+  border-radius: 99px;
+  transition: width 0.4s;
+}
+
+.juillet .month-progress-fill { background: var(--jul); }
+.aout .month-progress-fill { background: var(--aout); }
+
+.month-days-done {
+  font-size: 11px;
+  color: var(--encre-doux);
+}
+
+.weeks-section { margin-bottom: 2rem; }
+.weeks-section h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 18px;
+  margin-bottom: 1rem;
+  color: var(--encre);
+}
+
+.week-list { display: flex; flex-direction: column; gap: 8px; }
+
+.week-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.week-row:hover { background: var(--creme); }
+.week-row.locked { opacity: 0.45; cursor: default; }
+
+.week-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500;
+  flex-shrink: 0;
+}
+
+.week-dot.juillet { background: var(--jul-light); color: var(--jul); }
+.week-dot.aout { background: var(--aout-light); color: var(--aout); }
+.week-dot.done { background: var(--vert-light); color: var(--vert); }
+
+.week-info { flex: 1; }
+.week-name { font-size: 14px; font-weight: 500; }
+.week-theme { font-size: 12px; color: var(--encre-doux); margin-top: 1px; }
+
+.week-score {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--vert);
+}
+
+.week-days {
+  display: flex; gap: 3px;
+}
+
+.week-day-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.week-day-dot.done { background: var(--vert); }
+.week-day-dot.current { background: var(--jul); }
+
+/* ── ÉCRAN SEMAINE ── */
+#screen-week {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+}
+
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; color: var(--encre-doux);
+  background: none; border: none; cursor: pointer;
+  padding: 0; margin-bottom: 1.5rem;
+  transition: color 0.15s;
+}
+.back-btn:hover { color: var(--encre); }
+
+.week-header {
+  margin-bottom: 1.5rem;
+}
+
+.week-header .eyebrow {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--encre-doux); margin-bottom: 6px;
+}
+
+.week-header h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300; font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.week-header .theme-pill {
+  display: inline-block;
+  font-size: 12px; padding: 4px 12px;
+  border-radius: 99px; border: 1px solid var(--border);
+  color: var(--encre-doux);
+}
+
+.days-grid {
+  display: flex; flex-direction: column; gap: 8px;
+}
+
+.day-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.day-row:hover { transform: translateX(3px); }
+.day-row.done { border-color: var(--vert); background: var(--vert-light); }
+.day-row.locked { opacity: 0.4; cursor: default; }
+
+.day-num {
+  font-family: 'Fraunces', serif;
+  font-size: 20px; font-weight: 300;
+  min-width: 32px; color: var(--encre-doux);
+}
+
+.day-info { flex: 1; }
+.day-title { font-size: 14px; font-weight: 500; }
+.day-blocks { font-size: 12px; color: var(--encre-doux); margin-top: 2px; }
+
+.day-status {
+  font-size: 12px; font-weight: 500;
+}
+.day-row.done .day-status { color: var(--vert); }
+
+/* ── ÉCRAN LEÇON ── */
+#screen-lesson {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+}
+
+.lesson-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.lesson-meta { font-size: 12px; color: var(--encre-doux); }
+
+.step-indicators {
+  display: flex; gap: 6px;
+}
+
+.step-dot {
+  width: 24px; height: 4px;
+  border-radius: 99px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.step-dot.active { background: var(--jul); }
+.step-dot.done-step { background: var(--vert); }
+
+/* Bloc leçon */
+.lesson-block {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.block-tag {
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 500; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.block-tag .tag-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+
+.tag-lecon .tag-dot { background: var(--jul); }
+.tag-lecon { color: var(--jul); }
+.tag-exercice .tag-dot { background: var(--or); }
+.tag-exercice { color: var(--or); }
+.tag-defi .tag-dot { background: var(--vert); }
+.tag-defi { color: var(--vert); }
+
+.lesson-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 500; font-size: 20px;
+  margin-bottom: 1rem; line-height: 1.3;
+}
+
+.lesson-rule {
+  background: var(--jul-light);
+  border-left: 3px solid var(--jul);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  font-size: 14px; line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.lesson-examples {
+  display: flex; flex-direction: column; gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.example-item {
+  font-size: 14px; line-height: 1.5;
+  padding: 8px 12px;
+  background: var(--creme);
+  border-radius: 8px;
+}
+
+.example-item strong { color: var(--jul); }
+
+/* Exercices */
+.exo-list { display: flex; flex-direction: column; gap: 14px; }
+
+.exo-item { }
+
+.exo-q {
+  font-size: 14px; line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.exo-opts { display: flex; flex-direction: column; gap: 6px; }
+
+.exo-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  background: #fff;
+  transition: all 0.15s;
+}
+.exo-opt:hover { background: var(--creme); }
+.exo-opt.selected { border-color: var(--jul); background: var(--jul-light); color: var(--jul); }
+.exo-opt.correct { border-color: var(--vert); background: var(--vert-light); color: var(--vert); }
+.exo-opt.wrong { border-color: var(--rouge); background: var(--rouge-light); color: var(--rouge); }
+
+.opt-letter { font-weight: 500; min-width: 16px; font-size: 12px; }
+
+.exo-blank input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  width: 100%;
+  background: #fff;
+  color: var(--encre);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.exo-blank input:focus { border-color: var(--jul); }
+.exo-blank input.correct { border-color: var(--vert); background: var(--vert-light); }
+.exo-blank input.wrong { border-color: var(--rouge); background: var(--rouge-light); }
+
+.check-btn {
+  margin-top: 8px;
+  padding: 7px 16px;
+  border: 1px solid var(--jul);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--jul);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.check-btn:hover { background: var(--jul); color: #fff; }
+.check-btn:disabled { opacity: 0.4; cursor: default; }
+
+.exo-feedback {
+  font-size: 12px;
+  margin-top: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: none;
+}
+.exo-feedback.show { display: block; }
+.exo-feedback.ok { background: var(--vert-light); color: var(--vert); }
+.exo-feedback.ko { background: var(--rouge-light); color: var(--rouge); }
+
+/* Défi */
+.defi-zone {
+  min-height: 90px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 1.6;
+  background: #fff;
+  color: var(--encre);
+  resize: none;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.defi-zone:focus { border-color: var(--vert); }
+
+.defi-hint {
+  font-size: 12px;
+  color: var(--encre-doux);
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  background: var(--or-light);
+  border-radius: 8px;
+  border-left: 3px solid var(--or);
+}
+
+/* Navigation bas */
+.lesson-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-nav {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--encre);
+}
+.btn-nav:hover { background: var(--creme); }
+.btn-nav.primary {
+  background: var(--encre);
+  color: var(--creme);
+  border-color: var(--encre);
+}
+.btn-nav.primary:hover { background: #333; }
+.btn-nav.success {
+  background: var(--vert);
+  color: #fff;
+  border-color: var(--vert);
+}
+
+.score-display {
+  font-size: 13px;
+  color: var(--encre-doux);
+}
+
+/* ── RÉSULTAT JOURNÉE ── */
+.result-day {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.result-day .big-emoji {
+  font-size: 48px;
+  margin-bottom: 1rem;
+}
+
+.result-day h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: 26px;
+  margin-bottom: 0.5rem;
+}
+
+.result-day .result-score {
+  font-size: 36px;
+  font-weight: 500;
+  margin: 1rem 0;
+}
+
+.result-day .score-detail {
+  font-size: 13px;
+  color: var(--encre-doux);
+  margin-bottom: 1.5rem;
+}
+
+.stars { font-size: 24px; letter-spacing: 4px; }
+
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ══ ÉCRAN ACCUEIL ══ -->
+<div id="screen-home">
+  <div class="home-hero">
+    <div class="overtitle">Passeport langue française</div>
+    <h1>Juillet &amp; <em>Août</em></h1>
+    <p class="sub">30 minutes par jour · 62 jours · Niveaux A2 → B1</p>
+  </div>
+
+  <div class="month-grid">
+    <div class="month-card juillet" onclick="showMonth('juillet')">
+      <div class="month-label">Juillet</div>
+      <div class="month-title">Bases &amp; fluidité</div>
+      <div class="month-meta">31 jours · Niveau A2</div>
+      <div class="month-progress-bar"><div class="month-progress-fill" id="prog-juillet" style="width:0%"></div></div>
+      <div class="month-days-done" id="done-juillet">0 / 31 jours</div>
+    </div>
+    <div class="month-card aout" onclick="showMonth('aout')">
+      <div class="month-label">Août</div>
+      <div class="month-title">Nuances &amp; style</div>
+      <div class="month-meta">31 jours · Niveaux A2/B1</div>
+      <div class="month-progress-bar"><div class="month-progress-fill" id="prog-aout" style="width:0%"></div></div>
+      <div class="month-days-done" id="done-aout">0 / 31 jours</div>
+    </div>
+  </div>
+
+  <div class="weeks-section">
+    <h2>Toutes les semaines</h2>
+    <div class="week-list" id="all-weeks-list"></div>
+  </div>
+</div>
+
+<!-- ══ ÉCRAN SEMAINE ══ -->
+<div id="screen-week" class="hidden">
+  <button class="back-btn" onclick="showHome()">← Retour</button>
+  <div class="week-header">
+    <div class="eyebrow" id="w-eyebrow"></div>
+    <h2 id="w-title"></h2>
+    <span class="theme-pill" id="w-theme"></span>
+  </div>
+  <div class="days-grid" id="days-grid"></div>
+</div>
+
+<!-- ══ ÉCRAN LEÇON ══ -->
+<div id="screen-lesson" class="hidden">
+  <div class="lesson-header">
+    <button class="back-btn" onclick="showWeek(currentWeek)" style="margin-bottom:0">← Semaine</button>
+    <div class="lesson-meta" id="lesson-meta"></div>
+  </div>
+  <div class="step-indicators" id="step-indicators"></div>
+  <div id="lesson-content" style="margin-top:1.25rem;"></div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════
+   DONNÉES — 62 jours, 9 semaines juillet + 9 semaines août (≈)
+══════════════════════════════════════════════ */
+
+const CURRICULUM = [
+// ── JUILLET ──
+{
+  id:"J1", month:"juillet", num:1,
+  title:"La vie quotidienne", theme:"Thème : Les habitudes",
+  days:[
+    {
+      id:"J1D1", title:"Les articles (le, la, les, un, une)",
+      lesson:{
+        titre:"Les articles en français",
+        regle:"En français, chaque nom a un genre : masculin ou féminin. Les articles changent selon le genre et le nombre.",
+        points:[
+          "le / un → masculin singulier : <strong>le</strong> chat, <strong>un</strong> livre",
+          "la / une → féminin singulier : <strong>la</strong> maison, <strong>une</strong> fleur",
+          "les / des → pluriel : <strong>les</strong> enfants, <strong>des</strong> amis"
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Complète : '_____ soleil brille aujourd'hui.'", opts:["Le","La","Les","Des"], ans:0, exp:"'Soleil' est masculin → Le soleil."},
+        {type:"qcm", q:"Complète : 'J'ai mangé _____ pomme.'", opts:["une","un","le","la"], ans:0, exp:"'Pomme' est féminin → une pomme."},
+        {type:"qcm", q:"Complète : '_____ enfants jouent dans le parc.'", opts:["Les","Le","La","Des"], ans:0, exp:"'Enfants' est pluriel + défini → Les enfants."},
+        {type:"blank", q:"Écris l'article correct : _____ livre (masculin)", ans:"le", exp:"'Livre' est masculin → le livre."},
+        {type:"blank", q:"Écris l'article correct : _____ école (féminin)", ans:"l'", exp:"'École' commence par une voyelle → l'école."}
+      ],
+      defi:{
+        consigne:"Regarde autour de toi. Écris 3 phrases avec des objets que tu vois. Utilise 'le', 'la', 'les', 'un' ou 'une'.",
+        exemple:"Exemple : Il y a une table dans la cuisine. Le stylo est rouge."
+      }
+    },
+    {
+      id:"J1D2", title:"Les verbes en -ER au présent",
+      lesson:{
+        titre:"Conjuguer les verbes en -ER",
+        regle:"La majorité des verbes français se terminent en -ER. Pour les conjuguer, on enlève -ER et on ajoute les terminaisons.",
+        points:[
+          "Je parle / Tu parles / Il-Elle parle",
+          "Nous parlons / Vous parlez / Ils-Elles parlent",
+          "Attention : je, tu, il, ils ont souvent la même prononciation !"
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"'Tu _____ (aimer) le chocolat ?'", opts:["aimes","aime","aimez","aimons"], ans:0, exp:"Avec 'tu' → terminaison -es : tu aimes."},
+        {type:"qcm", q:"'Nous _____ (regarder) un film.'", opts:["regardons","regardez","regardent","regarde"], ans:0, exp:"Avec 'nous' → terminaison -ons : nous regardons."},
+        {type:"qcm", q:"'Ils _____ (travailler) beaucoup.'", opts:["travaillent","travaille","travaillons","travaillez"], ans:0, exp:"Avec 'ils' → terminaison -ent : ils travaillent."},
+        {type:"blank", q:"'Elle _____ (chanter) très bien.'", ans:"chante", exp:"Avec 'elle' → terminaison -e : elle chante."},
+        {type:"blank", q:"'Vous _____ (habiter) à Paris ?'", ans:"habitez", exp:"Avec 'vous' → terminaison -ez : vous habitez."}
+      ],
+      defi:{
+        consigne:"Écris 3 phrases sur ce que tu fais aujourd'hui. Utilise 3 verbes en -ER différents.",
+        exemple:"Exemple : Je mange des céréales le matin. Je regarde la télé le soir."
+      }
+    },
+    {
+      id:"J1D3", title:"Vocabulaire : la maison",
+      lesson:{
+        titre:"Les pièces et les meubles",
+        regle:"Pour parler de ta maison, il faut connaître le vocabulaire des pièces et des objets courants.",
+        points:[
+          "Les pièces : la cuisine, le salon, la chambre, la salle de bain, les toilettes",
+          "Les meubles : le canapé, la table, le lit, l'armoire, la chaise",
+          "Utile : 'il y a' = there is/are → Il y a un canapé dans le salon."
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Où dort-on généralement ?", opts:["Dans la chambre","Dans la cuisine","Dans le salon","Dans la salle de bain"], ans:0, exp:"On dort dans la chambre. C'est la pièce avec le lit."},
+        {type:"qcm", q:"Quel meuble est dans la cuisine ?", opts:["La cuisinière","Le canapé","Le lit","L'armoire"], ans:0, exp:"La cuisinière (ou la gazinière) est dans la cuisine pour cuisiner."},
+        {type:"qcm", q:"Complète : 'Il y a _____ chaises autour de la table.'", opts:["des","de la","du","une"], ans:0, exp:"'Chaises' est pluriel indéfini → des chaises."},
+        {type:"blank", q:"La pièce où on mange s'appelle la salle à _____.", ans:"manger", exp:"La salle à manger est la pièce réservée aux repas."},
+        {type:"blank", q:"On prend une douche dans la salle de _____.", ans:"bain", exp:"La salle de bain contient la douche et/ou la baignoire."}
+      ],
+      defi:{
+        consigne:"Décris ta pièce préférée à la maison. Qu'est-ce qu'il y a ? Pourquoi tu l'aimes ?",
+        exemple:"Exemple : Ma pièce préférée est le salon. Il y a un grand canapé et une télévision."
+      }
+    },
+    {
+      id:"J1D4", title:"Poser des questions simples",
+      lesson:{
+        titre:"Les questions en français",
+        regle:"Il y a trois façons de poser une question en français. En A2, on utilise surtout la première et la deuxième.",
+        points:[
+          "1. Intonation : 'Tu viens ?' (voix qui monte)",
+          "2. Est-ce que : 'Est-ce que tu viens ?'",
+          "3. Inversion : 'Viens-tu ?' (plus formel)"
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Quelle est la version correcte avec 'est-ce que' ?", opts:["Est-ce que tu habites ici ?","Est-ce que habites-tu ici ?","Tu est-ce que habites ici ?","Habites est-ce que tu ici ?"], ans:0, exp:"'Est-ce que' se place au début, avant le sujet et le verbe."},
+        {type:"qcm", q:"Comment demander l'heure poliment ?", opts:["Quelle heure est-il ?","Heure est quelle ?","Il est quelle heure que ?","Est-ce que heure ?"], ans:0, exp:"'Quelle heure est-il ?' est la formule correcte et naturelle."},
+        {type:"qcm", q:"'_____ tu t'appelles ?' (prénom)", opts:["Comment","Pourquoi","Quand","Combien"], ans:0, exp:"Pour demander le prénom/nom → Comment tu t'appelles ?"},
+        {type:"blank", q:"_____ est-ce que tu habites ? (lieu)", ans:"Où", exp:"'Où' est le mot interrogatif pour demander un lieu."},
+        {type:"blank", q:"_____ est-ce que tu travailles ? (moment)", ans:"Quand", exp:"'Quand' est le mot interrogatif pour demander un moment."}
+      ],
+      defi:{
+        consigne:"Imagine que tu rencontres quelqu'un de nouveau. Écris 4 questions pour le/la connaître.",
+        exemple:"Exemple : Comment tu t'appelles ? Où est-ce que tu habites ?"
+      }
+    },
+    {
+      id:"J1D5", title:"La négation : ne...pas",
+      lesson:{
+        titre:"Dire non en français",
+        regle:"Pour mettre une phrase à la forme négative, on utilise 'ne...pas' autour du verbe. Attention : dans le langage parlé, on oublie souvent le 'ne'.",
+        points:[
+          "Affirmatif : Je mange de la viande.",
+          "Négatif : Je <strong>ne</strong> mange <strong>pas</strong> de viande.",
+          "Avec une voyelle : Je <strong>n'</strong>aime <strong>pas</strong> le café.",
+          "À l'oral : 'Je mange pas' est compris mais incorrect à l'écrit."
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Mets à la négative : 'Il parle anglais.'", opts:["Il ne parle pas anglais.","Il parle pas anglais.","Il ne parle anglais pas.","Pas il parle anglais."], ans:0, exp:"Ne se place avant le verbe, pas après → Il ne parle pas anglais."},
+        {type:"qcm", q:"Complète : 'Elle _____ pas faim.'", opts:["n'a","ne a","na","n'est"], ans:0, exp:"Avant 'a' (voyelle) → 'n'' : elle n'a pas faim."},
+        {type:"qcm", q:"Corrige : 'Je ne veux pas du café.'", opts:["Je ne veux pas de café.","Je ne veux pas du café.","Je veux pas de café.","Je ne veux du café pas."], ans:0, exp:"Après une négation, 'du/de la/des' devient 'de' → pas de café."},
+        {type:"blank", q:"'Tu aimes le sport ?' → 'Non, je _____ aime _____ le sport.'", ans:"n' / pas", exp:"Avec une voyelle : je n'aime pas. La voyelle de 'aime' déclenche l'élision."},
+        {type:"blank", q:"'Ils ont un chien.' → 'Ils _____ ont _____ de chien.'", ans:"n' / pas", exp:"Après la négation, 'un/une/des' devient 'de' → pas de chien."}
+      ],
+      defi:{
+        consigne:"Écris 3 choses que tu ne fais pas et explique pourquoi.",
+        exemple:"Exemple : Je ne mange pas de viande parce que je suis végétarien(ne)."
+      }
+    },
+    {
+      id:"J1D6", title:"Les chiffres et les quantités",
+      lesson:{
+        titre:"Compter et mesurer",
+        regle:"Les chiffres en français peuvent être délicats, surtout 70, 80 et 90. On dit soixante-dix (60+10), quatre-vingts (4×20), quatre-vingt-dix (4×20+10).",
+        points:[
+          "20 = vingt / 30 = trente / 40 = quarante / 50 = cinquante",
+          "60 = soixante / 70 = soixante-dix / 80 = quatre-vingts / 90 = quatre-vingt-dix",
+          "Quantités : un peu de, beaucoup de, assez de, trop de"
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Comment dit-on '75' en français ?", opts:["Soixante-quinze","Septante-cinq","Soixante-et-cinq","Septante et cinq"], ans:0, exp:"En France : 75 = soixante (60) + quinze (15) = soixante-quinze."},
+        {type:"qcm", q:"Complète : 'Il y a _____ sucre dans ce gâteau.' (trop)", opts:["trop de","trop du","beaucoup le","assez de"], ans:0, exp:"Après les expressions de quantité, on utilise 'de' sans article → trop de sucre."},
+        {type:"qcm", q:"Combien font 4 × 20 ?", opts:["80","40","60","90"], ans:0, exp:"Quatre-vingts = 4 × 20 = 80. Le 's' disparaît quand suivi d'un autre chiffre."},
+        {type:"blank", q:"Comment dit-on 91 ? Quatre-vingt-_____", ans:"onze", exp:"91 = quatre-vingts + onze = quatre-vingt-onze."},
+        {type:"blank", q:"'Je bois _____ café.' (peu) → Je bois _____ peu de café.", ans:"un", exp:"'Un peu de' est l'expression pour une petite quantité indéfinie."}
+      ],
+      defi:{
+        consigne:"Écris ton numéro de téléphone en lettres ! Et donne 2 prix de choses que tu as achetées récemment.",
+        exemple:"Exemple : Mon numéro est le zéro-six-trente-deux... / J'ai acheté du pain pour un euro vingt."
+      }
+    },
+    {
+      id:"J1D7", title:"Révision semaine 1 — Bilan",
+      lesson:{
+        titre:"Bilan de la semaine 1",
+        regle:"Cette semaine, tu as appris : les articles, les verbes en -ER, le vocabulaire de la maison, poser des questions, la négation, et les chiffres. Voici un résumé rapide.",
+        points:[
+          "Articles : le/la/les (défini) — un/une/des (indéfini)",
+          "Verbes -ER : parle, parles, parle, parlons, parlez, parlent",
+          "Questions : Est-ce que + sujet + verbe ?",
+          "Négation : ne + verbe + pas (→ de après la négation)"
+        ]
+      },
+      exos:[
+        {type:"qcm", q:"Quel article est correct ? '_____ appartement est grand.'", opts:["L'","Le","La","Un"], ans:0, exp:"'Appartement' commence par une voyelle → L'appartement."},
+        {type:"qcm", q:"Conjuguez : 'Vous _____ (écouter) de la musique ?'", opts:["écoutez","écoutent","écoutons","écoute"], ans:0, exp:"Avec 'vous' → terminaison -ez : vous écoutez."},
+        {type:"qcm", q:"Transforme à la négative : 'J'ai du temps.'", opts:["Je n'ai pas de temps.","Je n'ai pas du temps.","Je ai pas de temps.","Je n'ai pas le temps."], ans:0, exp:"Après la négation : 'du' devient 'de' → pas de temps."},
+        {type:"blank", q:"Comment dit-on 82 ? ___________________", ans:"quatre-vingt-deux", exp:"82 = quatre-vingts + deux. Sans 's' à 'vingt' car suivi d'un chiffre."},
+        {type:"blank", q:"'_____ heure est-il ?' = Quelle heure est-il ?", ans:"Quelle", exp:"'Quelle' est le mot interrogatif pour l'heure (féminin → quelle)."}
+      ],
+      defi:{
+        consigne:"Écris un petit paragraphe (5-6 phrases) pour te présenter : ton prénom, où tu habites, ce que tu aimes faire, ce que tu n'aimes pas.",
+        exemple:"Exemple : Je m'appelle Marie. J'habite à Lyon. J'aime regarder des films mais je n'aime pas faire la cuisine."
+      }
+    }
+  ]
+},
+{
+  id:"J2", month:"juillet", num:2,
+  title:"Voyages et déplacements", theme:"Thème : Se déplacer",
+  days:[
+    {id:"J2D1", title:"Les transports", lesson:{titre:"Prendre les transports",regle:"Pour parler des transports, on utilise différentes prépositions selon le moyen de transport.",points:["En voiture, en bus, en métro, en avion, en train","À vélo, à pied, à moto","Je prends le bus / Je vais à pied / Je voyage en avion"]},exos:[{type:"qcm",q:"Comment dit-on qu'on va au travail à vélo ?",opts:["Je vais au travail à vélo.","Je vais au travail en vélo.","Je prends le vélo au travail.","Je marche en vélo."],ans:0,exp:"Avec 'vélo', on dit 'à vélo' (pas 'en vélo')."},
+    {type:"qcm",q:"'Je _____ le métro chaque matin.'",opts:["prends","prend","prendre","prenons"],ans:0,exp:"'Je' + prendre → je prends. Verbe irrégulier important."},
+    {type:"qcm",q:"Quel transport est 'en avion' ?",opts:["L'avion","La voiture","Le bus","Le bateau"],ans:0,exp:"'En avion' = voyager par avion. Les grands transports utilisent 'en'."},
+    {type:"blank",q:"Je voyage _____ train pour aller à Paris.",ans:"en",exp:"On dit 'en train' pour ce moyen de transport."},
+    {type:"blank",q:"Il va à l'école _____ pied tous les jours.",ans:"à",exp:"'À pied' signifie qu'on marche. On utilise 'à' et non 'en'."}],defi:{consigne:"Décris comment tu te déplaces dans ta vie quotidienne. Quels transports utilises-tu ?",exemple:"Exemple : Je vais au travail en bus. Le weekend, je me promène à pied."}},
+    {id:"J2D2", title:"Demander son chemin", lesson:{titre:"S'orienter dans la ville",regle:"Pour demander et donner un chemin, il faut connaître les directions et les lieux.",points:["Tournez à gauche / à droite","Allez tout droit / Continuez","Traversez la rue / Prenez la première rue","C'est à 5 minutes à pied / C'est loin ?"]},exos:[{type:"qcm",q:"'Pour aller à la gare, _____ à gauche au feu.'",opts:["tournez","tourner","vous tournez","tournez-vous"],ans:0,exp:"Pour donner une instruction/direction, on utilise l'impératif → tournez."},
+    {type:"qcm",q:"Que signifie 'tout droit' ?",opts:["Sans tourner, dans la même direction","À gauche","À droite","Derrière vous"],ans:0,exp:"'Tout droit' = continuer dans la même direction, sans tourner."},
+    {type:"qcm",q:"'C'est _____ ?' Vous voulez savoir si c'est proche.",opts:["loin","ici","là","proche"],ans:0,exp:"'C'est loin ?' permet de savoir si la distance est grande ou petite."},
+    {type:"blank",q:"La banque est en face _____ la pharmacie.",ans:"de",exp:"'En face de' est l'expression correcte pour indiquer une position opposée."},
+    {type:"blank",q:"Prenez la _____ rue à droite.",ans:"première",exp:"'La première rue à droite' = la prochaine rue à droite."}],defi:{consigne:"Écris les directions pour aller de ton domicile à un endroit que tu connais bien.",exemple:"Exemple : Pour aller à la boulangerie : sortez de chez moi, tournez à gauche..."}},
+    {id:"J2D3", title:"Réserver un billet", lesson:{titre:"Acheter et réserver",regle:"Pour acheter un billet ou réserver, il faut des expressions spécifiques.",points:["Je voudrais un billet pour... (aller simple ou aller-retour)","Un billet de première/deuxième classe","Le train part à... et arrive à...","Combien ça coûte ? / C'est quel prix ?"]},exos:[{type:"qcm",q:"Comment demander poliment un billet ?",opts:["Je voudrais un billet, s'il vous plaît.","Donne-moi un billet.","Je veux billet.","Un billet moi."],ans:0,exp:"'Je voudrais' est le conditionnel de 'vouloir' → très poli et naturel."},
+    {type:"qcm",q:"'Un aller-retour' signifie :",opts:["Un billet pour aller et revenir","Un billet seulement pour aller","Deux billets","Un voyage en retard"],ans:0,exp:"Un aller-retour = ticket pour aller ET pour le retour (deux trajets)."},
+    {type:"qcm",q:"'Le train _____ à 14h30.'",opts:["part","pars","partez","partir"],ans:0,exp:"'Le train' est à la 3e personne du singulier → il part."},
+    {type:"blank",q:"Je voudrais un billet _____ simple pour Lyon.",ans:"aller",exp:"'Un aller simple' = seulement le trajet aller, sans retour."},
+    {type:"blank",q:"C'est _____ prix, ce billet ? (pour demander le prix)",ans:"quel",exp:"'C'est quel prix ?' ou 'Quel est le prix ?' pour demander combien ça coûte."}],defi:{consigne:"Tu veux voyager de ta ville à Paris. Écris ce que tu dirais au guichet de la gare.",exemple:"Exemple : Bonjour, je voudrais un aller-retour pour Paris, s'il vous plaît."}},
+    {id:"J2D4", title:"À l'hôtel", lesson:{titre:"Réserver un hôtel",regle:"Quand on voyage, on a besoin de réserver une chambre et de comprendre les informations de l'hôtel.",points:["Je voudrais réserver une chambre pour 2 personnes.","Pour combien de nuits ? Pour 3 nuits, du 5 au 8 juillet.","La chambre est-elle avec petit-déjeuner inclus ?","À quelle heure est le check-in / check-out ?"]},exos:[{type:"qcm",q:"'Je voudrais une chambre _____ deux personnes.'",opts:["pour","à","avec","de"],ans:0,exp:"'Pour' indique la destination ou la personne : une chambre pour deux personnes."},
+    {type:"qcm",q:"'Check-out' signifie :",opts:["L'heure de départ de l'hôtel","L'heure d'arrivée","Le petit-déjeuner","La réservation"],ans:0,exp:"Le check-out = l'heure à laquelle on doit libérer la chambre et partir."},
+    {type:"qcm",q:"'Le petit-déjeuner est _____.' (compris dans le prix)",opts:["inclus","incluse","inclut","include"],ans:0,exp:"'Inclus' (masculin) = compris dans le prix. Au féminin : incluse."},
+    {type:"blank",q:"La chambre est disponible _____ 15h. (à partir de)",ans:"à partir de",exp:"'À partir de 15h' = depuis 15h, pas avant 15h."},
+    {type:"blank",q:"C'est combien _____ nuit ?",ans:"par",exp:"'Par nuit' indique le prix pour chaque nuit → 80 euros par nuit."}],defi:{consigne:"Écris un message pour réserver une chambre d'hôtel pour 2 nuits. Précise tes besoins.",exemple:"Exemple : Bonjour, je voudrais réserver une chambre pour 2 personnes..."}},
+    {id:"J2D5", title:"Les pays et les nationalités", lesson:{titre:"Parler des pays",regle:"En français, on utilise des prépositions différentes selon les pays (masculin, féminin, pluriel).",points:["EN + pays féminin : en France, en Espagne, en Italie","AU + pays masculin : au Maroc, au Japon, au Canada","AUX + pays pluriel : aux États-Unis, aux Pays-Bas","Nationalités : je suis français(e), marocain(e), espagnol(e)"]},exos:[{type:"qcm",q:"'Je vais _____ Maroc cet été.'",opts:["au","en","à","aux"],ans:0,exp:"'Maroc' est masculin → au Maroc. (En + féminin / Au + masculin)"},
+    {type:"qcm",q:"'Elle vient _____ États-Unis.'",opts:["des","du","de","d'"],ans:0,exp:"Pour les pays pluriels, on utilise 'des' → des États-Unis."},
+    {type:"qcm",q:"Il est né en Italie. Quelle est sa nationalité ?",opts:["Il est italien.","Il est italienne.","Il est italie.","Il est de Italie."],ans:0,exp:"Nationalité masculine → italien (sans -ne pour les hommes)."},
+    {type:"blank",q:"J'habite _____ France depuis 5 ans.",ans:"en",exp:"'France' est féminin → en France."},
+    {type:"blank",q:"Elle vient _____ Japon. (origine)",ans:"du",exp:"Pour indiquer l'origine d'un pays masculin, on dit 'du' → elle vient du Japon."}],defi:{consigne:"Parle d'un voyage que tu as fait ou que tu rêves de faire. Quel pays ? Pourquoi ?",exemple:"Exemple : Je voudrais aller au Japon parce que j'aime la culture japonaise."}},
+    {id:"J2D6", title:"Parler du passé (passé composé)", lesson:{titre:"Le passé composé",regle:"Pour parler d'actions terminées dans le passé, on utilise le passé composé : AVOIR/ÊTRE + participe passé.",points:["J'ai mangé / Tu as dormi / Nous avons regardé → avec AVOIR",
+    "Je suis allé(e) / Elle est venue / Ils sont partis → avec ÊTRE",
+    "Astuce : les verbes de mouvement utilisent souvent ÊTRE (aller, venir, partir, arriver...)"]},exos:[{type:"qcm",q:"'Elle _____ allée au marché ce matin.'",opts:["est","a","était","avait"],ans:0,exp:"'Aller' utilise 'être' au passé composé → elle est allée (accord avec sujet féminin)."},
+    {type:"qcm",q:"'Nous _____ regardé un film hier soir.'",opts:["avons","sommes","avez","ont"],ans:0,exp:"'Regarder' utilise 'avoir' → nous avons regardé."},
+    {type:"qcm",q:"Quel est le participe passé de 'finir' ?",opts:["fini","finit","finis","finir"],ans:0,exp:"Verbes en -IR → participe passé en -i : finir → fini."},
+    {type:"blank",q:"J'_____ travaillé toute la journée.",ans:"ai",exp:"'Travailler' utilise 'avoir' → j'ai travaillé."},
+    {type:"blank",q:"Ils _____ partis tôt ce matin.",ans:"sont",exp:"'Partir' utilise 'être' → ils sont partis (accord au masculin pluriel)."}],defi:{consigne:"Raconte ce que tu as fait hier. Utilise au moins 4 verbes au passé composé.",exemple:"Exemple : Hier, j'ai mangé avec ma famille. Nous sommes allés au parc."}},
+    {id:"J2D7", title:"Révision semaine 2 — Voyages", lesson:{titre:"Bilan semaine 2",regle:"Cette semaine : les transports, demander son chemin, réserver, les pays et nationalités, et le passé composé. Un rappel essentiel :",points:["Transports : en voiture / à vélo / à pied","Directions : tournez à gauche, allez tout droit","Passé composé : avoir/être + participe passé","Pays : en + féminin / au + masculin / aux + pluriel"]},exos:[{type:"qcm",q:"'Je suis _____ à Paris hier à 18h.' (arriver)",opts:["arrivé","arrivée","arriver","arrivés"],ans:0,exp:"'Arriver' utilise être. Sujet masculin singulier → arrivé."},
+    {type:"qcm",q:"'Pour aller à la gare, _____ tout droit.'",opts:["allez","aller","vous allez","allons"],ans:0,exp:"Pour donner une direction, on utilise l'impératif → allez."},
+    {type:"qcm",q:"Comment dit-on 'Spain' en français ?",opts:["L'Espagne","L'Españe","L'Espagn","L'Ispagne"],ans:0,exp:"Spain = l'Espagne. C'est un pays féminin → en Espagne."},
+    {type:"blank",q:"Je voudrais un aller _____ pour Marseille, s'il vous plaît.",ans:"simple",exp:"Un aller simple = seulement le trajet aller (pas de retour)."},
+    {type:"blank",q:"Hier soir, nous _____ regardé les étoiles.",ans:"avons",exp:"'Regarder' utilise l'auxiliaire 'avoir' → nous avons regardé."}],defi:{consigne:"Raconte un voyage imaginaire : où tu es allé(e), comment tu y es allé(e), et ce que tu as fait.",exemple:"Exemple : Le weekend dernier, je suis allé(e) à Rome en avion. J'ai visité le Colisée..."}}
+  ]
+},
+{
+  id:"J3", month:"juillet", num:3,
+  title:"Manger et cuisiner", theme:"Thème : La nourriture",
+  days:[
+    {id:"J3D1", title:"Les aliments et les repas", lesson:{titre:"Le vocabulaire de la nourriture",regle:"En France, il y a traditionnellement 3 repas : le petit-déjeuner, le déjeuner et le dîner. Voici les mots essentiels.",points:["Petit-déjeuner : café, thé, croissant, pain, beurre, confiture, jus d'orange","Déjeuner/Dîner : la viande, le poisson, les légumes, le riz, les pâtes, la salade","Dessert : le gâteau, la tarte, la crème, les fruits"]},exos:[{type:"qcm",q:"Quel est le repas du matin en français ?",opts:["Le petit-déjeuner","Le déjeuner","Le dîner","Le goûter"],ans:0,exp:"Le petit-déjeuner = breakfast. Le déjeuner = lunch. Le dîner = dinner."},
+    {type:"qcm",q:"'Je mange des _____ avec de la sauce tomate.' (pâtes)",opts:["pâtes","pâte","path","paste"],ans:0,exp:"Les pâtes (toujours au pluriel en français) = pasta."},
+    {type:"qcm",q:"Quel aliment n'est pas un légume ?",opts:["La fraise","La carotte","Le poireau","L'aubergine"],ans:0,exp:"La fraise est un fruit. Les carottes, poireaux et aubergines sont des légumes."},
+    {type:"blank",q:"Le _____ est le repas du midi.",ans:"déjeuner",exp:"Le déjeuner = le repas de midi, entre le petit-déjeuner et le dîner."},
+    {type:"blank",q:"Je mets du _____ sur mon pain le matin. (butter)",ans:"beurre",exp:"Le beurre = butter. On le met souvent sur le pain au petit-déjeuner."}],defi:{consigne:"Décris ce que tu manges habituellement dans une journée. Petit-déjeuner, déjeuner, dîner.",exemple:"Exemple : Le matin, je mange du pain avec du beurre et je bois un café."}},
+    {id:"J3D2", title:"Au restaurant", lesson:{titre:"Commander au restaurant",regle:"Au restaurant français, il y a un vocabulaire spécifique pour commander et interagir avec le serveur.",points:["'La carte / le menu, s'il vous plaît !'","'Vous avez choisi ?' → 'Je voudrais... / Je vais prendre...'","'L'addition, s'il vous plaît.' pour payer","'C'est bon !' / 'C'était délicieux !'"]},exos:[{type:"qcm",q:"Comment demander l'addition au restaurant ?",opts:["L'addition, s'il vous plaît.","Le prix, s'il vous plaît.","Je veux payer maintenant.","Combien je dois ?"],ans:0,exp:"'L'addition' est le mot français pour 'bill'. On dit 'L'addition, s'il vous plaît'."},
+    {type:"qcm",q:"'Vous avez _____?' → le serveur demande si vous êtes prêt(e).",opts:["choisi","choisir","choisit","le choix"],ans:0,exp:"Le serveur dit 'Vous avez choisi ?' = Have you chosen? Participé passé de choisir."},
+    {type:"qcm",q:"'Je vais _____ le steak-frites.'",opts:["prendre","pris","prends","prenons"],ans:0,exp:"'Je vais prendre' = forme naturelle pour commander (infinitif après 'vais')."},
+    {type:"blank",q:"La carte, c'est la liste des _____ du restaurant.",ans:"plats",exp:"La carte / le menu = la liste des plats (dishes) proposés."},
+    {type:"blank",q:"'C'était _____!' pour dire que c'était très bon.",ans:"délicieux",exp:"'Délicieux' (ou délicieuse au féminin) = delicious. Très utilisé pour complimenter."}],defi:{consigne:"Écris un dialogue au restaurant entre un serveur et un client. 6-8 lignes minimum.",exemple:"Exemple : Serveur : Bonjour, vous avez choisi ? Client : Oui, je voudrais le poulet rôti..."}},
+    {id:"J3D3", title:"Les articles partitifs", lesson:{titre:"Du, de la, des — les articles partitifs",regle:"Les articles partitifs s'utilisent pour parler d'une quantité indéfinie de quelque chose (une partie d'un tout).",points:["DU (de + le) → masculin : je mange <strong>du</strong> pain, je bois <strong>du</strong> café","DE LA → féminin : je bois <strong>de la</strong> soupe, j'ai <strong>de la</strong> patience","DE L' → devant voyelle : je bois <strong>de l'</strong>eau","DES → pluriel : je mange <strong>des</strong> fruits","⚠️ Après la négation → DE seulement : je ne mange pas <strong>de</strong> viande"]},exos:[{type:"qcm",q:"'Je voudrais _____ eau, s'il vous plaît.'",opts:["de l'","du","de la","des"],ans:0,exp:"'Eau' est féminin et commence par une voyelle → de l'eau."},
+    {type:"qcm",q:"'Il mange _____ riz à chaque repas.'",opts:["du","de la","des","de l'"],ans:0,exp:"'Riz' est masculin → du riz (de + le = du)."},
+    {type:"qcm",q:"'Je ne bois pas _____ alcool.'",opts:["d'","du","de l'","de la"],ans:0,exp:"Après la négation, l'article partitif devient 'de' → pas d'alcool (+ élision)."},
+    {type:"blank",q:"Elle prépare _____ soupe pour ce soir. (feminine)",ans:"de la",exp:"'Soupe' est féminin → de la soupe. Elle prépare de la soupe."},
+    {type:"blank",q:"Il y a _____ fruits dans le panier. (pluriel)",ans:"des",exp:"'Fruits' est pluriel indéfini → des fruits."}],defi:{consigne:"Décris ce qu'il y a dans ton réfrigérateur en ce moment. Utilise du, de la, des.",exemple:"Exemple : Dans mon frigo, il y a du lait, de la salade, des œufs et du fromage."}},
+    {id:"J3D4", title:"Exprimer ses goûts", lesson:{titre:"Dire ce qu'on aime ou déteste",regle:"Il existe plusieurs façons d'exprimer son opinion sur la nourriture (et en général).",points:["J'adore / J'aime beaucoup / J'aime bien","Ça me plaît / C'est bon","Je n'aime pas beaucoup / Je n'aime pas","Je déteste / Je ne supporte pas","C'est + adjectif : c'est délicieux, épicé, fade, sucré, salé, amer"]},exos:[{type:"qcm",q:"Du plus fort au plus faible, quel est l'ordre ?",opts:["J'adore > J'aime > J'aime bien","J'aime bien > J'adore > J'aime","J'aime > J'aime bien > J'adore","J'adore > J'aime bien > J'aime"],ans:0,exp:"J'adore (le plus fort) > J'aime > J'aime bien (le plus faible des trois positifs)."},
+    {type:"qcm",q:"'Ce plat est trop _____ pour moi.' (beaucoup d'épices)",opts:["épicé","sucré","fade","amer"],ans:0,exp:"'Épicé' = spicy. Sucré = sweet. Fade = bland/tasteless. Amer = bitter."},
+    {type:"qcm",q:"Comment dire qu'on n'aime pas du tout quelque chose ?",opts:["Je déteste","Je n'aime pas beaucoup","Ça me plaît","Je n'aime pas trop"],ans:0,exp:"'Détester' est l'expression la plus forte pour exprimer une aversion."},
+    {type:"blank",q:"Le citron est _____ (not sweet, opposite of sweet).",ans:"amer",exp:"Le citron est amer (bitter). Le contraire de sucré."},
+    {type:"blank",q:"Ce gâteau n'a pas beaucoup de goût. Il est _____ (bland).",ans:"fade",exp:"'Fade' = sans goût, insipide. Un plat sans assez de sel ou d'épices."}],defi:{consigne:"Parle de tes 2 plats préférés et d'un plat que tu n'aimes pas. Explique pourquoi.",exemple:"Exemple : J'adore la pizza parce que c'est savoureux. Je n'aime pas les huîtres car c'est trop fort."}},
+    {id:"J3D5", title:"Faire les courses", lesson:{titre:"Au supermarché",regle:"Pour faire les courses, il faut connaître le vocabulaire du supermarché et des quantités.",points:["Les rayons : boulangerie, boucherie, épicerie, fruits et légumes, produits laitiers","Quantités emballées : une bouteille de, un kilo de, un paquet de, une boîte de","Demander de l'aide : 'Excusez-moi, où se trouve... ?' / 'Est-ce que vous avez... ?'"]},exos:[{type:"qcm",q:"'Je voudrais _____ kilo de tomates.'",opts:["un","une","du","de"],ans:0,exp:"'Kilo' est masculin → un kilo. On dit 'un kilo de tomates'."},
+    {type:"qcm",q:"Où achète-t-on de la viande ?",opts:["À la boucherie","À la boulangerie","À l'épicerie","Au rayon surgelés"],ans:0,exp:"La boucherie = boucher = magasin spécialisé dans la vente de viande."},
+    {type:"qcm",q:"'Une _____ d'eau' (pour une grande bouteille)",opts:["bouteille","boîte","paquet","pot"],ans:0,exp:"L'eau est liquide → on la vend en bouteilles. Une bouteille d'eau."},
+    {type:"blank",q:"Je cherche le rayon _____ et légumes.",ans:"fruits",exp:"Le rayon 'fruits et légumes' = la section du supermarché pour les produits frais."},
+    {type:"blank",q:"Un _____ de biscuits (a packet/bag)",ans:"paquet",exp:"Un paquet de biscuits = a packet of biscuits. Pour les produits solides emballés."}],defi:{consigne:"Fais une liste de courses pour une semaine. Utilise des quantités précises.",exemple:"Exemple : 2 kilos de pommes, une bouteille de lait, un paquet de pâtes..."}},
+    {id:"J3D6", title:"Recette simple : l'imparfait descriptif", lesson:{titre:"Décrire avec l'imparfait",regle:"L'imparfait s'utilise pour décrire des situations dans le passé, des habitudes ou des états (pas des actions ponctuelles).",points:["Description : Il faisait beau. La rue était calme. Les gens souriaient.","Habitude : Quand j'étais enfant, je mangeais des céréales.","État : J'avais faim. Elle était fatiguée. Nous voulions partir.","Terminaisons : -ais, -ais, -ait, -ions, -iez, -aient"]},exos:[{type:"qcm",q:"'Quand j'étais petite, je _____ des bonbons.'",opts:["mangeais","mangeait","mangez","mangerons"],ans:0,exp:"Imparfait, 1re personne : je mangeais. Habitude passée."},
+    {type:"qcm",q:"Quel temps convient ? 'Il _____ (faire) froid ce matin-là.'",opts:["faisait","a fait","fait","fera"],ans:0,exp:"Description d'une situation passée → imparfait : il faisait froid."},
+    {type:"qcm",q:"'Les enfants _____ (jouer) dans le jardin toute la journée.'",opts:["jouaient","ont joué","jouent","joueront"],ans:0,exp:"Habitude dans le passé → imparfait : les enfants jouaient."},
+    {type:"blank",q:"Avant, j'_____ (habiter) à Marseille.",ans:"habitais",exp:"Imparfait de 'habiter' : j'habitais. Situation passée qui durait."},
+    {type:"blank",q:"La soupe _____ (sentir) bon. C'était appétissant !",ans:"sentait",exp:"Description dans le passé → imparfait : la soupe sentait bon."}],defi:{consigne:"Raconte un souvenir lié à la nourriture : qu'est-ce que tu mangeais quand tu étais enfant ?",exemple:"Exemple : Quand j'étais enfant, je mangeais beaucoup de riz. Ma mère préparait..."}},
+    {id:"J3D7", title:"Révision semaine 3 — Nourriture", lesson:{titre:"Bilan semaine 3",regle:"Tu as appris : le vocabulaire des aliments, commander au restaurant, les articles partitifs, exprimer ses goûts, faire les courses et l'imparfait descriptif.",points:["Articles partitifs : du (masc.), de la (fém.), de l' (voyelle), des (pluriel)","Après négation : → de / d'","Imparfait : description et habitudes dans le passé","Goûts : j'adore > j'aime > j'aime bien / je n'aime pas > je déteste"]},exos:[{type:"qcm",q:"'Elle ne boit pas _____ café.' Quel article ?",opts:["de","du","le","d'un"],ans:0,exp:"Après une négation, les articles partitifs (du/de la/des) deviennent 'de'."},
+    {type:"qcm",q:"Quelle phrase est à l'imparfait ?",opts:["Il faisait chaud.","Il a fait chaud.","Il fait chaud.","Il fera chaud."],ans:0,exp:"'Faisait' = imparfait. 'A fait' = passé composé. 'Fait' = présent. 'Fera' = futur."},
+    {type:"qcm",q:"Comment commander au restaurant ?",opts:["Je vais prendre le poulet.","Donne-moi le poulet.","Je veux poulet.","Moi poulet."],ans:0,exp:"'Je vais prendre' est la façon la plus naturelle et polie de commander."},
+    {type:"blank",q:"Il y a _____ lait dans le frigo. (some milk)",ans:"du",exp:"'Lait' est masculin → du lait (de + le = du). Article partitif."},
+    {type:"blank",q:"Quand j'étais jeune, j'_____ beaucoup de sport.",ans:"faisais",exp:"Habitude passée → imparfait : je faisais. (faire → fais- + -ais)"}],defi:{consigne:"Écris une courte critique d'un restaurant que tu as visité (réel ou imaginaire). Décris les plats et donne ton avis.",exemple:"Exemple : J'ai mangé dans un restaurant italien hier. Les pâtes étaient délicieuses mais la sauce était un peu fade..."}}
+  ]
+},
+{
+  id:"J4", month:"juillet", num:4,
+  title:"Travail et études", theme:"Thème : La vie professionnelle",
+  days:[
+    {id:"J4D1", title:"Les professions", lesson:{titre:"Parler de son travail",regle:"Pour parler de sa profession, on utilise 'je suis' + profession (sans article en général).",points:["Je suis médecin / infirmier(ère) / professeur(e)","Je travaille comme ingénieur / secrétaire","Je suis étudiant(e) en droit / en médecine","⚠️ Pas d'article : je suis médecin (et non je suis un médecin)"]},exos:[{type:"qcm",q:"'Il travaille dans une école. Il est _____.'",opts:["professeur","un professeur","le professeur","de professeur"],ans:0,exp:"Après 'être', la profession s'utilise sans article → il est professeur."},
+    {type:"qcm",q:"'Je suis _____ en informatique.' (student)",opts:["étudiant","étudier","un étudiant","l'étudiant"],ans:0,exp:"'Je suis étudiant(e)' sans article. On peut préciser : étudiant en informatique."},
+    {type:"qcm",q:"Quel est le féminin de 'infirmier' ?",opts:["Infirmière","Infirmier","Infirmieuse","Infirmière"],ans:0,exp:"Infirmier → infirmière (on ajoute -e). Attention à l'accent sur le è."},
+    {type:"blank",q:"Elle soigne les malades à l'hôpital. Elle est _____.",ans:"médecin",exp:"Un/une médecin soigne les patients. En France, on dit souvent 'médecin' au féminin aussi."},
+    {type:"blank",q:"Je _____ comme développeur dans une startup.",ans:"travaille",exp:"'Travailler comme' + profession = une façon naturelle de décrire son travail."}],defi:{consigne:"Décris ton travail ou tes études. Qu'est-ce que tu fais ? Qu'est-ce que tu aimes dans ton travail ?",exemple:"Exemple : Je suis étudiant(e) en marketing. J'aime créer des campagnes publicitaires."}},
+    {id:"J4D2", title:"Le futur proche", lesson:{titre:"Parler du futur avec ALLER",regle:"Le futur proche s'utilise pour parler de ce qui va se passer bientôt. Il est très courant dans le langage parlé.",points:["Formation : ALLER (conjugué) + INFINITIF","Je vais travailler / Tu vas partir / Il va pleuvoir","Nous allons manger / Vous allez voir / Ils vont arriver","Négatif : Je ne vais pas travailler aujourd'hui."]},exos:[{type:"qcm",q:"'Elle _____ téléphoner ce soir.'",opts:["va","aller","va à","vas"],ans:0,exp:"Sujet 'elle' → elle va + infinitif. Future proche."},
+    {type:"qcm",q:"Mets au futur proche : 'Je mange.'",opts:["Je vais manger.","Je vas manger.","J'aller manger.","Je mange bientôt."],ans:0,exp:"Futur proche = aller conjugué + infinitif → je vais manger."},
+    {type:"qcm",q:"Forme négative : 'Nous allons partir.'",opts:["Nous n'allons pas partir.","Nous allons ne pas partir.","Nous ne partons pas aller.","Nous pas allons partir."],ans:0,exp:"La négation entoure le verbe conjugué (aller) → nous n'allons pas partir."},
+    {type:"blank",q:"Qu'est-ce que tu vas _____ ce weekend ? (faire)",ans:"faire",exp:"'Faire' est l'infinitif de 'faire'. Futur proche → tu vas faire quoi ?"},
+    {type:"blank",q:"Il _____ aller chez le médecin demain. (have to go)",ans:"va",exp:"Il va + infinitif = futur proche. 'Il va aller' = he is going to go."}],defi:{consigne:"Écris tes 5 projets pour le prochain mois. Qu'est-ce que tu vas faire ?",exemple:"Exemple : Le mois prochain, je vais apprendre à cuisiner. Je vais aussi lire un livre en français."}},
+    {id:"J4D3", title:"Écrire un email professionnel", lesson:{titre:"Le mail formel en français",regle:"En français, les mails professionnels ont une structure et un vocabulaire spécifiques assez formels.",points:["Début : 'Madame, Monsieur,' ou 'Bonjour M./Mme [Nom],'","Corps : 'Suite à... / Je me permets de... / Je vous contacte pour...'","Fin : 'Dans l'attente de votre réponse, veuillez agréer...' (très formel) ou simplement 'Cordialement,'","Signature : Prénom NOM / Poste / Coordonnées"]},exos:[{type:"qcm",q:"Quelle formule de politesse est la plus formelle ?",opts:["Veuillez agréer mes salutations distinguées.","Cordialement.","À bientôt.","Bonne journée."],ans:0,exp:"'Veuillez agréer...' est très formel, utilisé dans les lettres/mails officiels."},
+    {type:"qcm",q:"Pour commencer un mail à un inconnu, on écrit :",opts:["Madame, Monsieur,","Salut,","Coucou,","Hey,"],ans:0,exp:"'Madame, Monsieur,' est la formule standard quand on ne connaît pas le destinataire."},
+    {type:"qcm",q:"'Je me permets de vous _____ concernant votre annonce.'",opts:["contacter","contacte","contact","contacterai"],ans:0,exp:"Après 'je me permets de', on utilise l'infinitif → de vous contacter."},
+    {type:"blank",q:"Pour terminer un mail professionnel de façon neutre : _____,",ans:"Cordialement",exp:"'Cordialement' est la conclusion la plus utilisée dans les mails pro en France."},
+    {type:"blank",q:"'Dans l'_____ de votre réponse' (en attente de)",ans:"attente",exp:"'Dans l'attente de votre réponse' = en attendant que vous répondiez."}],defi:{consigne:"Écris un mail pour postuler à un emploi (réel ou imaginaire). Présente-toi et dis pourquoi tu es intéressé(e).",exemple:"Exemple : Madame, Monsieur, Je me permets de vous contacter au sujet de votre offre d'emploi..."}},
+    {id:"J4D4", title:"Les adverbes de fréquence", lesson:{titre:"Dire combien de fois",regle:"Les adverbes de fréquence permettent d'indiquer combien de fois on fait quelque chose.",points:["Toujours > souvent > régulièrement > parfois > rarement > jamais","Position : après le verbe au présent → Je travaille souvent le weekend","Au passé composé : entre l'auxiliaire et le participe → J'ai souvent travaillé"]},exos:[{type:"qcm",q:"Du plus fréquent au moins fréquent :",opts:["Toujours > souvent > parfois > jamais","Parfois > souvent > toujours > jamais","Jamais > parfois > souvent > toujours","Souvent > toujours > rarement > parfois"],ans:0,exp:"L'ordre de fréquence : toujours (100%) → souvent → parfois → rarement → jamais (0%)."},
+    {type:"qcm",q:"'Je ne travaille _____ le dimanche.' (never)",opts:["jamais","toujours","souvent","parfois"],ans:0,exp:"'Ne...jamais' = never. Jamais se place après le verbe (ou entre auxiliaire et participe)."},
+    {type:"qcm",q:"'Il _____ oublie ses clés.' (always)",opts:["oublie toujours","toujours oublie","a toujours oublié","oublie jamais"],ans:0,exp:"'Toujours' se place après le verbe conjugué → il oublie toujours."},
+    {type:"blank",q:"Elle va _____ au cinéma le vendredi. (sometimes)",ans:"parfois",exp:"'Parfois' = sometimes. Elle va parfois au cinéma = elle y va de temps en temps."},
+    {type:"blank",q:"Je ne mange _____ de fast-food. (rarely)",ans:"rarement",exp:"'Rarement' = rarely. Attention : 'rarement' seul n'est pas une négation, on peut l'utiliser sans 'ne'."}],defi:{consigne:"Décris tes habitudes professionnelles ou de study. Utilise 5 adverbes de fréquence différents.",exemple:"Exemple : Je travaille toujours le matin. Je vérifie souvent mes mails. Je fais parfois du sport à midi."}},
+    {id:"J4D5", title:"Donner des instructions (impératif)", lesson:{titre:"L'impératif — donner des ordres ou des conseils",regle:"L'impératif s'utilise pour donner des ordres, des conseils ou des instructions. Il n'a que 3 personnes.",points:["TU : Mange ! / Parle ! / Fais attention !","NOUS : Mangeons ! / Parlons ! / Allons-y !","VOUS : Mangez ! / Parlez ! / Faites attention !","Avec les verbes en -ER, le 'tu' perd le 's' : tu parles → Parle !"]},exos:[{type:"qcm",q:"Comment dit-on 'Listen !' (à un ami, tutoiement) ?",opts:["Écoute !","Écoutez !","Écoutons !","Tu écoutes !"],ans:0,exp:"Impératif 'tu' pour les verbes en -ER → perd le -s → Écoute !"},
+    {type:"qcm",q:"'_____ attention à la marche !' (vous)",opts:["Faites","Fais","Faire","Font"],ans:0,exp:"Impératif 'vous' de 'faire' = Faites. (Verbe irrégulier)"},
+    {type:"qcm",q:"Pour encourager un groupe à partir : '_____ !'",opts:["Allons-y !","Allez-y !","Va !","Aller !"],ans:0,exp:"'Allons-y !' = let's go! (impératif 'nous'). 'Allez-y !' s'adresserait à vous/eux."},
+    {type:"blank",q:"(Tu) _____ ce document avant 17h ! (finir)",ans:"Finis",exp:"Impératif 'tu' de 'finir' → Finis ! (verbes en -IR gardent le -s)."},
+    {type:"blank",q:"(Vous) _____ la porte, s'il vous plaît. (fermer)",ans:"Fermez",exp:"Impératif 'vous' de 'fermer' → Fermez ! Même forme que le présent vous."}],defi:{consigne:"Écris 5 conseils pour apprendre le français efficacement. Utilise l'impératif.",exemple:"Exemple : Écoute de la musique française. Regarde des films avec des sous-titres. Parle avec des natifs..."}},
+    {id:"J4D6", title:"Le CV et se présenter (B1)", lesson:{titre:"Se présenter professionnellement — niveau B1",regle:"Pour un entretien ou une présentation formelle, il faut structurer son discours.",points:["Formation : J'ai obtenu un diplôme de / Je suis diplômé(e) en...","Expérience : J'ai travaillé pendant X ans en tant que... / J'ai occupé le poste de...","Compétences : Je maîtrise... / J'ai de l'expérience en... / Je suis capable de...","Motivation : Ce qui m'attire dans ce poste, c'est... / Je suis passionné(e) par..."]},exos:[{type:"qcm",q:"'J'ai _____ un master en économie.' (obtained)",opts:["obtenu","obtenu","obtenir","obtenus"],ans:0,exp:"Passé composé de 'obtenir' (irrégulier) → j'ai obtenu. Participe passé = obtenu."},
+    {type:"qcm",q:"'Je _____ le poste de responsable marketing pendant 3 ans.'",opts:["ai occupé","occupais","occuper","occupe"],ans:0,exp:"Expérience terminée dans le passé → passé composé : j'ai occupé."},
+    {type:"qcm",q:"'Ce qui m'_____ dans ce poste, c'est la créativité.'",opts:["attire","attrait","attirait","attirera"],ans:0,exp:"Présent pour une motivation actuelle → ce qui m'attire (présent de l'indicatif)."},
+    {type:"blank",q:"Je _____ l'anglais et l'espagnol couramment. (master/speak fluently)",ans:"maîtrise",exp:"'Maîtriser une langue' = la parler très bien, la dominer. Je maîtrise = présent."},
+    {type:"blank",q:"J'ai de l'expérience _____ la gestion de projet.",ans:"en",exp:"'Avoir de l'expérience en + domaine' = la formulation naturelle en français."}],defi:{consigne:"Écris un paragraphe de présentation professionnelle comme si tu passais un entretien d'embauche.",exemple:"Exemple : Bonjour, je m'appelle... J'ai obtenu un diplôme en... J'ai travaillé pendant... Ce qui m'attire dans ce poste..."}},
+    {id:"J4D7", title:"Révision semaine 4 — Travail", lesson:{titre:"Bilan semaine 4",regle:"Cette semaine : les professions, le futur proche, l'email professionnel, les adverbes de fréquence, l'impératif, et se présenter en B1.",points:["Futur proche : aller conjugué + infinitif","Impératif : Mange ! / Mangeons ! / Mangez !","Adverbes : toujours > souvent > parfois > rarement > jamais","Email : Madame, Monsieur... Cordialement"]},exos:[{type:"qcm",q:"'Nous _____ présenter notre projet lundi.' (futur proche)",opts:["allons","allons à","irons","voulons"],ans:0,exp:"Futur proche : nous allons + infinitif → nous allons présenter."},
+    {type:"qcm",q:"'_____ vos mails avant 9h !' (vous, vérifier)",opts:["Vérifiez","Vérifier","Vous vérifiez","Vérifions"],ans:0,exp:"Impératif 'vous' de 'vérifier' → Vérifiez ! (terminaison -ez)"},
+    {type:"qcm",q:"Elle va _____ au bureau à vélo. (toujours)",opts:["toujours aller","aller toujours","aller jamais","toujours à"],ans:0,exp:"'Toujours' se place après le verbe auxiliaire dans le futur proche → va toujours aller."},
+    {type:"blank",q:"Je suis _____ en droit. (student)",ans:"étudiant",exp:"'Je suis étudiant(e) en droit' = sans article avant la profession."},
+    {type:"blank",q:"J'ai _____ un diplôme d'ingénieur en 2020.",ans:"obtenu",exp:"Participe passé irrégulier de 'obtenir' → obtenu. (J'ai obtenu mon diplôme)"}],defi:{consigne:"Rédige un petit email professionnel pour demander un jour de congé à ton supérieur.",exemple:"Exemple : Madame, Monsieur, Je me permets de vous contacter afin de solliciter un jour de congé le..."}}
+  ]
+},
+// Semaine 5 Juillet
+{
+  id:"J5", month:"juillet", num:5,
+  title:"Santé et corps", theme:"Thème : La santé",
+  days:[
+    {id:"J5D1", title:"Le corps humain", lesson:{titre:"Les parties du corps",regle:"Connaître les parties du corps est essentiel pour communiquer avec un médecin ou décrire une douleur.",points:["La tête : les yeux, le nez, la bouche, les oreilles, les dents","Le tronc : le dos, le ventre, la poitrine, les épaules","Les membres : les bras, les mains, les jambes, les pieds","Verbe utile : avoir mal à... → J'ai mal à la tête / J'ai mal au dos"]},exos:[{type:"qcm",q:"'J'ai mal _____ dos.' Quelle préposition ?",opts:["au","à le","à la","du"],ans:0,exp:"'Dos' est masculin → à + le = au. J'ai mal au dos."},
+    {type:"qcm",q:"Où sont les yeux ?",opts:["Sur le visage","Dans la bouche","Sur les épaules","Au bout des doigts"],ans:0,exp:"Les yeux se trouvent sur le visage, de chaque côté du nez."},
+    {type:"qcm",q:"'Elle a mal _____ gorge.' (throat)",opts:["à la","au","aux","de la"],ans:0,exp:"'Gorge' est féminin → à la gorge. Elle a mal à la gorge."},
+    {type:"blank",q:"Les _____ servent à marcher et à courir. (legs)",ans:"jambes",exp:"Les jambes (les deux membres inférieurs) servent à se déplacer."},
+    {type:"blank",q:"'J'ai mal _____ dents.' (teeth)",ans:"aux",exp:"'Dents' est pluriel → à + les = aux. J'ai mal aux dents."}],defi:{consigne:"Tu as mal quelque part. Décris tes symptômes comme si tu appelais le médecin.",exemple:"Exemple : Bonjour docteur, j'ai mal à la tête depuis hier et j'ai aussi mal à la gorge..."}},
+    {id:"J5D2", title:"Chez le médecin", lesson:{titre:"Une consultation médicale",regle:"Chez le médecin, il faut savoir décrire ses symptômes et comprendre les conseils du médecin.",points:["'Où avez-vous mal ?' / 'Depuis quand ?' / 'Avez-vous de la fièvre ?'","'J'ai de la fièvre / Je tousse / J'ai le nez qui coule / Je suis enrhumé(e)'","'Je vais vous prescrire... / Prenez ce médicament 3 fois par jour'","L'ordonnance = la prescription du médecin"]},exos:[{type:"qcm",q:"Comment dit-on 'I have a cold' ?",opts:["Je suis enrhumé(e).","J'ai froid.","Je tousse.","J'ai chaud."],ans:0,exp:"'Être enrhumé(e)' = avoir un rhume (cold). Attention : 'avoir froid' = to feel cold (température)."},
+    {type:"qcm",q:"'Depuis _____ avez-vous ces symptômes ?' (how long)",opts:["combien de temps","quand","pourquoi","comment"],ans:0,exp:"'Depuis combien de temps' demande la durée. 'Depuis quand' demande la date de début."},
+    {type:"qcm",q:"L'ordonnance est :",opts:["Le document du médecin pour les médicaments","La liste des symptômes","La carte d'assurance maladie","Le résultat d'une analyse"],ans:0,exp:"L'ordonnance (prescription) = le document signé par le médecin pour acheter des médicaments."},
+    {type:"blank",q:"Je _____ depuis 3 jours. (to cough)",ans:"tousse",exp:"Tousser → je tousse. 'Je tousse depuis 3 jours' = I've been coughing for 3 days."},
+    {type:"blank",q:"Le médecin m'a _____ du sirop pour la toux. (prescribed)",ans:"prescrit",exp:"Prescrire (irrégulier) → prescrit. Le médecin m'a prescrit = the doctor prescribed me."}],defi:{consigne:"Écris un dialogue entre un médecin et un patient qui a de la fièvre et mal à la gorge.",exemple:"Exemple : Médecin : Bonjour, qu'est-ce qui vous amène ? Patient : Bonjour docteur, j'ai de la fièvre..."}},
+    {id:"J5D3", title:"Les habitudes saines", lesson:{titre:"Parler de sa santé",regle:"Pour parler de santé et de bien-être, on utilise des expressions courantes.",points:["Faire du sport / faire de l'exercice / bouger","Bien dormir / avoir une bonne hygiène de sommeil","Manger équilibré / éviter le sucre / boire assez d'eau","Se sentir bien / être en forme / être fatigué(e)"]},exos:[{type:"qcm",q:"'Je _____ du sport 3 fois par semaine.' (faire)",opts:["fais","fait","faits","faire"],ans:0,exp:"'Faire du sport' → je fais (1re personne singulier du verbe irrégulier 'faire')."},
+    {type:"qcm",q:"'Je me sens très _____ ce matin.' (in shape/well)",opts:["en forme","malade","fatigué","enrhumé"],ans:0,exp:"'Être en forme' = to be in good shape, to feel well. Très utilisé en français."},
+    {type:"qcm",q:"Quel conseil est sain ?",opts:["Boire 1,5 litre d'eau par jour.","Dormir 4 heures par nuit.","Manger du sucre à chaque repas.","Éviter l'exercice physique."],ans:0,exp:"Les recommandations de santé : boire environ 1,5 à 2 litres d'eau par jour."},
+    {type:"blank",q:"Je ne _____ pas assez la nuit. (dormir)",ans:"dors",exp:"Dormir → je dors (irrégulier). 'Je ne dors pas assez' = I don't sleep enough."},
+    {type:"blank",q:"Il faut _____ le stress pour être en bonne santé. (éviter)",ans:"éviter",exp:"'Éviter' = to avoid. Il faut éviter le stress, le sucre, l'alcool..."}],defi:{consigne:"Décris tes habitudes de santé : qu'est-ce que tu fais de bien ? Qu'est-ce que tu pourrais améliorer ?",exemple:"Exemple : Je fais du jogging le matin mais je dors parfois seulement 6 heures. Je pourrais manger plus de légumes."}},
+    {id:"J5D4", title:"Les conseils — devoir, pouvoir, falloir", lesson:{titre:"Les verbes modaux",regle:"Les verbes modaux permettent d'exprimer l'obligation, la possibilité ou le conseil.",points:["DEVOIR + inf. = obligation : Tu dois manger plus de légumes.","POUVOIR + inf. = possibilité/permission : Tu peux sortir ce soir.","IL FAUT + inf. = obligation générale : Il faut dormir 8 heures.","DEVRAIT (conditionnel) = conseil doux : Tu devrais faire plus de sport."]},exos:[{type:"qcm",q:"'Tu _____ aller chez le médecin.' (you should)",opts:["devrais","dois","peux","faut"],ans:0,exp:"'Tu devrais' = conditionnel de 'devoir' → conseil doux, pas une obligation forte."},
+    {type:"qcm",q:"'Il _____ prendre ce médicament 2 fois par jour.' (must, impersonal)",opts:["faut","faut de","doit","peut"],ans:0,exp:"'Il faut + infinitif' est une expression impersonnelle pour l'obligation générale."},
+    {type:"qcm",q:"'Je _____ venir demain ?' (can I... is it possible?)",opts:["peux","dois","faut","devrais"],ans:0,exp:"'Pouvoir' exprime la possibilité ou la permission → je peux venir ?"},
+    {type:"blank",q:"Vous _____ vous reposer davantage. (should — conseil médical)",ans:"devriez",exp:"'Vous devriez' = conditionnel de 'devoir' → conseil poli et professionnel."},
+    {type:"blank",q:"Il _____ éviter le soleil pendant le traitement. (is necessary)",ans:"faut",exp:"'Il faut + infinitif' = it is necessary to. Forme impersonnelle d'obligation."}],defi:{consigne:"Donne 5 conseils de santé à un ami qui est souvent fatigué. Utilise devoir, pouvoir et il faut.",exemple:"Exemple : Tu devrais dormir plus tôt. Il faut aussi boire beaucoup d'eau. Tu peux faire du yoga..."}},
+    {id:"J5D5", title:"Décrire ses émotions", lesson:{titre:"Exprimer ses émotions",regle:"Parler de ses émotions est important pour communiquer en français. Il faut connaître les expressions essentielles.",points:["Positif : je suis content(e), heureux(se), soulagé(e), enthousiaste","Négatif : je suis triste, inquiet(ète), stressé(e), déçu(e), énervé(e)","Neutre : je suis surpris(e), confus(e), fatigué(e)","Structure : je me sens + adjectif / j'ai l'impression que + phrase"]},exos:[{type:"qcm",q:"'Elle _____ triste depuis plusieurs jours.'",opts:["est","a","fait","semble être"],ans:0,exp:"'Être + adjectif d'émotion' → elle est triste. Verbe 'être' pour les états."},
+    {type:"qcm",q:"'Je suis _____ de ton succès !' (very happy for you)",opts:["ravi(e)","énervé(e)","déçu(e)","inquiet"],ans:0,exp:"'Ravi(e)' = très content(e), enchanté(e). Très fort, très positif."},
+    {type:"qcm",q:"Quel mot exprime une émotion négative ?",opts:["Anxieux","Soulagé","Enthousiaste","Ravi"],ans:0,exp:"'Anxieux/anxieuse' = worried, anxious. Les autres sont positifs ou neutres."},
+    {type:"blank",q:"J'ai l'_____ que quelque chose ne va pas. (impression)",ans:"impression",exp:"'J'ai l'impression que' = I have a feeling that. Très naturel pour exprimer un doute."},
+    {type:"blank",q:"Il se sent _____ après l'opération. (relieved)",ans:"soulagé",exp:"'Soulagé(e)' = relieved. Le soulagement vient après quelque chose d'inquiétant."}],defi:{consigne:"Comment tu te sens en ce moment ? Décris 3 émotions que tu ressens et explique pourquoi.",exemple:"Exemple : Je me sens un peu stressé(e) parce que j'ai beaucoup de travail. Mais je suis aussi content(e) car..."}},
+    {id:"J5D6", title:"Le conditionnel présent (B1)", lesson:{titre:"Le conditionnel — politesse et hypothèses",regle:"Le conditionnel présent s'utilise pour être poli, formuler des souhaits, ou imaginer des situations.",points:["Formation : radical du futur + terminaisons de l'imparfait (-ais, -ais, -ait, -ions, -iez, -aient)","Politesse : Je voudrais / Pourriez-vous... ? / Ce serait bien si...","Hypothèse : Si j'avais le temps, je voyagerais.","Conseil : Tu devrais / Il faudrait"]},exos:[{type:"qcm",q:"'Si j'avais plus d'argent, j'_____ le monde.' (voyager)",opts:["voyagerais","voyagerai","voyage","voyagez"],ans:0,exp:"Condition irréelle : si + imparfait → conditionnel présent → je voyagerais."},
+    {type:"qcm",q:"'_____ vous me passer le sel ?' (very polite request)",opts:["Pourriez","Pouvez","Pouviez","Pourrez"],ans:0,exp:"'Pourriez-vous' = conditionnel de 'pouvoir' → formule très polie."},
+    {type:"qcm",q:"Quelle phrase est au conditionnel ?",opts:["Ce serait fantastique !","C'est fantastique !","C'était fantastique !","Ce sera fantastique !"],ans:0,exp:"'Serait' = conditionnel de 'être'. Les autres sont présent, imparfait et futur."},
+    {type:"blank",q:"Il _____ mieux qu'il consulte un médecin. (it would be better)",ans:"vaudrait",exp:"'Il vaudrait mieux' = it would be better. Conditionnel de 'valoir'."},
+    {type:"blank",q:"Tu _____ parler à ton chef de ce problème. (should)",ans:"devrais",exp:"'Tu devrais' = conditionnel de 'devoir'. Conseil formulé avec douceur."}],defi:{consigne:"Imagine ta vie idéale. Si tu pouvais changer 3 choses, qu'est-ce que tu ferais ?",exemple:"Exemple : Si j'avais plus de temps, je voyagerais souvent. Si j'avais un grand jardin, je ferais du jardinage."}},
+    {id:"J5D7", title:"Révision semaine 5 — Santé", lesson:{titre:"Bilan semaine 5",regle:"Cette semaine : le corps, chez le médecin, les habitudes saines, les verbes modaux, les émotions et le conditionnel.",points:["Avoir mal à + article : j'ai mal au dos / à la tête / aux dents","Modaux : devoir (obligation) / pouvoir (possibilité) / falloir (nécessité générale)","Conditionnel : si + imparfait → conditionnel présent","Émotions : être content/triste/stressé/soulagé..."]},exos:[{type:"qcm",q:"'J'ai mal _____ yeux.' Quel article ?",opts:["aux","à les","au","à la"],ans:0,exp:"'Yeux' est pluriel → à + les = aux. J'ai mal aux yeux."},
+    {type:"qcm",q:"'Tu _____ aller te coucher tôt.' (advice: should)",opts:["devrais","dois","peux","faudrait"],ans:0,exp:"Conseil doux → conditionnel de 'devoir' : tu devrais."},
+    {type:"qcm",q:"'Si elle avait le choix, elle _____ à la campagne.' (vivre)",opts:["vivrait","vivra","vit","vivait"],ans:0,exp:"Si + imparfait → conditionnel → elle vivrait."},
+    {type:"blank",q:"Je me sens très _____ aujourd'hui. Je n'ai pas bien dormi. (tired)",ans:"fatigué",exp:"'Fatigué(e)' = tired. Se sent fatigué(e) = feels tired."},
+    {type:"blank",q:"Il _____ consulter un médecin rapidement. (must)",ans:"faut",exp:"'Il faut' + infinitif = obligation impersonnelle générale."}],defi:{consigne:"Écris une liste de conseils de santé pour quelqu'un qui commence à se sentir mal. Sois précis(e) et bienveillant(e).",exemple:"Exemple : Tu devrais te reposer. Il faut boire beaucoup d'eau. Essaie de manger légèrement..."}}
+  ]
+},
+// AOÛT - Semaines 1-4 (condensées pour couvrir 31 jours)
+{
+  id:"A1", month:"aout", num:1,
+  title:"Opinion et argumentation", theme:"Thème : S'exprimer — niveau B1",
+  days:[
+    {id:"A1D1", title:"Donner son avis", lesson:{titre:"Exprimer une opinion en français",regle:"Pour donner son avis, il faut connaître les expressions qui introduisent une opinion.",points:["Je pense que / Je crois que / J'estime que + indicatif","À mon avis / Selon moi / D'après moi","Il me semble que / J'ai l'impression que","Pour exprimer un accord/désaccord : Tout à fait ! / Je ne suis pas d'accord."]},exos:[{type:"qcm",q:"'_____ moi, ce film est excellent.'",opts:["À mon avis selon","Selon","D'après","À mon avis /"],ans:1,exp:"'Selon moi' ou 'À mon avis' ou 'D'après moi' sont les 3 expressions correctes."},
+    {type:"qcm",q:"'Je pense _____ il a raison.'",opts:["que","qui","qu'","quoi"],ans:0,exp:"'Je pense que' + indicatif → que (et non 'qui' qui est un pronom relatif)."},
+    {type:"qcm",q:"Comment exprimer un désaccord poli ?",opts:["Je ne suis pas tout à fait d'accord.","Tu as tort !","Non !","C'est faux."],ans:0,exp:"'Je ne suis pas tout à fait d'accord' est une façon polie de nuancer un désaccord."},
+    {type:"blank",q:"Il me _____ que cette solution n'est pas idéale.",ans:"semble",exp:"'Il me semble que' = it seems to me that. Exprime une opinion incertaine."},
+    {type:"blank",q:"D'_____ le rapport, les résultats sont positifs.",ans:"après",exp:"'D'après' = according to. D'après le rapport = according to the report."}],defi:{consigne:"Donne ton avis sur les réseaux sociaux : est-ce plutôt positif ou négatif ? Écris 5-6 phrases.",exemple:"Exemple : À mon avis, les réseaux sociaux ont des avantages et des inconvénients. Je pense que..."}},
+    {id:"A1D2", title:"Les connecteurs logiques", lesson:{titre:"Structurer son discours",regle:"Les connecteurs logiques permettent de lier les idées et de structurer un argument.",points:["Addition : de plus, en outre, également, par ailleurs","Cause : parce que, car, puisque, étant donné que","Conséquence : donc, c'est pourquoi, ainsi, par conséquent","Opposition : mais, cependant, néanmoins, or, pourtant","Concession : bien que + subjonctif, même si, quand même"]},exos:[{type:"qcm",q:"'Je suis fatigué, _____ je continue à travailler.' (nevertheless)",opts:["néanmoins","donc","car","puisque"],ans:0,exp:"'Néanmoins' exprime une opposition/concession : malgré la fatigue, il continue."},
+    {type:"qcm",q:"'Il pleut, _____ je prends un parapluie.' (so/therefore)",opts:["c'est pourquoi","cependant","bien que","or"],ans:0,exp:"'C'est pourquoi' = therefore, that's why. Il pleut → c'est pourquoi je prends un parapluie."},
+    {type:"qcm",q:"'_____ il soit tard, elle travaille encore.' (even though)",opts:["Bien que","Car","Donc","De plus"],ans:0,exp:"'Bien que' + subjonctif exprime une concession. Bien qu'il soit tard (subjonctif de 'être')."},
+    {type:"blank",q:"Il est très compétent. _____ plus, il est ponctuel.",ans:"De",exp:"'De plus' = furthermore, moreover. S'utilise pour ajouter un argument."},
+    {type:"blank",q:"Je n'aime pas ce restaurant, _____ la nourriture est trop chère.",ans:"car",exp:"'Car' = because. Introduit une cause (même sens que 'parce que', plus soutenu)."}],defi:{consigne:"Écris un court texte argumentatif (6-8 phrases) sur : 'Est-il mieux de vivre en ville ou à la campagne ?'",exemple:"Exemple : Selon moi, il est préférable de vivre en ville. En effet, il y a de nombreux avantages..."}},
+    {id:"A1D3", title:"Le subjonctif présent", lesson:{titre:"Le subjonctif — quand l'utiliser ?",regle:"Le subjonctif s'utilise après certaines expressions qui expriment doute, souhait, obligation ou sentiment.",points:["Obligation : il faut que, il est nécessaire que → il faut que tu viennes","Souhait : je veux que, je souhaite que → je veux qu'il parte","Sentiment : je suis content que, j'ai peur que → j'ai peur qu'il soit malade","Formation : radical 'ils' du présent + terminaisons (-e, -es, -e, -ions, -iez, -ent)"]},exos:[{type:"qcm",q:"'Il faut que tu _____ à temps.' (arriver)",opts:["arrives","arriverais","arrive","arrivais"],ans:0,exp:"'Il faut que' → subjonctif. 'Arriver' → que tu arrives (subjonctif présent)."},
+    {type:"qcm",q:"'Je suis contente qu'il _____ guéri.' (être)",opts:["soit","est","était","sera"],ans:0,exp:"Sentiment → subjonctif. 'Être' au subjonctif → que je sois, que tu sois, qu'il soit."},
+    {type:"qcm",q:"Quelle expression n'est PAS suivie du subjonctif ?",opts:["Je pense que","Il faut que","Je veux que","Bien que"],ans:0,exp:"'Je pense que' est suivi de l'indicatif (pas du subjonctif) car c'est une certitude."},
+    {type:"blank",q:"Il est important que vous _____ ce document. (lire)",ans:"lisiez",exp:"Subjonctif de 'lire' : que je lise, que tu lises, que vous lisiez."},
+    {type:"blank",q:"J'ai peur qu'elle ne _____ pas venir. (pouvoir)",ans:"puisse",exp:"Subjonctif irrégulier de 'pouvoir' → que je puisse, que tu puisses, qu'il puisse."}],defi:{consigne:"Exprime 4 souhaits ou craintes pour l'avenir en utilisant le subjonctif.",exemple:"Exemple : Je veux que le monde soit plus pacifique. J'ai peur que le changement climatique s'aggrave."}},
+    {id:"A1D4", title:"Comparer et nuancer", lesson:{titre:"Les comparatifs et superlatifs",regle:"Pour comparer des choses ou des personnes, on utilise des structures précises.",points:["Plus... que / Moins... que / Aussi... que","Le/la/les plus + adj. → le plus grand de la classe","Le/la/les moins + adj.","Comparatifs irréguliers : bon → meilleur / mauvais → pire / bien → mieux"]},exos:[{type:"qcm",q:"'Ce restaurant est _____ que l'autre.' (better)",opts:["meilleur","mieux","plus bon","bon plus"],ans:0,exp:"'Meilleur' est le comparatif irrégulier de 'bon' (pour les noms/qualités). Mieux → pour les verbes."},
+    {type:"qcm",q:"'Elle parle _____ que moi.' (better — adverb)",opts:["mieux","meilleur","plus bien","meilleurement"],ans:0,exp:"'Mieux' est le comparatif de l'adverbe 'bien'. Pour les verbes → parler mieux."},
+    {type:"qcm",q:"'C'est _____ film de l'année.' (the best)",opts:["le meilleur","le mieux","le plus bon","le bon"],ans:0,exp:"Superlatif de 'bon' → le meilleur / la meilleure. Adjectif irrégulier."},
+    {type:"blank",q:"Cette solution est _____ efficace que la précédente. (less)",ans:"moins",exp:"'Moins... que' = less... than. Structure de comparatif d'infériorité."},
+    {type:"blank",q:"C'est le _____ résultat possible. (worst)",ans:"pire",exp:"'Le pire' = the worst. Superlatif irrégulier de 'mauvais'."}],defi:{consigne:"Compare deux choses que tu connais bien (deux villes, deux films, deux restaurants...). 5-6 phrases.",exemple:"Exemple : Paris est plus grand que Lyon, mais Lyon est moins stressante. À mon avis, Lyon offre une meilleure qualité de vie."}},
+    {id:"A1D5", title:"Rapporter des paroles", lesson:{titre:"Le discours indirect",regle:"Pour rapporter ce que quelqu'un a dit, on utilise le discours indirect. Les temps et les pronoms changent.",points:["Direct : Il dit 'je viens.' → Indirect : Il dit qu'il vient.","Direct : Elle a dit 'j'ai fini.' → Indirect : Elle a dit qu'elle avait fini.","Direct : Il a demandé 'Tu viens ?' → Indirect : Il a demandé si je venais.","Changements de temps : présent → imparfait / passé composé → plus-que-parfait"]},exos:[{type:"qcm",q:"'Je suis fatigué.' → Il a dit qu'il _____ fatigué.",opts:["était","est","a été","serait"],ans:0,exp:"Au discours indirect passé : le présent devient l'imparfait → il était fatigué."},
+    {type:"qcm",q:"'Est-ce qu'il vient ?' → Elle a demandé _____ il venait.",opts:["si","que","ce que","quand"],ans:0,exp:"Pour les questions oui/non au discours indirect → si (+ imparfait)."},
+    {type:"qcm",q:"'Viens ici !' → Il lui a dit _____ ici.",opts:["de venir","qu'il vient","si venir","venir"],ans:0,exp:"L'impératif au discours indirect devient : dire de + infinitif → de venir."},
+    {type:"blank",q:"'Je partirai demain.' → Elle a dit qu'elle _____ le lendemain.",ans:"partirait",exp:"Futur → conditionnel au discours indirect passé : partirait."},
+    {type:"blank",q:"'Qu'est-ce que tu veux ?' → Il a demandé ce _____ je voulais.",ans:"que",exp:"Pour les questions avec 'que/quoi', au discours indirect → ce que + imparfait."}],defi:{consigne:"Rapporte une conversation que tu as eue (ou imagine une). Utilise le discours indirect.",exemple:"Exemple : Hier, ma mère m'a dit qu'elle était fatiguée. Elle m'a demandé si je pouvais l'aider."}},
+    {id:"A1D6", title:"Écrire un texte argumentatif", lesson:{titre:"La structure d'un texte argumentatif (B1)",regle:"Un texte argumentatif en français a une structure claire et utilise des connecteurs.",points:["Introduction : Présenter le sujet + annoncer le plan","Développement : Argument 1 + exemple / Argument 2 + exemple","Concession : Certes... mais... / Il est vrai que... cependant...","Conclusion : Rappel des idées + prise de position personnelle"]},exos:[{type:"qcm",q:"Quelle phrase introduit une concession ?",opts:["Certes, il y a des avantages, mais...","D'abord, il faut noter que...","En conclusion, je pense que...","Par exemple, on peut citer..."],ans:0,exp:"'Certes... mais' introduit une concession : on reconnaît un argument avant de le nuancer."},
+    {type:"qcm",q:"'Par exemple, on peut citer...' → ce connecteur sert à :",opts:["Illustrer un argument","Conclure","Introduire une cause","Marquer une opposition"],ans:0,exp:"'Par exemple' introduit un exemple pour illustrer et renforcer un argument."},
+    {type:"qcm",q:"Quelle phrase est une bonne conclusion ?",opts:["En définitive, il semble que les avantages l'emportent.","Premièrement, on peut dire que...","Parce que c'est important.","C'est pourquoi je n'aime pas cela."],ans:0,exp:"'En définitive' = finalement, en conclusion. C'est une formule de conclusion naturelle."},
+    {type:"blank",q:"_____ vrai que c'est difficile, mais ça vaut la peine.",ans:"Il est",exp:"'Il est vrai que... mais' = c'est une structure de concession très utile à l'écrit."},
+    {type:"blank",q:"En _____, je pense que l'effort en vaut la peine.",ans:"conclusion",exp:"'En conclusion' = in conclusion. Formule classique pour terminer un texte."}],defi:{consigne:"Écris un court texte argumentatif (8-10 phrases) sur : 'Les voyages forment-ils la personnalité ?'",exemple:"Exemple : En introduction : Les voyages sont souvent considérés comme une source d'apprentissage. Dans cet essai..."}},
+    {id:"A1D7", title:"Révision semaine 1 Août — Opinion", lesson:{titre:"Bilan Août semaine 1",regle:"Tu as appris : donner son avis, les connecteurs, le subjonctif, les comparatifs, le discours indirect et l'argumentatif.",points:["Subjonctif après : il faut que, je veux que, bien que, j'ai peur que","Comparatifs : plus/moins/aussi... que / meilleur-mieux-pire","Discours indirect : présent → imparfait / futur → conditionnel","Connecteurs : de plus, cependant, c'est pourquoi, bien que"]},exos:[{type:"qcm",q:"'Bien qu'il _____ fatigué, il continue.' (être — subjonctif)",opts:["soit","est","était","sera"],ans:0,exp:"Subjonctif de 'être' → qu'il soit. 'Bien que' impose le subjonctif."},
+    {type:"qcm",q:"'Il a dit qu'il _____ bientôt.' (partir — discours indirect passé)",opts:["partirait","part","partira","partait"],ans:0,exp:"Discours indirect passé : futur → conditionnel. Il partirait bientôt."},
+    {type:"qcm",q:"'Ce vin est _____ que l'autre.' (better)",opts:["meilleur","mieux","plus bon","le meilleur"],ans:0,exp:"Comparatif de 'bon' → meilleur (adjectif qui qualifie un nom)."},
+    {type:"blank",q:"Il faut que tu _____ cette lettre aujourd'hui. (écrire — subjonctif)",ans:"écrives",exp:"Subjonctif de 'écrire' : que tu écrives (radical 'ils écrivent' → écrive-)."},
+    {type:"blank",q:"À mon _____, c'est la meilleure solution.",ans:"avis",exp:"'À mon avis' = in my opinion. Expression très fréquente pour donner son opinion."}],defi:{consigne:"Écris un texte de 10 phrases sur un sujet qui te tient à cœur. Utilise des connecteurs et le subjonctif au moins une fois.",exemple:"Exemple : La lecture est importante dans ma vie. Je pense que les livres permettent de... Bien que la télévision soit populaire..."}}
+  ]
+},
+{
+  id:"A2", month:"aout", num:2,
+  title:"Culture et médias", theme:"Thème : Cinéma, littérature, actualités",
+  days:[
+    {id:"A2D1", title:"Parler d'un film ou d'un livre", lesson:{titre:"La critique culturelle",regle:"Pour parler d'un film ou d'un livre, il faut maîtriser le vocabulaire spécifique et savoir donner son avis.",points:["Film : l'intrigue, les personnages, la mise en scène, la bande originale","Livre : l'auteur(e), le narrateur, le style, le dénouement, l'intrigue","Exprimer : C'est captivant / décevant / touchant / bien construit / prévisible","Recommander : Je vous conseille vivement / Ça vaut le coup d'être vu/lu"]},exos:[{type:"qcm",q:"'Ce film est très _____ — je n'ai pas vu la fin venir !' (unpredictable)",opts:["imprévisible","prévisible","décevant","ennuyeux"],ans:0,exp:"'Imprévisible' = unpredictable. 'Prévisible' = predictable (on voit venir la fin)."},
+    {type:"qcm",q:"'L'_____ du film est complexe et bien construite.' (plot)",opts:["intrigue","acteur","scénario","mise en scène"],ans:0,exp:"'L'intrigue' = the plot (l'histoire principale du film ou du livre)."},
+    {type:"qcm",q:"'Je vous _____ vivement ce roman.' (strongly recommend)",opts:["conseille","conseil","recommandation","suggère"],ans:0,exp:"'Conseiller' = recommander. Je vous conseille vivement = I strongly recommend to you."},
+    {type:"blank",q:"Ce film m'a beaucoup _____ — j'ai pleuré ! (touched/moved)",ans:"touché",exp:"'Toucher' = to move (emotionally). Ce film m'a touché = this film moved me."},
+    {type:"blank",q:"La _____ en scène de ce film est magnifique. (directing)",ans:"mise",exp:"'La mise en scène' = the direction/staging. La façon dont le réalisateur filme."}],defi:{consigne:"Recommande (ou déconseille) un film ou livre que tu as vu/lu récemment. Explique pourquoi.",exemple:"Exemple : Je vous conseille vivement le film 'Le Fabuleux Destin d'Amélie Poulain'. L'intrigue est originale et la mise en scène est magnifique..."}},
+    {id:"A2D2", title:"Les médias et l'information", lesson:{titre:"Parler de l'actualité",regle:"Pour discuter des médias et de l'actualité, il faut un vocabulaire adapté.",points:["Les médias : la presse écrite, la radio, la télévision, les réseaux sociaux","L'information : un article, une dépêche, un reportage, une enquête","Vérifier : une source fiable / les fake news / vérifier les informations","Exprimer : D'après les médias... / Selon les dernières nouvelles..."]},exos:[{type:"qcm",q:"'Je lis les _____ chaque matin sur mon téléphone.' (news)",opts:["actualités","actuals","journaux","nouvelles"],ans:0,exp:"'Les actualités' = the news. 'Les nouvelles' aussi s'utilise. 'Les journaux' = newspapers."},
+    {type:"qcm",q:"'Il faut vérifier la _____ avant de partager un article.' (source)",opts:["source","ressource","origine","base"],ans:0,exp:"'La source' = the source. Vérifier la source = to check/verify the source."},
+    {type:"qcm",q:"Une fake news est :",opts:["Une fausse information","Une nouvelle urgente","Un journal spécialisé","Une dépêche officielle"],ans:0,exp:"Une fake news = une fausse information, souvent diffusée intentionnellement."},
+    {type:"blank",q:"D'après les _____, il va pleuvoir ce weekend. (forecasts/news)",ans:"prévisions",exp:"'Les prévisions' = forecasts. Les prévisions météo = weather forecast."},
+    {type:"blank",q:"Ce journaliste fait des _____ sur la corruption. (investigations)",ans:"enquêtes",exp:"'Une enquête' = an investigation. Un journaliste d'enquête = investigative journalist."}],defi:{consigne:"Parle d'une actualité récente qui t'a intéressé(e). De quoi s'agit-il ? Quel est ton avis ?",exemple:"Exemple : Récemment, j'ai lu un article sur le changement climatique. Selon l'article..."}},
+    {id:"A2D3", title:"La relative avec qui, que, dont, où", lesson:{titre:"Les pronoms relatifs",regle:"Les pronoms relatifs permettent de relier deux phrases pour éviter les répétitions.",points:["QUI = sujet : C'est l'acteur <strong>qui</strong> joue dans ce film.","QUE = complément d'objet : C'est le film <strong>que</strong> j'ai vu.","DONT = complément avec 'de' : C'est l'acteur <strong>dont</strong> je t'ai parlé.","OÙ = lieu ou temps : C'est la ville <strong>où</strong> je suis né(e)."]},exos:[{type:"qcm",q:"'C'est le livre _____ j'ai acheté hier.'",opts:["que","qui","dont","où"],ans:0,exp:"'Que' remplace le COD (complément d'objet direct). J'ai acheté le livre → le livre que j'ai acheté."},
+    {type:"qcm",q:"'L'auteur _____ a écrit ce roman est célèbre.'",opts:["qui","que","dont","où"],ans:0,exp:"'Qui' remplace le sujet. L'auteur a écrit → l'auteur qui a écrit."},
+    {type:"qcm",q:"'C'est un film _____ j'ai besoin de te parler.' (avoir besoin DE)",opts:["dont","que","qui","où"],ans:0,exp:"'Dont' remplace un complément introduit par 'de'. Parler DE ce film → dont je te parle."},
+    {type:"blank",q:"Paris est la ville _____ j'ai grandi. (where)",ans:"où",exp:"'Où' = where (lieu). La ville où j'ai grandi = the city where I grew up."},
+    {type:"blank",q:"C'est l'actrice _____ tout le monde connaît. (that)",ans:"que",exp:"'Que' remplace le COD. Tout le monde connaît cette actrice → l'actrice que tout le monde connaît."}],defi:{consigne:"Décris ton film ou livre préféré en utilisant les 4 pronoms relatifs (qui, que, dont, où).",exemple:"Exemple : Mon film préféré est un film qui se passe à Paris. C'est l'histoire que j'ai découverte il y a 5 ans..."}},
+    {id:"A2D4", title:"Exprimer la cause et la conséquence", lesson:{titre:"Cause et conséquence",regle:"Pour construire des arguments solides, il faut maîtriser les expressions de cause et de conséquence.",points:["CAUSE : parce que / car / puisque / étant donné que / à cause de / grâce à","CONSÉQUENCE : donc / alors / c'est pourquoi / par conséquent / ainsi / du coup (familier)","Nuance : grâce à (positif) / à cause de (négatif ou neutre)","Exemple : Grâce à cet effort, il a réussi. / À cause de la pluie, on est restés."]},exos:[{type:"qcm",q:"'_____ son travail acharné, elle a obtenu une promotion.' (thanks to)",opts:["Grâce à","À cause de","Parce que","Car"],ans:0,exp:"'Grâce à' = thanks to. S'utilise pour une cause positive. Suivi d'un nom."},
+    {type:"qcm",q:"'Il est arrivé en retard, _____ il a raté le début.' (so)",opts:["donc","parce que","grâce à","bien que"],ans:0,exp:"'Donc' = so/therefore. Introduit une conséquence logique."},
+    {type:"qcm",q:"Quelle est la différence entre 'car' et 'parce que' ?",opts:["'Car' est plus soutenu, 'parce que' plus courant","Ce sont des synonymes exacts","'Car' = cause positive, 'parce que' = cause négative","'Car' commence une phrase, 'parce que' non"],ans:0,exp:"'Car' est légèrement plus formel/littéraire. 'Parce que' est plus courant à l'oral."},
+    {type:"blank",q:"Il a oublié son parapluie, _____ il est tout mouillé ! (therefore)",ans:"c'est pourquoi",exp:"'C'est pourquoi' = that's why, therefore. Conséquence directe de l'oubli."},
+    {type:"blank",q:"_____ la grève, le métro ne fonctionne pas. (because of)",ans:"À cause de",exp:"'À cause de' + nom = because of. Cause neutre ou négative (ici, c'est problématique)."}],defi:{consigne:"Explique 3 décisions importantes dans ta vie et leurs conséquences. Utilise grâce à, à cause de, donc, c'est pourquoi.",exemple:"Exemple : J'ai décidé d'apprendre le français. Grâce à cela, j'ai pu rencontrer de nouvelles personnes..."}},
+    {id:"A2D5", title:"Le passé : plus-que-parfait (B1)", lesson:{titre:"Le plus-que-parfait",regle:"Le plus-que-parfait exprime une action passée AVANT une autre action passée. C'est le 'passé du passé'.",points:["Formation : AVOIR/ÊTRE à l'imparfait + participe passé","J'avais mangé / Elle était partie / Nous avions fini","Usage : Quand il est arrivé, j'avais déjà dîné. (dîner = avant l'arrivée)","Souvent avec : déjà, encore, quand, lorsque, avant que"]},exos:[{type:"qcm",q:"'Quand je suis arrivé, le film _____ déjà commencé.'",opts:["avait","a","avait eu","était"],ans:0,exp:"Plus-que-parfait de 'commencer' (avec avoir) → avait commencé. Action avant l'arrivée."},
+    {type:"qcm",q:"'Elle _____ (partir) avant que j'arrive.'",opts:["était partie","a parti","était partis","avait parti"],ans:0,exp:"'Partir' utilise 'être' au plus-que-parfait → était partie. Accord féminin singulier."},
+    {type:"qcm",q:"Lequel exprime le plus-que-parfait ?",opts:["Il avait déjà vu ce film.","Il a vu ce film.","Il voyait ce film.","Il verra ce film."],ans:0,exp:"'Avait vu' = plus-que-parfait. 'A vu' = passé composé. 'Voyait' = imparfait. 'Verra' = futur."},
+    {type:"blank",q:"Lorsque la police est arrivée, le voleur _____ (s'enfuir) déjà.",ans:"s'était enfui",exp:"Plus-que-parfait pronominal de 's'enfuir' → s'était enfui. Action antérieure à l'arrivée."},
+    {type:"blank",q:"J'ai remarqué que tu _____ (changer) de coiffure.",ans:"avais changé",exp:"Plus-que-parfait de 'changer' (avec avoir) → tu avais changé. Action avant le moment de remarquer."}],defi:{consigne:"Raconte une situation où tu es arrivé(e) trop tard ou trop tôt. Qu'avait-il déjà eu lieu ?",exemple:"Exemple : Quand je suis arrivé(e) à la fête, tout le monde était déjà parti. La musique s'était arrêtée et..."}},
+    {id:"A2D6", title:"Nuancer et préciser sa pensée", lesson:{titre:"Exprimer des nuances",regle:"Pour parler comme un locuteur B1, il faut savoir nuancer ses propos et ne pas rester dans le manichéen (tout bon / tout mauvais).",points:["D'un côté... de l'autre / D'une part... d'autre part","Cela dit / Il faut nuancer / C'est plus complexe que ça","Certes... mais / Même si... quand même","Ça dépend (de) / Pas forcément / Pas nécessairement"]},exos:[{type:"qcm",q:"'D'un côté, c'est pratique. _____ l'autre, c'est cher.'",opts:["De","D'","Du","À"],ans:1,exp:"'D'un côté... de l'autre' = on one hand... on the other. 'De l'autre' avec élision → d'l'autre."},
+    {type:"qcm",q:"'_____ c'est difficile, je vais quand même essayer.' (even if)",opts:["Même si","Bien que","Cependant","Certes"],ans:0,exp:"'Même si' + indicatif = even if. (Bien que → subjonctif, Même si → indicatif)"},
+    {type:"qcm",q:"Pour nuancer une affirmation trop forte, on dit :",opts:["Il faut nuancer / Ce n'est pas si simple.","C'est exactement comme ça.","Absolument, sans exception.","C'est toujours vrai."],ans:0,exp:"'Il faut nuancer' = we need to be more nuanced. Expression clé pour éviter les généralités."},
+    {type:"blank",q:"D'une _____, les études coûtent cher. D'autre part, elles ouvrent des portes.",ans:"part",exp:"'D'une part... d'autre part' = on one hand... on the other hand. Structure argumentative."},
+    {type:"blank",q:"Ça _____ de la personne. Tout le monde est différent.",ans:"dépend",exp:"'Ça dépend de' = it depends on. Expression très utilisée pour nuancer."}],defi:{consigne:"Donne ton avis nuancé sur un sujet de ton choix. Utilise 'd'un côté... de l'autre' et au moins un autre connecteur de nuance.",exemple:"Exemple : Internet est un outil formidable. D'un côté, il nous donne accès à toute la connaissance. De l'autre, il peut..."}},
+    {id:"A2D7", title:"Révision semaine 2 Août", lesson:{titre:"Bilan Août semaine 2",regle:"Cette semaine : parler de culture, les médias, les pronoms relatifs, cause/conséquence, le plus-que-parfait et nuancer.",points:["Pronoms : qui (sujet) / que (COD) / dont (complément de) / où (lieu/temps)","Plus-que-parfait : avais/était + participe passé → action avant une autre","Grâce à (positif) vs à cause de (neutre/négatif)","Nuancer : d'un côté... de l'autre / même si / certes... mais"]},exos:[{type:"qcm",q:"'C'est le film _____ tout le monde parle.' (dont/que/qui)",opts:["dont","que","qui","où"],ans:0,exp:"'Tout le monde parle DE ce film' → parler de = dont. C'est le film dont tout le monde parle."},
+    {type:"qcm",q:"'Quand elle est revenue, il _____ déjà parti.' (plus-que-parfait)",opts:["était","a","avait","fut"],ans:0,exp:"'Partir' utilise 'être'. Plus-que-parfait = était parti. Accord masculin sing."},
+    {type:"qcm",q:"'_____ la formation, il a trouvé un emploi.' (thanks to)",opts:["Grâce à","À cause de","Donc","Car"],ans:0,exp:"Résultat positif → 'grâce à'. Il a trouvé un emploi = bon résultat."},
+    {type:"blank",q:"Certes, c'est difficile, _____ c'est possible.",ans:"mais",exp:"'Certes... mais' = admittedly... but. Structure de concession classique."},
+    {type:"blank",q:"La ville _____ j'ai grandi s'appelle Casablanca. (where)",ans:"où",exp:"'Où' = pronom relatif de lieu (et de temps). La ville où j'ai grandi."}],defi:{consigne:"Écris une mini-critique (8 phrases) d'un film, livre ou série. Utilise les pronoms relatifs et exprime des nuances.",exemple:"Exemple : J'ai regardé une série qui m'a beaucoup intéressé(e). C'est une histoire dont les personnages sont..."}}
+  ]
+},
+{
+  id:"A3", month:"aout", num:3,
+  title:"Société et environnement", theme:"Thème : Le monde qui nous entoure",
+  days:[
+    {id:"A3D1", title:"L'environnement", lesson:{titre:"Parler de l'écologie",regle:"Le vocabulaire de l'environnement est de plus en plus important dans la communication quotidienne.",points:["Les problèmes : le réchauffement climatique, la pollution, la déforestation, la sécheresse","Les solutions : le recyclage, les énergies renouvelables, réduire sa consommation","Verbes : recycler, économiser, préserver, protéger, polluer, consommer","Adjectifs : écologique, durable, renouvelable, biodégradable"]},exos:[{type:"qcm",q:"'Les énergies _____ n'émettent pas de CO2.' (renewable)",opts:["renouvelables","recyclables","durables","propres"],ans:0,exp:"'Renouvelable' = renewable. Les énergies renouvelables : solaire, éolien, hydraulique."},
+    {type:"qcm",q:"Que signifie 'le réchauffement climatique' ?",opts:["L'augmentation de la température de la Terre","Un phénomène météorologique local","La fonte des glaces uniquement","La pollution de l'air"],ans:0,exp:"Le réchauffement climatique = global warming. Augmentation globale des températures terrestres."},
+    {type:"qcm",q:"'Il faut _____ nos déchets pour protéger l'environnement.'",opts:["recycler","réutiliser","réduire","trier"],ans:3,exp:"'Trier ses déchets' = to sort waste. On trie d'abord (verre, papier, plastique...) puis on recycle."},
+    {type:"blank",q:"Le _____ de l'eau est un problème mondial. (wastage/waste)",ans:"gaspillage",exp:"'Le gaspillage' = waste/wastage. Gaspiller de l'eau/de la nourriture = to waste water/food."},
+    {type:"blank",q:"Nous devons _____ la biodiversité pour les générations futures.",ans:"préserver",exp:"'Préserver' = to preserve. Préserver la biodiversité = to preserve biodiversity."}],defi:{consigne:"Quels gestes écologiques fais-tu déjà ? Qu'est-ce que tu pourrais améliorer ? 5-6 phrases.",exemple:"Exemple : Je recycle mes déchets et j'utilise les transports en commun. Cependant, je pourrais aussi..."}},
+    {id:"A3D2", title:"Les problèmes de société", lesson:{titre:"Parler des enjeux sociaux",regle:"Pour parler de société, il faut des mots pour décrire les problèmes et exprimer des solutions.",points:["Les inégalités, la pauvreté, le chômage, la discrimination, l'exclusion","La solidarité, l'entraide, l'égalité des chances, l'inclusion","Verbes : lutter contre, améliorer, soutenir, renforcer, sensibiliser","Structure : Il est nécessaire de + inf. / Il faudrait que + subjonctif"]},exos:[{type:"qcm",q:"'Lutter _____ les inégalités est une priorité.'",opts:["contre","pour","sur","avec"],ans:0,exp:"'Lutter contre' = to fight against. On lutte contre les problèmes, pas 'pour les inégalités'."},
+    {type:"qcm",q:"Que signifie 'le chômage' ?",opts:["Le manque d'emploi","Le manque d'argent","Le manque de logement","Le manque de nourriture"],ans:0,exp:"Le chômage = unemployment. Les chômeurs sont des personnes sans emploi."},
+    {type:"qcm",q:"'Il faudrait _____ davantage les populations vulnérables.' (to support)",opts:["soutenir","lutter","sensibiliser","exclure"],ans:0,exp:"'Soutenir' = to support. Soutenir les populations vulnérables = support vulnerable populations."},
+    {type:"blank",q:"Il est nécessaire de _____ les gens à ces problèmes. (raise awareness)",ans:"sensibiliser",exp:"'Sensibiliser à' = to raise awareness about. Sensibiliser le public = make the public aware."},
+    {type:"blank",q:"L'égalité des _____ est un droit fondamental. (opportunities)",ans:"chances",exp:"'L'égalité des chances' = equal opportunities. Principe fondamental des sociétés démocratiques."}],defi:{consigne:"Quel problème de société te préoccupe le plus ? Pourquoi et quelles solutions proposes-tu ?",exemple:"Exemple : Le problème qui me préoccupe le plus est l'inégalité. Je pense qu'il faudrait..."}},
+    {id:"A3D3", title:"Le passif (B1)", lesson:{titre:"La voix passive",regle:"La voix passive met l'accent sur l'action et non sur celui qui agit.",points:["Formation : être (conjugué) + participe passé","Actif : Le gouvernement a adopté cette loi.","Passif : Cette loi a été adoptée par le gouvernement.","Agent (si mentionné) : + PAR → Cette loi a été adoptée PAR le gouvernement.","Le participe passé s'accorde avec le sujet du verbe passif."]},exos:[{type:"qcm",q:"'Ce roman _____ par des millions de lecteurs.' (lire, présent passif)",opts:["est lu","est lire","a lu","lit"],ans:0,exp:"Passif présent = est + participe passé. 'Lire' → lu. Ce roman est lu (par des millions)."},
+    {type:"qcm",q:"Transforme : 'Le maire a inauguré le musée.'",opts:["Le musée a été inauguré par le maire.","Le musée est inauguré par le maire.","Le musée a inauguré le maire.","Le maire a été inauguré."],ans:0,exp:"Passé composé passif = a été + participe passé + par + l'agent → a été inauguré."},
+    {type:"qcm",q:"'La décision _____ annoncée demain.' (will be)",opts:["sera","est","a été","avait été"],ans:0,exp:"Futur passif = sera + participe passé. La décision sera annoncée = will be announced."},
+    {type:"blank",q:"Cette maison _____ construite en 1920. (was built — passé composé)",ans:"a été",exp:"Passé composé passif de 'construire' → a été construite. Accord féminin (maison)."},
+    {type:"blank",q:"Les résultats seront _____ la semaine prochaine. (published)",ans:"publiés",exp:"Futur passif de 'publier' → seront publiés. Accord masculin pluriel (résultats)."}],defi:{consigne:"Réécris 3 phrases actives en phrases passives sur le thème de l'environnement.",exemple:"Exemple : Actif : Le gouvernement a adopté une loi. Passif : Une loi a été adoptée par le gouvernement."}},
+    {id:"A3D4", title:"La politique et la citoyenneté", lesson:{titre:"Le vocabulaire civique",regle:"La vie civique et politique nécessite un vocabulaire spécifique pour comprendre et participer aux débats.",points:["Les institutions : le gouvernement, le parlement, la mairie, la préfecture","Les actions : voter, élire, manifester, pétitionner, débattre","Les droits : la liberté d'expression, le droit de vote, l'égalité devant la loi","Être citoyen(ne) : payer ses impôts, respecter les lois, participer à la vie démocratique"]},exos:[{type:"qcm",q:"'On va aux urnes pour _____.' (to vote)",opts:["voter","élire le président","manifester","pétitionner"],ans:0,exp:"'Les urnes' sont les boîtes dans lesquelles on met son bulletin de vote. Aller aux urnes = aller voter."},
+    {type:"qcm",q:"La liberté d'expression est :",opts:["Le droit de dire ce qu'on pense","Le droit de ne pas travailler","Le droit de voyager","Le droit de ne pas payer d'impôts"],ans:0,exp:"La liberté d'expression = the right to free speech, to express one's opinions."},
+    {type:"qcm",q:"'Les citoyens _____ pour protester contre la loi.' (are demonstrating)",opts:["manifestent","votent","élisent","pétitionnent"],ans:0,exp:"'Manifester' = to demonstrate (in the street). Une manifestation = a protest/march."},
+    {type:"blank",q:"Tout le monde doit _____ ses impôts. (to pay)",ans:"payer",exp:"Payer ses impôts (taxes) est une obligation civique dans une société démocratique."},
+    {type:"blank",q:"Le _____ de vote est un droit fondamental dans une démocratie.",ans:"droit",exp:"Le droit de vote = the right to vote. Obtenu par les femmes en France en 1944."}],defi:{consigne:"Es-tu un(e) citoyen(ne) actif(ve) ? Comment participes-tu à la vie de ta société ?",exemple:"Exemple : Je pense qu'être un bon citoyen, c'est voter aux élections et aussi..."}},
+    {id:"A3D5", title:"Les relations humaines", lesson:{titre:"Parler des relations",regle:"Pour parler des relations humaines, il faut maîtriser un vocabulaire riche et nuancé.",points:["Relations : l'amitié, la confiance, le respect, la solidarité, la complicité","Conflits : un malentendru, une dispute, la jalousie, la rancœur","Résoudre : s'excuser, pardonner, se réconcilier, faire la paix","Verbes pronominaux : se disputer, se réconcilier, s'entendre (bien/mal) avec"]},exos:[{type:"qcm",q:"'Ils se sont _____ après leur dispute.' (made up/reconciled)",opts:["réconciliés","disputés","séparés","ignorés"],ans:0,exp:"'Se réconcilier' = to make up, to reconcile. Après une dispute, on peut se réconcilier."},
+    {type:"qcm",q:"'Il y a eu un _____ entre nous.' (misunderstanding)",opts:["malentendu","conflit","différend","désaccord"],ans:0,exp:"'Un malentendu' = a misunderstanding. Quand on ne comprend pas ce que l'autre voulait dire."},
+    {type:"qcm",q:"'Je m'_____ très bien avec ma collègue.' (get along)",opts:["entends","entends","vois","comprends"],ans:0,exp:"'S'entendre bien avec quelqu'un' = to get along well with someone."},
+    {type:"blank",q:"Il lui a demandé _____ après leur dispute. (forgiveness)",ans:"pardon",exp:"'Demander pardon' = to apologize, to ask for forgiveness. 'Pardonner' = to forgive."},
+    {type:"blank",q:"La _____ est la base de toute bonne relation. (trust)",ans:"confiance",exp:"'La confiance' = trust. 'Avoir confiance en quelqu'un' = to trust someone."}],defi:{consigne:"Décris une relation importante dans ta vie (ami(e), famille, collègue). Qu'est-ce qui la rend spéciale ?",exemple:"Exemple : Mon ami(e) le/la plus proche s'appelle... Notre amitié est basée sur la confiance et..."}},
+    {id:"A3D6", title:"Bilan et auto-évaluation", lesson:{titre:"Évaluation de ton parcours",regle:"Nous arrivons à la fin de notre parcours de 62 jours ! Voici les notions clés de tout l'été.",points:["JUILLET A2 : articles, verbes -ER, passé composé, imparfait, conditionnel","AOÛT B1 : subjonctif, discours indirect, plus-que-parfait, passif, argumentation","Progrès : tu peux maintenant exprimer ton opinion, raconter le passé, argumenter et nuancer","Prochaine étape : lire des textes authentiques, regarder des films sans sous-titres, converser !"]},exos:[{type:"qcm",q:"'Je _____ que tu partes maintenant.' Quel verbe ? (vouloir + subjonctif)",opts:["veux","voudrais","voulais","veux que"],ans:3,exp:"'Je veux que' + subjonctif. L'expression complète = 'je veux que' → que tu partes."},
+    {type:"qcm",q:"'Le projet _____ validé par le comité.' (passé composé passif)",opts:["a été","est","était","avait"],ans:0,exp:"Passé composé passif = a été + participe passé. Le projet a été validé."},
+    {type:"qcm",q:"'Elle m'a dit qu'elle _____ fatiguée.' (discours indirect passé)",opts:["était","est","serait","soit"],ans:0,exp:"Discours indirect passé : présent → imparfait. 'Je suis' → elle était."},
+    {type:"blank",q:"Quand je suis arrivé(e), il _____ déjà parti. (plus-que-parfait)",ans:"était",exp:"Plus-que-parfait de 'partir' (être) → était parti. Action antérieure à l'arrivée."},
+    {type:"blank",q:"Grâce à cet été de travail, mon français s'est beaucoup _____!",ans:"amélioré",exp:"'S'améliorer' = to improve. Passé composé pronominal → s'est amélioré(e)."}],defi:{consigne:"Écris une lettre à toi-même dans 6 mois. Qu'est-ce que tu espères avoir accompli en français ?",exemple:"Exemple : Chère moi, Je t'écris depuis le mois d'août. Cet été, j'ai appris beaucoup de choses. Dans 6 mois, j'espère que..."}},
+    {id:"A3D7", title:"Jour 62 — Grande Révision Finale", lesson:{titre:"Félicitations ! 62 jours accomplis.",regle:"Tu as terminé le Passeport Français Juillet-Août ! Voici les grands piliers que tu maîtrises maintenant.",points:["Grammaire A2 : articles, conjugaisons (présent, passé composé, imparfait, futur proche)","Grammaire B1 : conditionnel, subjonctif, passif, plus-que-parfait, discours indirect","Vocabulaire : quotidien, voyages, nourriture, travail, santé, société, culture","Communication : donner son avis, argumenter, nuancer, raconter, décrire"]},exos:[{type:"qcm",q:"Laquelle est une phrase au subjonctif ?",opts:["Bien qu'il soit tard, je continue.","Il est tard.","Il était tard.","Il sera tard."],ans:0,exp:"'Bien que' + subjonctif → bien qu'il soit tard. 'Soit' = subjonctif de 'être'."},
+    {type:"qcm",q:"'Si j'avais su, j'_____ (venir) plus tôt.' (conditionnel passé)",opts:["serais venu(e)","serai venu","venais","suis venu"],ans:0,exp:"Condition hypothétique passée : si + plus-que-parfait → conditionnel passé → serais venu(e)."},
+    {type:"qcm",q:"Quelle phrase est au passif ?",opts:["Ce livre a été écrit en 1960.","J'ai écrit ce livre.","Il écrit ce livre.","Il allait écrire ce livre."],ans:0,exp:"Passif = être + participe passé. 'A été écrit' = passé composé passif."},
+    {type:"blank",q:"Elle m'a demandé si je _____ (vouloir) l'accompagner. (discours indirect)",ans:"voulais",exp:"Discours indirect passé : présent → imparfait. 'Tu veux' → si je voulais."},
+    {type:"blank",q:"D'une _____, c'est difficile. D'autre part, c'est enrichissant.",ans:"part",exp:"'D'une part... d'autre part' = on one hand... on the other. Structure de nuance."}],defi:{consigne:"Écris un texte libre de 10-15 phrases sur ce que cet été t'a apporté. Utilise le maximum de structures apprises !",exemple:"Exemple : Cet été, j'ai beaucoup travaillé mon français. Au début, je ne savais pas bien utiliser le subjonctif, mais maintenant..."}}
+  ]
+}
+];
+
+/* ════════════════════════════════
+   ÉTAT DE L'APP
+════════════════════════════════ */
+let progress = JSON.parse(localStorage.getItem('pfprogress') || '{}');
+let currentWeek = null;
+let currentDay = null;
+let currentStep = 0; // 0=lecon 1=exos 2=defi 3=result
+let exoResults = {};
+
+function save() {
+  localStorage.setItem('pfprogress', JSON.stringify(progress));
+  updateHomeStats();
+}
+
+/* ════════════════════════════════
+   NAVIGATION
+════════════════════════════════ */
+function showHome() {
+  document.getElementById('screen-home').style.display = 'block';
+  document.getElementById('screen-week').style.display = 'none';
+  document.getElementById('screen-lesson').style.display = 'none';
+  renderAllWeeks();
+  updateHomeStats();
+}
+
+function showMonth(m) {
+  // Scroll to weeks section filtered by month
+  renderAllWeeks(m);
+  document.querySelector('.weeks-section h2').textContent =
+    m === 'juillet' ? 'Semaines de Juillet' : 'Semaines d\'Août';
+}
+
+function showWeek(weekId) {
+  currentWeek = weekId;
+  const week = CURRICULUM.find(w => w.id === weekId);
+  document.getElementById('screen-home').style.display = 'none';
+  document.getElementById('screen-week').style.display = 'block';
+  document.getElementById('screen-lesson').style.display = 'none';
+
+  document.getElementById('w-eyebrow').textContent =
+    (week.month === 'juillet' ? 'Juillet' : 'Août') + ' · Semaine ' + week.num;
+  document.getElementById('w-title').textContent = week.title;
+  document.getElementById('w-theme').textContent = week.theme;
+
+  const grid = document.getElementById('days-grid');
+  grid.innerHTML = '';
+  week.days.forEach((day, i) => {
+    const done = progress[day.id];
+    const div = document.createElement('div');
+    div.className = 'day-row' + (done ? ' done' : '');
+    div.innerHTML = `
+      <div class="day-num">${i + 1}</div>
+      <div class="day-info">
+        <div class="day-title">${day.title}</div>
+        <div class="day-blocks">Leçon · Exercices · Défi</div>
+      </div>
+      <div class="day-status">${done ? '✓ ' + done + '/5' : '→'}</div>
+    `;
+    div.onclick = () => startDay(weekId, day.id);
+    grid.appendChild(div);
+  });
+}
+
+function startDay(weekId, dayId) {
+  currentWeek = weekId;
+  const week = CURRICULUM.find(w => w.id === weekId);
+  currentDay = week.days.find(d => d.id === dayId);
+  currentStep = 0;
+  exoResults = {};
+  document.getElementById('screen-home').style.display = 'none';
+  document.getElementById('screen-week').style.display = 'none';
+  document.getElementById('screen-lesson').style.display = 'block';
+  renderStep();
+}
+
+/* ════════════════════════════════
+   RENDU DE LA LEÇON
+════════════════════════════════ */
+function renderStep() {
+  const day = currentDay;
+  const meta = document.getElementById('lesson-meta');
+  meta.textContent = day.title;
+
+  // Step indicators
+  const ind = document.getElementById('step-indicators');
+  ind.innerHTML = ['Leçon', 'Exercices', 'Défi', 'Bilan'].map((s, i) =>
+    `<div class="step-dot ${i < currentStep ? 'done-step' : i === currentStep ? 'active' : ''}" title="${s}"></div>`
+  ).join('');
+
+  const content = document.getElementById('lesson-content');
+  content.innerHTML = '';
+
+  if (currentStep === 0) renderLecon(content, day);
+  else if (currentStep === 1) renderExos(content, day);
+  else if (currentStep === 2) renderDefi(content, day);
+  else renderResult(content, day);
+}
+
+function renderLecon(container, day) {
+  const l = day.lesson;
+  container.innerHTML = `
+    <div class="lesson-block">
+      <div class="block-tag tag-lecon"><div class="tag-dot"></div> Leçon du jour</div>
+      <div class="lesson-title">${l.titre}</div>
+      <div class="lesson-rule">${l.regle}</div>
+      <div class="lesson-examples">
+        ${l.points.map(p => `<div class="example-item">• ${p}</div>`).join('')}
+      </div>
+    </div>
+    <div class="lesson-nav">
+      <button class="btn-nav" onclick="showWeek(currentWeek)">← Retour</button>
+      <span class="score-display">Étape 1/4</span>
+      <button class="btn-nav primary" onclick="nextStep()">Exercices →</button>
+    </div>`;
+}
+
+function renderExos(container, day) {
+  const exoHtml = day.exos.map((e, i) => {
+    if (e.type === 'qcm') {
+      return `<div class="exo-item">
+        <div class="exo-q"><strong>Q${i+1}.</strong> ${e.q}</div>
+        <div class="exo-opts">
+          ${e.opts.map((o, j) => `<div class="exo-opt" id="opt-${i}-${j}" onclick="selectOpt(${i},${j})">\
+<span class="opt-letter">${'ABCD'[j]}</span>${o}</div>`).join('')}
+        </div>
+        <div class="exo-feedback" id="fb-${i}"></div>
+      </div>`;
+    } else {
+      return `<div class="exo-item">
+        <div class="exo-q"><strong>Q${i+1}.</strong> ${e.q}</div>
+        <div class="exo-blank">
+          <input type="text" id="inp-${i}" placeholder="Écris ta réponse..." onkeyup="if(event.key==='Enter')checkBlank(${i})">
+          <button class="check-btn" onclick="checkBlank(${i})">Vérifier</button>
+        </div>
+        <div class="exo-feedback" id="fb-${i}"></div>
+      </div>`;
+    }
+  }).join('');
+
+  container.innerHTML = `
+    <div class="lesson-block">
+      <div class="block-tag tag-exercice"><div class="tag-dot"></div> Exercices</div>
+      <div class="exo-list">${exoHtml}</div>
+    </div>
+    <div class="lesson-nav">
+      <button class="btn-nav" onclick="prevStep()">← Leçon</button>
+      <span class="score-display" id="exo-score">0/${day.exos.length}</span>
+      <button class="btn-nav primary" id="to-defi-btn" onclick="nextStep()">Défi →</button>
+    </div>`;
+}
+
+function selectOpt(qi, oi) {
+  const day = currentDay;
+  const e = day.exos[qi];
+  if (exoResults[qi] !== undefined) return;
+
+  ['A','B','C','D'].forEach((_, j) => {
+    const el = document.getElementById(`opt-${qi}-${j}`);
+    if (el) el.classList.remove('selected','correct','wrong');
+  });
+
+  const selected = document.getElementById(`opt-${qi}-${oi}`);
+  if (oi === e.ans) {
+    selected.classList.add('correct');
+    exoResults[qi] = true;
+  } else {
+    selected.classList.add('wrong');
+    document.getElementById(`opt-${qi}-${e.ans}`)?.classList.add('correct');
+    exoResults[qi] = false;
+  }
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.textContent = (oi === e.ans ? '✓ ' : '✗ ') + e.exp;
+  fb.className = 'exo-feedback show ' + (oi === e.ans ? 'ok' : 'ko');
+  updateExoScore();
+}
+
+function checkBlank(qi) {
+  const day = currentDay;
+  const e = day.exos[qi];
+  const inp = document.getElementById(`inp-${qi}`);
+  if (!inp || exoResults[qi] !== undefined) return;
+  const val = inp.value.trim().toLowerCase();
+  const correct = e.ans.toLowerCase();
+  const ok = val === correct || val.replace(/['']/g,"'") === correct.replace(/['']/g,"'");
+  inp.className = ok ? 'correct' : 'wrong';
+  exoResults[qi] = ok;
+  const fb = document.getElementById(`fb-${qi}`);
+  fb.textContent = ok ? '✓ ' + e.exp : `✗ Réponse attendue : "${e.ans}" — ${e.exp}`;
+  fb.className = 'exo-feedback show ' + (ok ? 'ok' : 'ko');
+  updateExoScore();
+}
+
+function updateExoScore() {
+  const day = currentDay;
+  const done = Object.keys(exoResults).length;
+  const good = Object.values(exoResults).filter(Boolean).length;
+  const sc = document.getElementById('exo-score');
+  if (sc) sc.textContent = `${good}/${day.exos.length}`;
+}
+
+function renderDefi(container, day) {
+  const d = day.defi;
+  container.innerHTML = `
+    <div class="lesson-block">
+      <div class="block-tag tag-defi"><div class="tag-dot"></div> Défi du jour</div>
+      <div class="lesson-title">À toi de jouer !</div>
+      <div class="defi-hint">💡 ${d.exemple}</div>
+      <p style="font-size:14px;color:var(--encre-doux);margin-bottom:12px;line-height:1.6;">${d.consigne}</p>
+      <textarea class="defi-zone" id="defi-text" placeholder="Écris ici..."></textarea>
+    </div>
+    <div class="lesson-nav">
+      <button class="btn-nav" onclick="prevStep()">← Exercices</button>
+      <span class="score-display">Étape 3/4</span>
+      <button class="btn-nav success" onclick="finishDay()">Terminer ✓</button>
+    </div>`;
+}
+
+function renderResult(container, day) {
+  const total = Object.values(exoResults).filter(Boolean).length;
+  const max = day.exos.length;
+  const pct = Math.round(total/max*100);
+  const stars = pct >= 80 ? '⭐⭐⭐' : pct >= 60 ? '⭐⭐' : '⭐';
+  const msg = pct >= 80 ? 'Excellent travail !' : pct >= 60 ? 'Bien joué !' : 'Continue comme ça !';
+  const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '😊' : '💪';
+
+  container.innerHTML = `
+    <div class="lesson-block result-day">
+      <div class="big-emoji">${emoji}</div>
+      <h3>${msg}</h3>
+      <div class="stars">${stars}</div>
+      <div class="result-score" style="color:${pct>=80?'var(--vert)':pct>=60?'var(--jul)':'var(--aout)'}">${total}<span style="font-size:20px;color:var(--encre-doux);">/${max}</span></div>
+      <div class="score-detail">Journée complétée · ${pct}% aux exercices</div>
+    </div>
+    <div class="lesson-nav">
+      <button class="btn-nav" onclick="showWeek(currentWeek)">← Semaine</button>
+      <button class="btn-nav primary" onclick="showHome()">Accueil</button>
+    </div>`;
+}
+
+function nextStep() { currentStep++; renderStep(); }
+function prevStep() { currentStep--; renderStep(); }
+
+function finishDay() {
+  const total = Object.values(exoResults).filter(Boolean).length;
+  progress[currentDay.id] = total;
+  save();
+  currentStep = 3;
+  renderStep();
+}
+
+/* ════════════════════════════════
+   HOME — STATS ET LISTE
+════════════════════════════════ */
+function updateHomeStats() {
+  const julWeeks = CURRICULUM.filter(w => w.month === 'juillet');
+  const aoutWeeks = CURRICULUM.filter(w => w.month === 'aout');
+  const allJulDays = julWeeks.flatMap(w => w.days);
+  const allAoutDays = aoutWeeks.flatMap(w => w.days);
+  const julDone = allJulDays.filter(d => progress[d.id] !== undefined).length;
+  const aoutDone = allAoutDays.filter(d => progress[d.id] !== undefined).length;
+
+  document.getElementById('prog-juillet').style.width = (julDone/31*100) + '%';
+  document.getElementById('prog-aout').style.width = (aoutDone/31*100) + '%';
+  document.getElementById('done-juillet').textContent = `${julDone} / 31 jours`;
+  document.getElementById('done-aout').textContent = `${aoutDone} / 31 jours`;
+}
+
+function renderAllWeeks(filterMonth) {
+  const list = document.getElementById('all-weeks-list');
+  list.innerHTML = '';
+  const weeks = filterMonth ? CURRICULUM.filter(w => w.month === filterMonth) : CURRICULUM;
+  weeks.forEach(w => {
+    const allDone = w.days.filter(d => progress[d.id] !== undefined).length;
+    const isJul = w.month === 'juillet';
+    const div = document.createElement('div');
+    div.className = 'week-row' + (allDone === 7 ? '' : '');
+    const dotsHtml = w.days.map((d, i) =>
+      `<div class="week-day-dot ${progress[d.id] !== undefined ? 'done' : ''}"></div>`
+    ).join('');
+    div.innerHTML = `
+      <div class="week-dot ${isJul ? 'juillet' : 'aout'} ${allDone===7?'done':''}">${w.num}</div>
+      <div class="week-info">
+        <div class="week-name">${w.title}</div>
+        <div class="week-theme">${w.theme}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div class="week-days">${dotsHtml}</div>
+        <div class="week-score" style="font-size:11px;color:var(--encre-doux);">${allDone}/7</div>
+      </div>`;
+    div.onclick = () => showWeek(w.id);
+    list.appendChild(div);
+  });
+  document.querySelector('.weeks-section h2').textContent = 'Toutes les semaines';
+}
+
+// INIT
+showHome();
+</script>
+</body>
+</html>

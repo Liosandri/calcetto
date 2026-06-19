@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test de français A2/B1</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f4f0;color:#1a1a18;padding:1.5rem}
+h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.sub{font-size:13px;color:#5f5e5a;margin-bottom:1.5rem}
+.progress-wrap{height:6px;background:#e0deda;border-radius:99px;margin-bottom:1.5rem;overflow:hidden}
+.progress-bar{height:6px;background:#534AB7;border-radius:99px;transition:width .3s}
+.badge{font-size:12px;padding:4px 10px;border-radius:6px;border:0.5px solid #ccc;background:#eeedfe;color:#3c3489;display:inline-block}
+.cat-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.cat-card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;padding:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.cat-name{font-size:15px;font-weight:500;margin-bottom:2px}
+.cat-meta{font-size:12px;color:#888}
+.btn{padding:8px 18px;border-radius:8px;border:0.5px solid #b4b2a9;background:transparent;font-size:14px;cursor:pointer;color:#1a1a18;transition:background .15s}
+.btn:hover{background:#f1efe8}
+.btn.primary{background:#534AB7;color:#fff;border-color:#534AB7}
+.btn.primary:hover{background:#3c3489}
+.btn:disabled{opacity:.35;cursor:default}
+.q-card{background:#fff;border:0.5px solid #d3d1c7;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.q-num{font-size:12px;color:#888;margin-bottom:6px}
+.q-text{font-size:15px;line-height:1.6;margin-bottom:1rem}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 14px;border:0.5px solid #d3d1c7;border-radius:8px;cursor:pointer;font-size:14px;background:#fff;transition:all .15s}
+.opt:hover{background:#f1efe8}
+.opt.selected{border-color:#534AB7;background:#eeedfe;color:#3c3489}
+.opt.correct{border-color:#0f6e56;background:#e1f5ee;color:#085041}
+.opt.wrong{border-color:#993c1d;background:#faece7;color:#712b13}
+.opt-letter{font-weight:500;min-width:18px}
+.nav-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.timer{font-size:14px;font-weight:500;color:#888;min-width:48px;text-align:right}
+.timer.warn{color:#d85a30}
+.explanation{font-size:13px;color:#5f5e5a;margin-top:8px;padding:8px 12px;background:#f1efe8;border-radius:8px;border-left:2px solid #534AB7}
+.result-card{background:#f1efe8;border-radius:12px;padding:1.5rem;margin-bottom:1rem;text-align:center}
+.big-score{font-size:48px;font-weight:500}
+.result-label{font-size:14px;color:#5f5e5a;margin-top:4px}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:1rem 0}
+.result-cat{background:#fff;border:0.5px solid #d3d1c7;border-radius:8px;padding:10px;font-size:13px}
+.result-cat .cn{color:#888;font-size:11px;margin-bottom:4px}
+.result-cat .cs{font-weight:500;font-size:16px}
+</style>
+</head>
+<body>
+<h1>Test de français — A2/B1</h1>
+<p class="sub">100 questions · 5 catégories · 10 minutes par catégorie</p>
+<div id="app"></div>
+<script>
+const CATS=["Grammaire","Vocabulaire","Conjugaison","Compréhension","Orthographe"];
+const QS={
+"Grammaire":[
+{q:"Choisissez la phrase correcte :",opts:["Je suis allé au marché","Je suis aller au marché","J'ai été aller au marché","Je suis allée au marché"],ans:0,exp:"'Aller' se conjugue avec 'être' au passé composé → je suis allé(e)."},
+{q:"Complétez : '_____ livre est très intéressant.'",opts:["Ce","Cet","Cette","Ces"],ans:0,exp:"'Livre' est masculin → ce livre. 'Cet' s'emploie devant une voyelle."},
+{q:"Quelle phrase utilise correctement 'dont' ?",opts:["C'est le film dont je t'ai parlé","C'est le film qui je t'ai parlé","C'est le film que je t'ai parlé","C'est le film lequel je t'ai parlé"],ans:0,exp:"'Dont' remplace un complément introduit par 'de' : parlé DE ce film."},
+{q:"Complétez : 'Elle a mangé _____ pommes.'",opts:["des","de","les","ses"],ans:0,exp:"Après un verbe affirmatif, on utilise 'des' devant un nom pluriel indéfini."},
+{q:"Quel est le genre de 'problème' ?",opts:["Masculin","Féminin","Les deux","Neutre"],ans:0,exp:"'Un problème' est masculin malgré sa terminaison en -e."},
+{q:"Complétez : 'Il y a _____ monde dans la rue.'",opts:["beaucoup de","beaucoup des","beaucoup du","beaucoup d'un"],ans:0,exp:"Après 'beaucoup', on utilise 'de' sans article."},
+{q:"Choisissez la bonne préposition : 'Je vais _____ Paris.'",opts:["à","en","au","dans"],ans:0,exp:"Pour une ville, on utilise 'à' : je vais à Paris."},
+{q:"Complétez : 'Ce sont _____ mes amis.'",opts:["tous","tout","toutes","toute"],ans:0,exp:"'Amis' est masculin pluriel → tous mes amis."},
+{q:"Quelle question est correcte ?",opts:["Où habites-tu ?","Où tu habites-tu ?","Où est-ce que tu habites-tu ?","Où habites-vous-tu ?"],ans:0,exp:"L'inversion verbe-sujet donne : habites-tu ?"},
+{q:"Complétez : 'Je n'ai _____ mangé aujourd'hui.'",opts:["rien","pas rien","jamais rien","plus rien"],ans:0,exp:"'Rien' seul forme une négation complète avec 'ne'."},
+{q:"'Ni l'un ni l'autre ne _____ venu.' Choisissez :",opts:["sont","est","a","ont"],ans:0,exp:"'Ni l'un ni l'autre' = deux sujets → accord au pluriel : sont."},
+{q:"Complétez : 'J'ai acheté _____ eau minérale.'",opts:["de l'","du","de la","des"],ans:0,exp:"'Eau' est féminin et commence par une voyelle → de l'eau."},
+{q:"Quelle phrase est correcte ?",opts:["C'est moi qui ai raison","C'est moi qui a raison","C'est moi qui ont raison","C'est moi qui avez raison"],ans:0,exp:"Quand 'qui' a pour antécédent 'moi', le verbe est à la 1re personne."},
+{q:"Complétez : 'Elle est plus grande _____ lui.'",opts:["que","de","qu'","à"],ans:0,exp:"La comparaison s'introduit avec 'que' (ou 'qu'' devant voyelle)."},
+{q:"Quel mot est un article partitif ?",opts:["du","le","un","ces"],ans:0,exp:"'Du' (de + le) est un article partitif pour les noms masculins non comptables."},
+{q:"Complétez : 'Je me souviens _____ cette journée.'",opts:["de","à","pour","en"],ans:0,exp:"Se souvenir de quelque chose → préposition 'de'."},
+{q:"Choisissez : 'Les enfants _____ sages.'",opts:["sont","est","a été","être"],ans:0,exp:"Sujet pluriel → verbe à la 3e personne du pluriel : sont."},
+{q:"Complétez : 'Il n'y a _____ personne ici.'",opts:["aucune","pas","nulle","rien de"],ans:0,exp:"'Personne' féminin → 'aucune personne' renforce la négation."},
+{q:"Quelle préposition manque ? 'Il dépend _____ toi.'",opts:["de","à","par","sur"],ans:0,exp:"Dépendre de quelqu'un → préposition 'de'."},
+{q:"Complétez : 'Je cherche _____ clés depuis une heure.'",opts:["mes","les miens","mon","mienne"],ans:0,exp:"'Clés' est féminin pluriel → adjectif possessif 'mes'."}
+],
+"Vocabulaire":[
+{q:"Que signifie 'un boulot' en français familier ?",opts:["Un travail","Un pain rond","Une boulangerie","Un mensonge"],ans:0,exp:"'Boulot' est un mot familier pour désigner un emploi ou une tâche."},
+{q:"Quel mot est le contraire de 'généreux' ?",opts:["Avare","Riche","Pauvre","Élégant"],ans:0,exp:"Le contraire de généreux est avare (qui ne veut pas partager)."},
+{q:"Complétez la locution : 'Avoir le cœur _____ la main.'",opts:["sur","dans","à","de"],ans:0,exp:"'Avoir le cœur sur la main' = être très généreux."},
+{q:"Que signifie 'flâner' ?",opts:["Se promener sans but","Travailler vite","Manger beaucoup","Dormir longtemps"],ans:0,exp:"Flâner, c'est se promener lentement et sans destination précise."},
+{q:"Quel mot appartient au champ lexical de la cuisine ?",opts:["Mijoter","Agrafer","Tondre","Baliser"],ans:0,exp:"Mijoter (cuire à feu doux) appartient au vocabulaire culinaire."},
+{q:"Choisissez le synonyme de 'rapide' :",opts:["Prompt","Lourd","Large","Sombre"],ans:0,exp:"'Prompt' signifie rapide, qui agit vite."},
+{q:"Que veut dire 'être dans la lune' ?",opts:["Être distrait","Être fatigué","Avoir sommeil","Être triste"],ans:0,exp:"'Être dans la lune' = être distrait, rêveur."},
+{q:"Quel mot désigne une personne qui ne dit pas la vérité ?",opts:["Menteur","Bavard","Timide","Curieux"],ans:0,exp:"Un menteur est quelqu'un qui dit des mensonges intentionnellement."},
+{q:"Que signifie 'un embouteillage' ?",opts:["Un blocage de la circulation","Une bouteille bouchée","Un problème d'eau","Un accident de train"],ans:0,exp:"Un embouteillage est un bouchon : la circulation est bloquée."},
+{q:"Quel mot n'appartient pas à la famille de 'soleil' ?",opts:["Lunaire","Ensoleillé","Solaire","Insolation"],ans:0,exp:"'Lunaire' vient de 'lune', pas de 'soleil'."},
+{q:"Que signifie 'avoir du mal à' ?",opts:["Trouver quelque chose difficile","Être malade","Faire du mal","Ressentir de la douleur"],ans:0,exp:"'Avoir du mal à faire quelque chose' = trouver cela difficile."},
+{q:"Quel est le sens de 'bienveillant' ?",opts:["Qui veut le bien des autres","Qui arrive à l'heure","Qui est bien habillé","Qui parle bien"],ans:0,exp:"Bienveillant = qui a de bonnes intentions envers les autres."},
+{q:"Que veut dire 'une prise de conscience' ?",opts:["Le moment où on réalise quelque chose","Une prise électrique","Un médicament","Un exercice physique"],ans:0,exp:"Une prise de conscience = le moment où l'on comprend quelque chose d'important."},
+{q:"Quel mot est un faux ami avec l'anglais ?",opts:["Actuellement (= en ce moment)","Information","Animal","Final"],ans:0,exp:"'Actuellement' = en ce moment, pas 'actually' (= en fait). C'est un faux ami."},
+{q:"Que signifie 'une randonnée' ?",opts:["Une longue promenade à pied","Une course rapide","Un voyage en voiture","Un repas en plein air"],ans:0,exp:"Une randonnée est une longue promenade, souvent en nature, à pied."},
+{q:"Quel mot décrit quelqu'un qui parle beaucoup ?",opts:["Bavard","Muet","Timide","Discret"],ans:0,exp:"Un bavard est quelqu'un qui parle énormément."},
+{q:"Que veut dire 'coûter les yeux de la tête' ?",opts:["Être très cher","Faire mal aux yeux","Être beau","Être difficile à trouver"],ans:0,exp:"Expression idiomatique qui signifie très cher."},
+{q:"Quel est le sens du préfixe 'in-' dans 'incroyable' ?",opts:["Négatif (pas)","Grand","Très","De nouveau"],ans:0,exp:"Le préfixe 'in-' exprime la négation : incroyable = pas croyable."},
+{q:"Que signifie 's'en sortir' ?",opts:["Réussir à surmonter une difficulté","Sortir d'une pièce","Se sauver en courant","Se débarrasser de quelqu'un"],ans:0,exp:"'S'en sortir' = réussir à surmonter une situation difficile."},
+{q:"Que signifie 'néanmoins' ?",opts:["Cependant / malgré cela","À cause de cela","Avant tout","Par conséquent"],ans:0,exp:"'Néanmoins' est un connecteur de concession qui signifie 'cependant'."}
+],
+"Conjugaison":[
+{q:"'Nous _____ (aller) au cinéma demain.' Futur simple :",opts:["irons","allons","irions","alleras"],ans:0,exp:"Futur de 'aller' : j'irai, tu iras, il ira, nous irons, vous irez, ils iront."},
+{q:"Conjuguez 'faire' à l'imparfait, 3e personne du pluriel :",opts:["faisaient","faisient","fesaient","faisait"],ans:0,exp:"Imparfait de 'faire' : nous faisions → ils faisaient. Radical = fais-."},
+{q:"'Si j'avais le temps, je _____ (voyager).' Conditionnel :",opts:["voyagerais","voyagerai","voyage","voyagerait"],ans:0,exp:"Si + imparfait → conditionnel présent : je voyagerais."},
+{q:"Choisissez le bon auxiliaire : 'Elle _____ partie à midi.'",opts:["est","a","était","avait"],ans:0,exp:"'Partir' se conjugue avec 'être' au passé composé → elle est partie."},
+{q:"'Que tu _____ (être) heureux !' Subjonctif présent :",opts:["sois","es","étais","sera"],ans:0,exp:"Subjonctif présent de 'être' : que je sois, que tu sois, qu'il soit…"},
+{q:"Conjuguez 'vouloir' au présent, 1ère personne du singulier :",opts:["veux","voul","veut","voulez"],ans:0,exp:"Présent de 'vouloir' : je veux, tu veux, il veut…"},
+{q:"'Ils _____ (finir) leurs devoirs hier.' Passé composé :",opts:["ont fini","ont finit","sont finis","avaient fini"],ans:0,exp:"'Finir' utilise 'avoir'. Participe passé = fini (sans -t)."},
+{q:"Quel est l'imparfait de 'être' à la 2e personne du pluriel ?",opts:["étiez","êtiez","ères","ériez"],ans:0,exp:"Imparfait de 'être' : j'étais, tu étais, il était, nous étions, vous étiez."},
+{q:"'Il faut que vous _____ (prendre) ce médicament.' Subjonctif :",opts:["preniez","prenez","prendrez","prendriez"],ans:0,exp:"Subjonctif de 'prendre' : que je prenne, que vous preniez."},
+{q:"Conjuguez 'savoir' au futur simple, 3e personne du singulier :",opts:["saura","saurait","sait","savait"],ans:0,exp:"Futur de 'savoir' (irrégulier) : je saurai, tu sauras, il saura…"},
+{q:"'Nous _____ (se lever) tôt ce matin.' Passé composé :",opts:["nous sommes levés","nous avons levés","nous levons","on levait"],ans:0,exp:"Verbe pronominal → auxiliaire 'être' + accord : nous nous sommes levés."},
+{q:"Dans 'Je mangeais quand il est arrivé', quels temps sont utilisés ?",opts:["Imparfait / passé composé","Passé composé / imparfait","Présent / imparfait","Passé simple / imparfait"],ans:0,exp:"Action en cours (imparfait) interrompue par une action ponctuelle (passé composé)."},
+{q:"Conjuguez 'recevoir' au présent, 1ère personne du pluriel :",opts:["recevons","reçevons","recevrons","recevions"],ans:0,exp:"Présent de 'recevoir' : je reçois, tu reçois, nous recevons…"},
+{q:"'Elle _____ (pouvoir) venir si elle voulait.' Conditionnel passé :",opts:["aurait pu","aurait put","a pu","eût pu"],ans:0,exp:"Conditionnel passé = auxiliaire au conditionnel + participe passé → aurait pu."},
+{q:"Quel est le participe passé de 'ouvrir' ?",opts:["ouvert","ouvri","ouvrit","ouvré"],ans:0,exp:"'Ouvrir' fait 'ouvert' au participe passé (comme offrir → offert)."},
+{q:"'Avant qu'il _____ (partir), dis-lui bonjour.' Subjonctif :",opts:["parte","part","partira","partirait"],ans:0,exp:"Après 'avant que', on utilise le subjonctif → qu'il parte."},
+{q:"Conjuguez 'tenir' à l'imparfait, 3e personne du singulier :",opts:["tenait","tienait","tient","tenît"],ans:0,exp:"Imparfait de 'tenir' : je tenais, tu tenais, il tenait… Radical = ten-."},
+{q:"'Nous _____ (devoir) travailler ce weekend.' Conditionnel présent :",opts:["devrions","devrons","devions","devirons"],ans:0,exp:"Conditionnel de 'devoir' : je devrais, tu devrais, nous devrions…"},
+{q:"Choisissez la forme correcte du gérondif : 'En _____ (chanter).'",opts:["chantant","chanté","chanter","chant"],ans:0,exp:"Le gérondif = en + participe présent. 'Chanter' → chantant."},
+{q:"'Dès qu'il _____ (arriver), appelez-moi.' Futur antérieur :",opts:["sera arrivé","arrivera","arrive","serait arrivé"],ans:0,exp:"Après 'dès que' avec sens futur, on utilise le futur antérieur : sera arrivé."}
+],
+"Compréhension":[
+{q:"'Marie n'est pas venue car elle avait de la fièvre.' Pourquoi ?",opts:["Elle était malade","Elle était en vacances","Elle avait peur","Elle était fatiguée"],ans:0,exp:"'Avoir de la fièvre' signifie être malade. C'est la raison explicite."},
+{q:"'Il faisait beau, mais on a quand même annulé le pique-nique.' Qu'est-ce qui est surprenant ?",opts:["L'annulation malgré le beau temps","Le mauvais temps","Que le pique-nique ait eu lieu","Que personne ne voulait y aller"],ans:0,exp:"'Quand même' exprime une contradiction : le beau temps aurait dû favoriser le pique-nique."},
+{q:"'Plus on attend, moins on a de chances.' Quelle est l'idée principale ?",opts:["Il faut agir vite","Il faut être patient","L'attente est toujours bonne","Ça ne dépend pas du temps"],ans:0,exp:"La structure 'plus… moins…' indique une relation inversement proportionnelle."},
+{q:"'Paul a beau travailler dur, il ne réussit pas.' Qu'est-ce que cela signifie ?",opts:["Il travaille dur mais sans succès","Il ne travaille pas assez","Il réussit grâce à son travail","Il ne veut pas travailler"],ans:0,exp:"'Avoir beau + infinitif' = faire quelque chose sans que ça serve."},
+{q:"'La réunion a été repoussée d'une semaine.' Si elle était prévue le 5, quand aura-t-elle lieu ?",opts:["Le 12","Le 6","Le 4","Le 19"],ans:0,exp:"'Repousser d'une semaine' = décaler de 7 jours. 5 + 7 = le 12."},
+{q:"'Bien que fatigué, il a continué à courir.' Quelle relation logique est exprimée ?",opts:["Concession","Cause","Conséquence","But"],ans:0,exp:"'Bien que' introduit une concession : fatigué, mais il a continué quand même."},
+{q:"'Ce restaurant est fermé le mardi.' Un ami propose d'y aller mardi soir. Que répondez-vous ?",opts:["Ce n'est pas possible ce soir-là","C'est une bonne idée","Il faut réserver","Le restaurant ferme tôt"],ans:0,exp:"Si le restaurant est fermé le mardi, il est impossible d'y aller."},
+{q:"'Suite à de nombreuses plaintes, le bruit a été réduit.' Quelle est la cause ?",opts:["Les plaintes des habitants","La décision du maire","Une loi nouvelle","Un accident"],ans:0,exp:"'Suite à' indique la cause : les plaintes ont entraîné la réduction du bruit."},
+{q:"'Il est interdit de stationner ici de 8h à 18h.' À 19h, peut-on se garer ?",opts:["Oui","Non","Ça dépend du jour","Seulement avec un badge"],ans:0,exp:"L'interdiction s'arrête à 18h. À 19h, c'est autorisé."},
+{q:"'Contrairement à sa sœur, Lucie aime le sport.' Que peut-on dire de la sœur ?",opts:["Elle n'aime pas le sport","Elle aime aussi le sport","Elle fait plus de sport","Elle est meilleure"],ans:0,exp:"'Contrairement à' = l'opposé. Si Lucie aime le sport, sa sœur ne l'aime pas."},
+{q:"'Il a failli rater son bus.' Qu'est-ce qui s'est passé ?",opts:["Il a presque raté son bus mais pas tout à fait","Il a raté son bus","Il a pris son bus sans problème","Il a couru pour rien"],ans:0,exp:"'Faillir + infinitif' = presque mais finalement non."},
+{q:"'La banque sera exceptionnellement ouverte samedi.' Que signifie 'exceptionnellement' ?",opts:["Seulement cette fois","Toujours","Rarement","Jamais"],ans:0,exp:"'Exceptionnellement' = c'est une exception, pas la règle habituelle."},
+{q:"'À condition d'avoir une pièce d'identité, vous pouvez entrer.' Que faut-il pour entrer ?",opts:["Une pièce d'identité","Un ticket","Une réservation","Rien de spécial"],ans:0,exp:"'À condition de' = il faut impérativement avoir une pièce d'identité."},
+{q:"'Ils ont mis deux heures à réparer la voiture.' Que peut-on dire ?",opts:["La réparation a duré deux heures","Ils ont eu besoin de deux mécaniciens","La voiture a deux problèmes","Ils ont coûté deux fois plus cher"],ans:0,exp:"'Mettre du temps à faire quelque chose' = cela a duré un certain temps."},
+{q:"'En cas de pluie, le match sera annulé.' Il pleut. Qu'arrive-t-il au match ?",opts:["Il est annulé","Il est reporté","Il a lieu quand même","Il est retardé d'une heure"],ans:0,exp:"La condition est remplie (il pleut) → le match est annulé."},
+{q:"'Ne faites pas ce que je dis, mais ce que je fais.' Quelle est l'idée ?",opts:["Il faut observer les actes, pas les paroles","Il faut écouter les conseils","Il ne faut pas agir","Les paroles sont plus importantes"],ans:0,exp:"Il faut s'inspirer des actions réelles, pas des discours."},
+{q:"'Elle avait l'air d'être pressée.' Que peut-on dire d'elle ?",opts:["Elle semblait manquer de temps","Elle était fatiguée","Elle était stressée","Elle était en retard"],ans:0,exp:"'Avoir l'air de' = sembler. Elle donnait l'impression d'être pressée."},
+{q:"'La séance commence à 20h30. Il est 20h15.' Combien de temps reste-t-il ?",opts:["15 minutes","30 minutes","45 minutes","1 heure"],ans:0,exp:"20h30 - 20h15 = 15 minutes restantes."},
+{q:"'Je préfère partir tôt plutôt que d'attendre.' Quelle est la préférence ?",opts:["Partir avant l'heure prévue","Attendre calmement","Partir plus tard","Rester à la maison"],ans:0,exp:"'Plutôt que de' oppose deux actions. La préférence est de partir tôt."},
+{q:"'Faute de temps, il n'a pas pu finir.' Que signifie 'faute de' ?",opts:["Par manque de","À cause de trop de","Grâce à","En raison de l'excès de"],ans:0,exp:"'Faute de' = par manque de. Il n'avait pas assez de temps."}
+],
+"Orthographe":[
+{q:"Quelle est la bonne orthographe ?",opts:["Développement","Dévéloppement","Developpement","Développemant"],ans:0,exp:"'Développement' : dé-ve-lop-pe-ment. Deux 'p', accent sur le premier 'e'."},
+{q:"Choisissez la bonne orthographe : 'Il a _____ son travail.'",opts:["terminé","terminer","terminée","terminent"],ans:0,exp:"Après 'avoir', le participe passé ne s'accorde pas avec le sujet → terminé."},
+{q:"Quelle est la bonne orthographe ?",opts:["Accueillir","Acqueillir","Accueuillir","Acueuillir"],ans:0,exp:"'Accueillir' : acc-uei-ll-ir. Attention au groupe 'uei' et aux deux 'l'."},
+{q:"Complétez : 'Les enfants se sont _____ les mains.'",opts:["lavé","lavés","lavées","laver"],ans:0,exp:"Le COD 'les mains' est après le verbe → le participe reste invariable : lavé."},
+{q:"Quelle est la bonne orthographe ?",opts:["Professionnelle","Professionelle","Professionele","Profesionnelle"],ans:0,exp:"'Professionnelle' : deux 's', deux 'n', deux 'l' au féminin."},
+{q:"Choisissez la bonne forme : 'Il faut _____ à cette lettre.'",opts:["répondre","répondu","répondit","répondait"],ans:0,exp:"Après 'il faut', on utilise l'infinitif → répondre."},
+{q:"Quelle est la bonne orthographe ?",opts:["Apparemment","Aparemment","Apparament","Apparamment"],ans:0,exp:"'Apparemment' : deux 'p', -emment. Formé sur 'apparent'."},
+{q:"Complétez : 'Elle s'est _____ pour aller à la fête.'",opts:["habillée","habillé","habiller","habillas"],ans:0,exp:"Verbe pronominal, le COD 'se' désigne la même personne → accord féminin : habillée."},
+{q:"Quel mot est mal orthographié ?",opts:["Sinthèse","Rythme","Rhume","Symbole"],ans:0,exp:"'Sinthèse' est incorrect → la bonne orthographe est 'synthèse' (avec un y)."},
+{q:"Choisissez la bonne orthographe :",opts:["Conscience","Consience","Conciense","Consciense"],ans:0,exp:"'Conscience' : cons-cience. Attention au 'sc'."},
+{q:"Complétez : 'Les fleurs que j'ai _____ sont belles.'",opts:["choisies","choisis","choisit","choisir"],ans:0,exp:"Le COD 'que' (= les fleurs, féminin pluriel) est avant le verbe → accord : choisies."},
+{q:"Quelle est la bonne orthographe ?",opts:["Enthousiaste","Enthoussiaste","Enthoussiaste","Enthusiaste"],ans:0,exp:"'Enthousiaste' : enth-ou-si-aste. Un seul 's', pas de doublement."},
+{q:"Choisissez : 'Ces résultats sont _____ à mes attentes.'",opts:["conformes","conforme","conformément","conforms"],ans:0,exp:"'Résultats' est masculin pluriel → adjectif accordé : conformes."},
+{q:"Quel mot contient une faute d'orthographe ?",opts:["Nécéssaire","Nécessaire","Necessaire","Necéssaire"],ans:1,exp:"La bonne orthographe est 'nécessaire' : un 'c' et deux 's'. L'option B est la seule correcte."},
+{q:"Complétez : 'C'est _____ moi qu'il s'adresse.'",opts:["à","a","ah","ha"],ans:0,exp:"Préposition 'à' (avec accent) pour indiquer la direction. 'A' sans accent = verbe avoir."},
+{q:"Quelle est la bonne orthographe ?",opts:["Éventuellement","Éventuélement","Événtuellement","Éventuellment"],ans:0,exp:"'Éventuellement' : é-ven-tuel-le-ment. Deux 'l', terminaison -ment."},
+{q:"Complétez : 'Nous _____ ravis de vous recevoir.'",opts:["sommes","somme","some","somes"],ans:0,exp:"1re personne du pluriel du verbe 'être' au présent = sommes."},
+{q:"Quelle est la bonne orthographe ?",opts:["Renseignement","Ranseignement","Rensegnement","Renseignment"],ans:0,exp:"'Renseignement' : ren-sei-gne-ment. Attention au groupe 'sei'."},
+{q:"Choisissez : 'Il _____ longtemps qu'il n'a pas appelé.'",opts:["y a","ya","yas","ait"],ans:0,exp:"'Il y a' (deux mots) introduit une durée. 'Ya' est familier, incorrect à l'écrit."},
+{q:"Quel mot est correctement orthographié ?",opts:["Malgré","Malgret","Malgrée","Malgret"],ans:0,exp:"'Malgré' (préposition) : mal-gré. Pas d'accent sur le e, pas de e final."}
+]
+};
+
+const state={cat:null,qi:0,answers:{},catScores:{},view:"home",timer:0,timerInt:null};
+
+function startTimer(sec){
+  clearInterval(state.timerInt);
+  state.timer=sec;
+  state.timerInt=setInterval(()=>{
+    state.timer--;
+    const el=document.getElementById("timer");
+    if(el){el.textContent=fmt(state.timer);el.className="timer"+(state.timer<60?" warn":"");}
+    if(state.timer<=0){clearInterval(state.timerInt);endCat();}
+  },1000);
+}
+function fmt(s){if(s<0)s=0;return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function endCat(){
+  const cat=state.cat;const qs=QS[cat];let sc=0;
+  qs.forEach((q,i)=>{if(state.answers[cat]&&state.answers[cat][i]===q.ans)sc++;});
+  state.catScores[cat]=sc;state.view="cat-result";render();
+}
+
+function render(){
+  const el=document.getElementById("app");
+  if(state.view==="home")el.innerHTML=renderHome();
+  else if(state.view==="quiz")el.innerHTML=renderQuiz();
+  else if(state.view==="cat-result")el.innerHTML=renderCatResult();
+  else if(state.view==="final")el.innerHTML=renderFinal();
+  attach();
+}
+
+function renderHome(){
+  const done=Object.keys(state.catScores).length;
+  let cards=CATS.map(c=>{
+    const isDone=state.catScores[c]!==undefined;const sc=state.catScores[c];
+    const col=isDone?(sc>=14?"#0f6e56":sc>=10?"#534AB7":"#993c1d"):"";
+    return `<div class="cat-card">
+      <div><div class="cat-name">${c}</div><div class="cat-meta">20 questions · ~10 min</div></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        ${isDone?`<span style="font-size:13px;font-weight:500;color:${col};">${sc}/20</span>`:""}
+        <button class="btn${isDone?"":" primary"}" data-start="${c}">${isDone?"Refaire":"Commencer"}</button>
+      </div>
+    </div>`;}).join("");
+  const finalBtn=done===5?`<button class="btn primary" id="see-final" style="margin-top:1rem;width:100%;">Voir mon résultat final →</button>`:"";
+  return `<div class="progress-wrap" style="margin-bottom:1rem;"><div class="progress-bar" style="width:${done*20}%"></div></div>
+    <p style="font-size:13px;color:#888;margin-bottom:1rem;">${done}/5 catégories complétées</p>
+    <div class="cat-grid">${cards}</div>${finalBtn}`;
+}
+
+function renderQuiz(){
+  const cat=state.cat;const qs=QS[cat];const qi=state.qi;const q=qs[qi];
+  const given=(state.answers[cat]&&state.answers[cat][qi]!==undefined)?state.answers[cat][qi]:null;
+  const answered=given!==null;
+  let opts=q.opts.map((o,i)=>{
+    let cls="opt";
+    if(answered){if(i===q.ans)cls+=" correct";else if(i===given)cls+=" wrong";}
+    else if(given===i)cls+=" selected";
+    return `<div class="${cls}" data-opt="${i}"><span class="opt-letter">${"ABCD"[i]}</span> ${o}</div>`;
+  }).join("");
+  const exp=answered?`<div class="explanation">💡 ${q.exp}</div>`:"";
+  return `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
+    <span class="badge">${cat}</span><span id="timer" class="timer">${fmt(state.timer)}</span></div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${(qi+1)*5}%"></div></div>
+    <div class="q-card">
+      <div class="q-num">Question ${qi+1} / 20</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${opts}</div>${exp}
+    </div>
+    <div class="nav-row">
+      <button class="btn" id="prev" ${qi===0?"disabled":""}>← Précédente</button>
+      <span style="flex:1"></span>
+      ${qi<qs.length-1?`<button class="btn primary" id="next">Suivante →</button>`:`<button class="btn primary" id="finish">Terminer ✓</button>`}
+    </div>`;
+}
+
+function renderCatResult(){
+  const cat=state.cat;const sc=state.catScores[cat];
+  const pct=Math.round(sc/20*100);
+  const label=sc>=16?"Excellent !":sc>=12?"Bon travail":sc>=8?"À revoir":"Insuffisant";
+  const col=sc>=16?"#0f6e56":sc>=12?"#534AB7":sc>=8?"#BA7517":"#993c1d";
+  return `<div class="result-card">
+    <div class="big-score" style="color:${col};">${sc}<span style="font-size:24px;color:#888;">/20</span></div>
+    <div class="result-label">${cat} · ${pct}% · ${label}</div>
+  </div>
+  <div class="nav-row">
+    <button class="btn" id="review">Revoir les questions</button>
+    <button class="btn primary" id="back">Retour à l'accueil</button>
+  </div>`;
+}
+
+function renderFinal(){
+  const total=Object.values(state.catScores).reduce((a,b)=>a+b,0);
+  const pct=Math.round(total/100*100);
+  const niv=total>=80?"B1 solide":total>=60?"A2/B1 intermédiaire":total>=40?"A2":"A1/A2";
+  const col=total>=80?"#0f6e56":total>=60?"#534AB7":total>=40?"#BA7517":"#993c1d";
+  let cats=CATS.map(c=>{
+    const sc=state.catScores[c]||0;
+    const cc=sc>=14?"#0f6e56":sc>=10?"#534AB7":"#993c1d";
+    return `<div class="result-cat"><div class="cn">${c}</div><div class="cs" style="color:${cc};">${sc}/20</div></div>`;
+  }).join("");
+  return `<div class="result-card">
+    <div class="big-score" style="color:${col};">${total}<span style="font-size:24px;color:#888;">/100</span></div>
+    <div class="result-label">Score final · Niveau estimé : <strong>${niv}</strong></div>
+  </div>
+  <div class="result-grid">${cats}</div>
+  <button class="btn primary" id="restart" style="margin-top:.5rem;width:100%;">Recommencer le test</button>`;
+}
+
+function attach(){
+  document.querySelectorAll("[data-start]").forEach(b=>b.addEventListener("click",()=>{
+    state.cat=b.dataset.start;state.qi=0;
+    if(!state.answers[state.cat])state.answers[state.cat]={};
+    state.view="quiz";render();startTimer(600);
+  }));
+  document.querySelectorAll("[data-opt]").forEach(o=>o.addEventListener("click",()=>{
+    const cat=state.cat;const qi=state.qi;
+    if(state.answers[cat][qi]!==undefined)return;
+    state.answers[cat][qi]=parseInt(o.dataset.opt);render();
+  }));
+  const p=document.getElementById("prev");if(p)p.addEventListener("click",()=>{state.qi--;render();});
+  const n=document.getElementById("next");if(n)n.addEventListener("click",()=>{state.qi++;render();});
+  const f=document.getElementById("finish");if(f)f.addEventListener("click",()=>{clearInterval(state.timerInt);endCat();});
+  const rv=document.getElementById("review");if(rv)rv.addEventListener("click",()=>{state.qi=0;state.view="quiz";render();});
+  const bk=document.getElementById("back");if(bk)bk.addEventListener("click",()=>{state.view="home";render();});
+  const sf=document.getElementById("see-final");if(sf)sf.addEventListener("click",()=>{state.view="final";render();});
+  const rs=document.getElementById("restart");if(rs)rs.addEventListener("click",()=>{
+    Object.assign(state,{answers:{},catScores:{},view:"home",cat:null,qi:0});
+    clearInterval(state.timerInt);render();
+  });
+}
+
+render();
+</script>
+</body>
+</html>
